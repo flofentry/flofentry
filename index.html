@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flofentry Foods | Premium Nuts Store</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= BASE ================= */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+
+body{
+  background:linear-gradient(to bottom,#fdf6ec,#f5efe6);
+  color:#333;
+  overflow-x:hidden;
+}
+
+/* ================= BACKGROUND ANIMATION ================= */
+.bg-animation{
+  position:fixed;
+  width:100%;
+  height:100%;
+  z-index:-1;
+  pointer-events:none;
+}
+
+.nut{
+  position:absolute;
+  width:35px;
+  opacity:0.05;
+  animation:float linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh) rotate(0deg);}
+  100%{transform:translateY(-10vh) rotate(360deg);}
+}
+
+/* ================= HEADER ================= */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 30px;
+  background:#fff;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+header img{
+  height:55px;
+  object-fit:contain;
+}
+
+nav a{
+  margin-left:18px;
+  color:#333;
+  text-decoration:none;
+  font-weight:500;
+}
+
+nav a:hover{color:#25D366;}
+
+/* ================= HERO ================= */
+.hero{
+  text-align:center;
+  padding:100px 20px 70px;
+}
+
+.hero h1{
+  font-size:50px;
+  color:#222;
+}
+
+.hero span{color:#25D366;}
+
+.cta{
+  display:inline-block;
+  margin-top:15px;
+  padding:12px 20px;
+  background:#25D366;
+  color:#fff;
+  border-radius:8px;
+  text-decoration:none;
+}
+
+/* ================= SECTION ================= */
+.section{
+  padding:60px 30px;
+}
+
+.section h2{
+  text-align:center;
+  margin-bottom:25px;
+  color:#222;
+}
+
+/* ================= FILTERS ================= */
+.filters{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.filters button{
+  margin:5px;
+  padding:8px 14px;
+  border:none;
+  border-radius:20px;
+  background:#eee;
+  cursor:pointer;
+}
+
+.filters button:hover{
+  background:#25D366;
+  color:#fff;
+}
+
+/* ================= PRODUCTS ================= */
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:#fff;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.card img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+}
+
+.card-body{
+  padding:12px;
+}
+
+.price{
+  color:#25D366;
+  font-weight:700;
+  margin-top:5px;
+}
+
+.btn{
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border:none;
+  border-radius:6px;
+  background:#25D366;
+  color:#fff;
+  cursor:pointer;
+}
+
+.btn:hover{background:#1ebe5d;}
+
+/* ================= CART ================= */
+#cart-box{
+  background:#fff;
+  padding:15px;
+  border-radius:10px;
+  margin-top:30px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* ================= REVIEWS ================= */
+.review{
+  background:#fff;
+  margin:10px auto;
+  padding:12px;
+  border-radius:10px;
+  max-width:500px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.08);
+}
+
+/* ================= WHATSAPP ================= */
+.whatsapp-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  color:#fff;
+  text-decoration:none;
+}
+
+/* ================= ADMIN ================= */
+#admin-panel{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#111;
+  color:#fff;
+  padding:20px;
+  overflow:auto;
+  z-index:9999;
+}
+
+.stat{
+  background:#222;
+  padding:10px;
+  margin:5px;
+  border-radius:8px;
+  display:inline-block;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg-animation"></div>
+
+<!-- HEADER -->
+<header>
+
+<div style="display:flex;align-items:center;gap:10px;">
+  <img src="images/logo.jpg" >
+</div>
+
+<nav>
+<a href="#">Home</a>
+<a href="#products">Shop</a>
+<a href="#" onclick="openAdmin()">Admin</a>
+</nav>
+
+<div>🛒 <span id="cart-count">0</span></div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+<h1>Premium <span>Nuts & Superfoods</span></h1>
+<p>Healthy • Natural • Fresh</p>
+<a class="cta" href="#products">Shop Now</a>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+
+<h2>Products</h2>
+
+<!-- FILTERS -->
+<div class="filters">
+<button onclick="filterProducts('All')">All</button>
+<button onclick="filterProducts('Almond')">Almonds</button>
+<button onclick="filterProducts('Cashew')">Cashews</button>
+<button onclick="filterProducts('Bitter Kola')">Bitter Kola</button>
+<button onclick="filterProducts('Brazil')">Brazil Nuts</button>
+</div>
+
+<div class="products" id="product-list"></div>
+
+<!-- CART -->
+<div id="cart-box">
+<h3>Cart</h3>
+<div id="cart-items"></div>
+<button class="btn" onclick="checkout()">Checkout WhatsApp</button>
+</div>
+
+</section>
+
+<!-- REVIEWS -->
+<section class="section">
+<h2>Customer Reviews</h2>
+
+<div id="reviews"></div>
+
+<div style="text-align:center;margin-top:20px;">
+<input id="review-name" placeholder="Name">
+<input id="review-text" placeholder="Review">
+<button class="btn" onclick="addReview()">Submit</button>
+</div>
+
+</section>
+
+<!-- WHATSAPP -->
+<a class="whatsapp-btn" href="https://wa.me/254726718968">💬</a>
+
+<!-- ADMIN -->
+<div id="admin-panel">
+
+<h2>Admin Dashboard</h2>
+<button onclick="closeAdmin()">Close</button>
+
+<h3>Analytics</h3>
+<div id="analytics"></div>
+
+<h3>Orders</h3>
+<div id="orders"></div>
+
+</div>
+
+<script>
+
+/* ================= DATA ================= */
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+
+let currentCategory = "All";
+let quantities = {};
+
+/* ================= PRODUCTS ================= */
+let products = [
+{name:"Bitter Kola 60g",category:"Bitter Kola",price:600,image:"images/bitterkola-60g.jpg",desc:"Boost immunity & energy."},
+{name:"Bitter Kola 125g",category:"Bitter Kola",price:1100,image:"images/bitterkola-125g.jpg",desc:"Boost immunity & energy."},
+
+{name:"Almond 1kg",category:"Almond",price:2000,image:"images/almond-1kg.jpg",desc:"Good for brain & heart."},
+{name:"Almond 500g",category:"Almond",price:1200,image:"images/almond-500g.jpg",desc:"Good for brain & heart."},
+{name:"Almond 250g",category:"Almond",price:700,image:"images/almond-250g.jpg",desc:"Good for brain & heart."},
+
+{name:"Cashew 1kg",category:"Cashew",price:1800,image:"images/cashew-1kg.jpg",desc:"High protein snack."},
+{name:"Cashew 500g",category:"Cashew",price:1000,image:"images/cashew-500g.jpg",desc:"High protein snack."},
+{name:"Cashew 250g",category:"Cashew",price:600,image:"images/cashew-250g.jpg",desc:"High protein snack."},
+
+{name:"Brazil Nuts 500g",category:"Brazil",price:3500,image:"images/brazil-500g.jpg",desc:"Rich in selenium."},
+{name:"Brazil Nuts 250g",category:"Brazil",price:1800,image:"images/brazil-250g.jpg",desc:"Rich in selenium."},
+{name:"Brazil Nuts 125g",category:"Brazil",price:950,image:"images/brazil-125g.jpg",desc:"Rich in selenium."}
+];
+
+/* ================= FILTER ================= */
+function filterProducts(cat){
+currentCategory=cat;
+renderProducts();
+}
+
+/* ================= RENDER ================= */
+function renderProducts(){
+
+let box=document.getElementById("product-list");
+box.innerHTML="";
+
+products.filter(p=>currentCategory==="All"||p.category===currentCategory)
+.forEach(p=>{
+
+if(!quantities[p.name]) quantities[p.name]=1;
+
+box.innerHTML+=`
+<div class="card">
+<img src="${p.image}">
+<div class="card-body">
+<h3>${p.name}</h3>
+<p>${p.desc}</p>
+<div class="price">KSh ${p.price}</div>
+
+<div>
+<button onclick="changeQty('${p.name}',-1)">-</button>
+${quantities[p.name]}
+<button onclick="changeQty('${p.name}',1)">+</button>
+</div>
+
+<button class="btn" onclick="addToCart('${p.name}')">Add</button>
+</div>
+</div>`;
+});
+}
+
+/* ================= QUANTITY ================= */
+function changeQty(name,val){
+quantities[name]+=val;
+if(quantities[name]<1)quantities[name]=1;
+renderProducts();
+}
+
+/* ================= CART ================= */
+function addToCart(name){
+
+let p=products.find(x=>x.name===name);
+let qty=quantities[name];
+
+for(let i=0;i<qty;i++) cart.push(p);
+
+localStorage.setItem("cart",JSON.stringify(cart));
+updateCart();
+}
+
+function updateCart(){
+
+document.getElementById("cart-count").innerText=cart.length;
+
+let grouped={};
+cart.forEach(c=>{
+grouped[c.name]=(grouped[c.name]||0)+1;
+});
+
+let box=document.getElementById("cart-items");
+box.innerHTML="";
+
+for(let i in grouped){
+let p=products.find(x=>x.name===i);
+box.innerHTML+=`<div>${i} x${grouped[i]} - KSh ${p.price*grouped[i]}</div>`;
+}
+}
+
+/* ================= CHECKOUT ================= */
+function checkout(){
+let msg="ORDER:%0A";
+cart.forEach(c=>msg+=c.name+"%0A");
+window.open("https://wa.me/254726718968?text="+msg);
+}
+
+/* ================= REVIEWS ================= */
+function addReview(){
+let n=document.getElementById("review-name").value;
+let t=document.getElementById("review-text").value;
+reviews.push({n,t});
+localStorage.setItem("reviews",JSON.stringify(reviews));
+renderReviews();
+}
+
+function renderReviews(){
+let box=document.getElementById("reviews");
+box.innerHTML="";
+reviews.forEach(r=>{
+box.innerHTML+=`<div class="review"><b>${r.n}</b><br>${r.t}</div>`;
+});
+}
+
+/* ================= ADMIN ================= */
+function openAdmin(){
+let p=prompt("Password:");
+if(p!=="Newtonohms@1")return;
+document.getElementById("admin-panel").style.display="block";
+}
+
+function closeAdmin(){
+document.getElementById("admin-panel").style.display="none";
+}
+
+/* ================= ANIMATION ================= */
+setInterval(()=>{
+let nut=document.createElement("div");
+nut.className="nut";
+nut.style.left=Math.random()*100+"vw";
+document.querySelector(".bg-animation").appendChild(nut);
+setTimeout(()=>nut.remove(),8000);
+},600);
+
+/* INIT */
+renderProducts();
+updateCart();
+renderReviews();
+
+</script>
+
+</body>
+</html>
