@@ -34,6 +34,14 @@ gap:20px;padding:20px;
 background:#1a1a1a;padding:15px;border-radius:10px;text-align:center;
 }
 
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:10px;
+}
+
 .btn{
 background:#25D366;border:none;padding:10px;color:#fff;
 width:100%;margin-top:10px;cursor:pointer;
@@ -78,6 +86,7 @@ background:#111;padding:10px;margin:10px 0;border-radius:10px;
 
 <section class="hero">
 <h1>Premium Nuts & Superfoods</h1>
+<p>Healthy • Natural • Delivered in Kenya</p>
 </section>
 
 <!-- PRODUCTS -->
@@ -136,28 +145,36 @@ projectId: "YOUR_PROJECT_ID"
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* PRODUCTS */
+/* PRODUCTS WITH LOCAL JPG IMAGES */
 let products=[
-{name:"Bitter Kola 60g",price:600},
-{name:"Bitter Kola 125g",price:1200},
-{name:"Almond 1kg",price:2000},
-{name:"Almond 500g",price:1200},
-{name:"Almond 250g",price:700},
-{name:"Cashew 1kg",price:1800},
-{name:"Cashew 500g",price:1000},
-{name:"Cashew 250g",price:600},
-{name:"Brazil Nuts 500g",price:3500},
-{name:"Brazil Nuts 250g",price:2000}
+
+{name:"Bitter Kola 60g",price:600,img:"images/bitterkola-60g.jpg"},
+{name:"Bitter Kola 125g",price:1200,img:"images/bitterkola-125g.jpg"},
+
+{name:"Almond 1kg",price:2000,img:"images/almond-1kg.jpg"},
+{name:"Almond 500g",price:1200,img:"images/almond-500g.jpg"},
+{name:"Almond 250g",price:700,img:"images/almond-250g.jpg"},
+
+{name:"Cashew 1kg",price:1800,img:"images/cashew-1kg.jpg"},
+{name:"Cashew 500g",price:1000,img:"images/cashew-500g.jpg"},
+{name:"Cashew 250g",price:600,img:"images/cashew-250g.jpg"},
+
+{name:"Brazil Nuts 500g",price:3500,img:"images/brazil-500g.jpg"},
+{name:"Brazil Nuts 250g",price:2000,img:"images/brazil-250g.jpg"},
+{name:"Brazil Nuts 125g",price:1200,img:"images/brazil-125g.jpg"}
+
 ];
 
 let cart=[];
 
-/* RENDER PRODUCTS */
+/* RENDER */
 function render(){
 let box=document.getElementById("products");
+box.innerHTML="";
 products.forEach(p=>{
 box.innerHTML+=`
 <div class="card">
+<img src="${p.img}">
 <h3>${p.name}</h3>
 <p>KSh ${p.price}</p>
 <button class="btn" onclick="addToCart('${p.name}')">Add</button>
@@ -195,10 +212,14 @@ updateCart();
 
 /* LOCATION */
 function getLocation(){
+if(navigator.geolocation){
 navigator.geolocation.getCurrentPosition(pos=>{
 document.getElementById("location").value =
 pos.coords.latitude+","+pos.coords.longitude;
 });
+}else{
+alert("Location not supported");
+}
 }
 
 /* CHECKOUT */
@@ -221,7 +242,7 @@ msg+=`${index+1}. ${i.name} - KSh ${i.price}%0A`;
 total+=i.price;
 });
 
-msg+=`Total: KSh ${total}`;
+msg+=`Total: KSh ${total}%0A🚚 Delivery fee depends on location`;
 
 /* SAVE ORDER */
 db.collection("orders").add({
@@ -239,12 +260,8 @@ updateCart();
 }
 
 /* TRACKING */
-function openTracking(){
-document.getElementById("tracking").style.display="block";
-}
-function closeTracking(){
-document.getElementById("tracking").style.display="none";
-}
+function openTracking(){tracking.style.display="block";}
+function closeTracking(){tracking.style.display="none";}
 
 function trackOrders(){
 let phone=document.getElementById("track-phone").value;
@@ -278,25 +295,21 @@ function openAdmin(){
 let pass=prompt("Password");
 if(pass!=="Newtonohms@1")return;
 
-document.getElementById("admin").style.display="block";
+admin.style.display="block";
 loadOrders();
 loadAnalytics();
 }
 
-function closeAdmin(){
-document.getElementById("admin").style.display="none";
-}
+function closeAdmin(){admin.style.display="none";}
 
-/* LOAD ORDERS */
+/* ORDERS */
 function loadOrders(){
 db.collection("orders").onSnapshot(snap=>{
-let box=document.getElementById("orders");
-box.innerHTML="";
-
+orders.innerHTML="";
 snap.forEach(doc=>{
 let d=doc.data();
 
-box.innerHTML+=`
+orders.innerHTML+=`
 <div class="order">
 <b>${d.customer.name}</b><br>
 ${d.customer.phone}<br>
@@ -326,18 +339,18 @@ db.collection("orders").doc(id).update({status});
 function loadAnalytics(){
 db.collection("orders").onSnapshot(snap=>{
 let today=new Date().toISOString().slice(0,10);
-let orders=0,revenue=0;
+let ordersCount=0,revenue=0;
 
 snap.forEach(doc=>{
 let d=doc.data();
 if(d.date.startsWith(today)){
-orders++;
+ordersCount++;
 revenue+=d.total;
 }
 });
 
-document.getElementById("analytics").innerHTML=
-`Orders Today: ${orders}<br>Revenue: KSh ${revenue}`;
+analytics.innerHTML=
+`Orders Today: ${ordersCount}<br>Revenue: KSh ${revenue}`;
 });
 }
 
