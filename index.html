@@ -3,269 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Flofentry Foods | Premium Nuts Store</title>
+<title>Flofentry Foods | Premium Nuts Kenya</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<!-- FIREBASE (ONLY DATABASE) -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <style>
-
-/* ===== BASE ===== */
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
-body{background:#f7f7f7;}
+body{background:#0f0f0f;color:#fff;}
 
-/* ===== TOP BAR ===== */
-.topbar{
-  background:#0f4c81;
-  color:#fff;
-  display:flex;
-  justify-content:space-between;
-  padding:6px 20px;
-  font-size:14px;
-}
-
-/* ===== HEADER ===== */
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 20px;
-  background:#fff;
+display:flex;justify-content:space-between;align-items:center;
+padding:15px;background:#000;
 }
 
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+nav a{color:#fff;margin-left:15px;text-decoration:none;}
 
-.search{
-  width:40%;
-  display:flex;
-}
+.hero{text-align:center;padding:60px;background:#111;}
 
-.search input{
-  width:100%;
-  padding:10px;
-  border:1px solid #ccc;
-}
-
-.search button{
-  padding:10px;
-  background:#0f4c81;
-  color:#fff;
-  border:none;
-}
-
-.cart{
-  background:#eee;
-  padding:10px;
-  border-radius:6px;
-}
-
-/* ===== NAVBAR ===== */
-.navbar{
-  background:#0f4c81;
-  padding:12px;
-}
-.navbar a{
-  color:#fff;
-  margin:10px;
-  text-decoration:none;
-}
-
-/* ===== HERO ===== */
-.hero{
-  text-align:center;
-  padding:60px;
-  background:#fff;
-}
-
-/* ===== PRODUCTS ===== */
 .products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-  padding:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;padding:20px;
 }
 
 .card{
-  background:#fff;
-  padding:10px;
-  border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
-
-.card img{
-  width:100%;
-  height:160px;
-  object-fit:cover;
+background:#1a1a1a;padding:15px;border-radius:10px;text-align:center;
 }
 
 .btn{
-  width:100%;
-  padding:10px;
-  background:#25D366;
-  color:#fff;
-  border:none;
-  margin-top:10px;
-  cursor:pointer;
+background:#25D366;border:none;padding:10px;color:#fff;
+width:100%;margin-top:10px;cursor:pointer;
 }
 
-/* ===== CART BOX ===== */
-#cartBox{
-  padding:20px;
+#cart-box{
+max-width:400px;margin:20px auto;background:#111;
+padding:15px;border-radius:10px;
 }
 
-/* ===== FOOTER ===== */
-footer{
-  background:#0f4c81;
-  color:#fff;
-  padding:40px;
+input{
+width:100%;padding:8px;margin:5px 0;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:20px;
-}
-
-/* ===== ADMIN ===== */
-#admin{
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:#111;
-  color:#fff;
-  overflow:auto;
-  padding:20px;
-  z-index:9999;
+/* PANELS */
+#admin,#tracking{
+display:none;
+position:fixed;top:0;left:0;width:100%;height:100%;
+background:#000;padding:20px;overflow:auto;z-index:9999;
 }
 
 .order{
-  background:#222;
-  margin:10px 0;
-  padding:10px;
-  border-radius:8px;
+background:#111;padding:10px;margin:10px 0;border-radius:10px;
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-<div>🚚 Free delivery over KSh 3000</div>
-<div onclick="openAdmin()">Admin</div>
-</div>
-
-<!-- HEADER -->
 <header>
-<div class="logo">
-<img src="images/logo.jpg" height="40">
-<b>FLOFENTRY FOODS</b>
-</div>
+<h2>Flofentry Foods</h2>
 
-<div class="search">
-<input placeholder="Search products...">
-<button>🔍</button>
-</div>
+<nav>
+<a href="#">Home</a>
+<a href="#products">Products</a>
+<a href="#" onclick="openTracking()">Track Order</a>
+<a href="#" onclick="openAdmin()">Admin</a>
+</nav>
 
-<div class="cart">🛒 <span id="count">0</span></div>
+<div>🛒 <span id="cart-count">0</span></div>
 </header>
 
-<!-- NAV -->
-<div class="navbar">
-<a href="#">Home</a>
-<a href="#products">Shop</a>
-<a href="#">Offers</a>
-<a href="#">Contact</a>
-</div>
-
-<!-- HERO -->
-<div class="hero">
+<section class="hero">
 <h1>Premium Nuts & Superfoods</h1>
-<p>Healthy • Natural • Fresh</p>
-</div>
+</section>
 
 <!-- PRODUCTS -->
-<div class="products" id="products"></div>
+<section id="products" class="products"></section>
 
-<!-- CART -->
-<div id="cartBox">
-<h3>Cart</h3>
-<div id="cartItems"></div>
-<button class="btn" onclick="checkout()">Checkout</button>
+<!-- CUSTOMER FORM + CART -->
+<div id="cart-box">
+
+<h3>Customer Details</h3>
+<input id="name" placeholder="Full Name">
+<input id="phone" placeholder="Phone Number">
+<input id="location" placeholder="Delivery Location">
+
+<button class="btn" onclick="getLocation()">📍 Auto Detect Location</button>
+
+<h3>Your Cart</h3>
+<div id="cart-items"></div>
+
+<h3>Total: KSh <span id="total">0</span></h3>
+
+<button class="btn" onclick="checkout()">Order via WhatsApp</button>
 </div>
 
-<!-- FOOTER -->
-<footer>
-<div class="grid">
+<!-- TRACKING PANEL -->
+<div id="tracking">
+<h2>Track Your Order</h2>
+<button onclick="closeTracking()">Close</button>
 
-<div>
-<h3>Quick Links</h3>
-<p>About</p>
-<p>Delivery</p>
+<input id="track-phone" placeholder="Enter Phone Number">
+<button class="btn" onclick="trackOrders()">Track</button>
+
+<div id="track-results"></div>
 </div>
 
-<div>
-<h3>Contact</h3>
-<p>WhatsApp: 0716 250 250</p>
-<p>Email: flofentry@gmail.com</p>
-</div>
-
-<div>
-<h3>Newsletter</h3>
-<input placeholder="Email">
-</div>
-
-</div>
-</footer>
-
-<!-- ADMIN -->
+<!-- ADMIN PANEL -->
 <div id="admin">
 <h2>Admin Dashboard</h2>
 <button onclick="closeAdmin()">Close</button>
+
+<h3>📊 Daily Analytics</h3>
+<div id="analytics"></div>
+
+<h3>Orders</h3>
 <div id="orders"></div>
 </div>
 
 <script>
 
-/* ===== FIREBASE ===== */
+/* FIREBASE */
 const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
+apiKey: "YOUR_KEY",
+authDomain: "YOUR_PROJECT.firebaseapp.com",
+projectId: "YOUR_PROJECT_ID"
 };
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* ===== PRODUCTS ===== */
-let products = [
-{name:"Cashew 500g",price:1000,image:"images/cashew.jpg"},
-{name:"Almond 500g",price:1200,image:"images/almond.jpg"},
-{name:"Bitter Kola 125g",price:1100,image:"images/kola.jpg"}
+/* PRODUCTS */
+let products=[
+{name:"Bitter Kola 60g",price:600},
+{name:"Bitter Kola 125g",price:1200},
+{name:"Almond 1kg",price:2000},
+{name:"Almond 500g",price:1200},
+{name:"Almond 250g",price:700},
+{name:"Cashew 1kg",price:1800},
+{name:"Cashew 500g",price:1000},
+{name:"Cashew 250g",price:600},
+{name:"Brazil Nuts 500g",price:3500},
+{name:"Brazil Nuts 250g",price:2000}
 ];
 
 let cart=[];
 
-/* ===== RENDER PRODUCTS ===== */
+/* RENDER PRODUCTS */
 function render(){
 let box=document.getElementById("products");
-box.innerHTML="";
 products.forEach(p=>{
 box.innerHTML+=`
 <div class="card">
-<img src="${p.image}">
 <h3>${p.name}</h3>
 <p>KSh ${p.price}</p>
 <button class="btn" onclick="addToCart('${p.name}')">Add</button>
@@ -273,71 +165,130 @@ box.innerHTML+=`
 });
 }
 
-/* ===== ADD TO CART ===== */
+/* CART */
 function addToCart(name){
 let p=products.find(x=>x.name===name);
 cart.push(p);
 updateCart();
 }
 
-/* ===== UPDATE CART ===== */
 function updateCart(){
-document.getElementById("count").innerText=cart.length;
-
-let box=document.getElementById("cartItems");
+let box=document.getElementById("cart-items");
 box.innerHTML="";
+let total=0;
 
-let grouped={};
-cart.forEach(c=>{
-grouped[c.name]=(grouped[c.name]||0)+1;
+cart.forEach((i,index)=>{
+total+=i.price;
+box.innerHTML+=`
+${i.name} - ${i.price}
+<button onclick="removeItem(${index})">X</button><br>`;
 });
 
-for(let i in grouped){
-let p=products.find(x=>x.name===i);
-box.innerHTML+=<div>${i} x${grouped[i]} - KSh ${p.price*grouped[i]}</div>;
-}
+document.getElementById("cart-count").innerText=cart.length;
+document.getElementById("total").innerText=total;
 }
 
-/* ===== CHECKOUT ===== */
+function removeItem(i){
+cart.splice(i,1);
+updateCart();
+}
+
+/* LOCATION */
+function getLocation(){
+navigator.geolocation.getCurrentPosition(pos=>{
+document.getElementById("location").value =
+pos.coords.latitude+","+pos.coords.longitude;
+});
+}
+
+/* CHECKOUT */
 function checkout(){
 
-if(cart.length===0){
-alert("Cart is empty");
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let location=document.getElementById("location").value;
+
+if(!name||!phone||!location||cart.length===0){
+alert("Fill all fields");
 return;
 }
 
-db.collection("orders").add({
-items:cart,
-date:new Date().toLocaleString(),
-status:"New"
+let total=0;
+let msg=`Hello Flofentry Foods,%0AName:${name}%0APhone:${phone}%0ALocation:${location}%0A%0A`;
+
+cart.forEach((i,index)=>{
+msg+=`${index+1}. ${i.name} - KSh ${i.price}%0A`;
+total+=i.price;
 });
 
-alert("Order placed successfully!");
+msg+=`Total: KSh ${total}`;
+
+/* SAVE ORDER */
+db.collection("orders").add({
+customer:{name,phone,location},
+items:cart,
+total,
+status:"Pending",
+date:new Date().toISOString()
+});
+
+window.open("https://wa.me/254726718968?text="+msg);
+
 cart=[];
 updateCart();
 }
 
-/* ===== ADMIN ACCESS ===== */
-function openAdmin(){
+/* TRACKING */
+function openTracking(){
+document.getElementById("tracking").style.display="block";
+}
+function closeTracking(){
+document.getElementById("tracking").style.display="none";
+}
 
-let pass=prompt("Enter Admin Password");
+function trackOrders(){
+let phone=document.getElementById("track-phone").value;
 
-if(pass!=="Newtonohms@1"){
-alert("Access denied");
+db.collection("orders")
+.where("customer.phone","==",phone)
+.onSnapshot(snap=>{
+let box=document.getElementById("track-results");
+box.innerHTML="";
+
+if(snap.empty){
+box.innerHTML="No orders found";
 return;
 }
 
+snap.forEach(doc=>{
+let d=doc.data();
+
+box.innerHTML+=`
+<div class="order">
+Status: ${d.status}<br>
+Total: KSh ${d.total}<br>
+${d.items.map(i=>i.name).join("<br>")}
+</div>`;
+});
+});
+}
+
+/* ADMIN */
+function openAdmin(){
+let pass=prompt("Password");
+if(pass!=="Newtonohms@1")return;
+
 document.getElementById("admin").style.display="block";
 loadOrders();
+loadAnalytics();
 }
 
 function closeAdmin(){
 document.getElementById("admin").style.display="none";
 }
 
-/* ===== LOAD ORDERS ===== */
+/* LOAD ORDERS */
 function loadOrders(){
-
 db.collection("orders").onSnapshot(snap=>{
 let box=document.getElementById("orders");
 box.innerHTML="";
@@ -347,15 +298,49 @@ let d=doc.data();
 
 box.innerHTML+=`
 <div class="order">
+<b>${d.customer.name}</b><br>
+${d.customer.phone}<br>
+${d.customer.location}<br><br>
+
 ${d.items.map(i=>i.name).join("<br>")}
-<br><small>${d.date}</small>
+
+<br>Total: ${d.total}
+<br>Status: ${d.status}
+
+<select onchange="updateStatus('${doc.id}',this.value)">
+<option ${d.status=="Pending"?"selected":""}>Pending</option>
+<option ${d.status=="Paid"?"selected":""}>Paid</option>
+<option ${d.status=="Delivered"?"selected":""}>Delivered</option>
+</select>
+
 </div>`;
 });
 });
-
 }
 
-/* INIT */
+function updateStatus(id,status){
+db.collection("orders").doc(id).update({status});
+}
+
+/* ANALYTICS */
+function loadAnalytics(){
+db.collection("orders").onSnapshot(snap=>{
+let today=new Date().toISOString().slice(0,10);
+let orders=0,revenue=0;
+
+snap.forEach(doc=>{
+let d=doc.data();
+if(d.date.startsWith(today)){
+orders++;
+revenue+=d.total;
+}
+});
+
+document.getElementById("analytics").innerHTML=
+`Orders Today: ${orders}<br>Revenue: KSh ${revenue}`;
+});
+}
+
 render();
 
 </script>
