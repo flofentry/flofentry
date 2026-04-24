@@ -20,6 +20,14 @@ display:flex;justify-content:space-between;align-items:center;
 padding:15px;background:#000;
 }
 
+.logo{
+display:flex;align-items:center;gap:10px;
+}
+
+.logo img{
+height:45px;
+}
+
 nav a{color:#fff;margin-left:15px;text-decoration:none;}
 
 .hero{text-align:center;padding:60px;background:#111;}
@@ -66,22 +74,41 @@ background:#000;padding:20px;overflow:auto;z-index:9999;
 .order{
 background:#111;padding:10px;margin:10px 0;border-radius:10px;
 }
+
+/* FOOTER */
+footer{
+background:#000;
+padding:30px;
+text-align:center;
+margin-top:40px;
+}
+
+footer a{
+color:#25D366;
+text-decoration:none;
+}
 </style>
 </head>
 
 <body>
 
 <header>
+
+<div class="logo">
+<img src="images/logo.jpg">
 <h2>Flofentry Foods</h2>
+</div>
 
 <nav>
 <a href="#">Home</a>
 <a href="#products">Products</a>
 <a href="#" onclick="openTracking()">Track Order</a>
+<a href="#contact">Contact</a>
 <a href="#" onclick="openAdmin()">Admin</a>
 </nav>
 
 <div>🛒 <span id="cart-count">0</span></div>
+
 </header>
 
 <section class="hero">
@@ -110,6 +137,14 @@ background:#111;padding:10px;margin:10px 0;border-radius:10px;
 <button class="btn" onclick="checkout()">Order via WhatsApp</button>
 </div>
 
+<!-- CONTACT -->
+<section id="contact" style="text-align:center;padding:40px;">
+<h2>Contact Us</h2>
+<p>📞 <a href="https://wa.me/254726718968">+254 726 718 968</a></p>
+<p>📧 <a href="mailto:flofrenry@gmail.com">flofrenry@gmail.com</a></p>
+<p>🚚 Delivery available at a small fee depending on location</p>
+</section>
+
 <!-- TRACKING PANEL -->
 <div id="tracking">
 <h2>Track Your Order</h2>
@@ -133,9 +168,18 @@ background:#111;padding:10px;margin:10px 0;border-radius:10px;
 <div id="orders"></div>
 </div>
 
+<!-- FOOTER -->
+<footer>
+<p>© 2026 Flofentry Foods</p>
+<p>
+📞 <a href="https://wa.me/254726718968">+254726718968</a> |
+📧 <a href="mailto:flofrenry@gmail.com">flofrenry@gmail.com</a>
+</p>
+</footer>
+
 <script>
 
-/* FIREBASE */
+/* FIREBASE CONFIG */
 const firebaseConfig = {
 apiKey: "YOUR_KEY",
 authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -145,9 +189,8 @@ projectId: "YOUR_PROJECT_ID"
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* PRODUCTS WITH LOCAL JPG IMAGES */
+/* PRODUCTS */
 let products=[
-
 {name:"Bitter Kola 60g",price:600,img:"images/bitterkola-60g.jpg"},
 {name:"Bitter Kola 125g",price:1200,img:"images/bitterkola-125g.jpg"},
 
@@ -162,7 +205,6 @@ let products=[
 {name:"Brazil Nuts 500g",price:3500,img:"images/brazil-500g.jpg"},
 {name:"Brazil Nuts 250g",price:2000,img:"images/brazil-250g.jpg"},
 {name:"Brazil Nuts 125g",price:1200,img:"images/brazil-125g.jpg"}
-
 ];
 
 let cart=[];
@@ -212,14 +254,10 @@ updateCart();
 
 /* LOCATION */
 function getLocation(){
-if(navigator.geolocation){
 navigator.geolocation.getCurrentPosition(pos=>{
 document.getElementById("location").value =
 pos.coords.latitude+","+pos.coords.longitude;
 });
-}else{
-alert("Location not supported");
-}
 }
 
 /* CHECKOUT */
@@ -244,7 +282,6 @@ total+=i.price;
 
 msg+=`Total: KSh ${total}%0A🚚 Delivery fee depends on location`;
 
-/* SAVE ORDER */
 db.collection("orders").add({
 customer:{name,phone,location},
 items:cart,
