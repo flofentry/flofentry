@@ -7,129 +7,183 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
 body{background:#0f0f0f;color:#fff;}
+
+section{padding:60px 20px;max-width:1200px;margin:auto;}
 
 header{
 display:flex;justify-content:space-between;align-items:center;
-padding:15px;background:#000;
+padding:15px 30px;background:#000;position:sticky;top:0;
 }
 
-.logo{
-display:flex;align-items:center;gap:10px;
+.logo{display:flex;align-items:center;gap:10px;}
+.logo img{height:45px;}
+
+nav a{color:#fff;margin-left:20px;text-decoration:none;}
+
+.hero{padding:20px;}
+.slider{
+position:relative;height:400px;overflow:hidden;border-radius:10px;
 }
 
-.logo img{
-height:45px;
+.slide{
+position:absolute;width:100%;height:100%;
+background-size:cover;background-position:center;
+opacity:0;transition:1s;
+display:flex;flex-direction:column;justify-content:center;align-items:center;
 }
 
-nav a{color:#fff;margin-left:15px;text-decoration:none;}
+.slide.active{opacity:1;}
 
-.hero{text-align:center;padding:60px;background:#111;}
+.slide h1{
+background:rgba(0,0,0,0.6);padding:10px;border-radius:5px;
+}
 
+.slide p{
+background:rgba(0,0,0,0.6);padding:5px;border-radius:5px;
+margin-top:10px;
+}
+
+/* TRUST */
+.trust{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;text-align:center;
+}
+
+.trust div{background:#1a1a1a;padding:20px;border-radius:10px;}
+
+/* PRODUCTS */
 .products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;padding:20px;
+display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
 }
 
 .card{
 background:#1a1a1a;padding:15px;border-radius:10px;text-align:center;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-8px) scale(1.02);
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
 }
 
 .card img{
-width:100%;
-height:160px;
-object-fit:cover;
-border-radius:10px;
-margin-bottom:10px;
+width:100%;height:160px;object-fit:cover;border-radius:10px;
+transition:0.4s;
 }
+
+.card:hover img{transform:scale(1.1);}
 
 .btn{
-background:#25D366;border:none;padding:10px;color:#fff;
-width:100%;margin-top:10px;cursor:pointer;
+background:#25D366;border:none;padding:10px;color:#fff;width:100%;cursor:pointer;
+transition:0.3s;border-radius:5px;
 }
 
+.btn:hover{background:#1ebe5d;}
+
+/* STEPS */
+.steps{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;text-align:center;
+}
+
+.steps div{background:#1a1a1a;padding:20px;border-radius:10px;}
+
+/* CART */
 #cart-box{
-max-width:400px;margin:20px auto;background:#111;
-padding:15px;border-radius:10px;
+max-width:500px;margin:40px auto;background:#111;padding:20px;border-radius:10px;
 }
 
-input{
-width:100%;padding:8px;margin:5px 0;
-}
+input{width:100%;padding:10px;margin:5px 0;}
 
-/* PANELS */
 #admin,#tracking{
-display:none;
-position:fixed;top:0;left:0;width:100%;height:100%;
+display:none;position:fixed;top:0;left:0;width:100%;height:100%;
 background:#000;padding:20px;overflow:auto;z-index:9999;
 }
 
-.order{
-background:#111;padding:10px;margin:10px 0;border-radius:10px;
-}
+.order{background:#111;padding:10px;margin:10px 0;border-radius:10px;}
 
-/* FOOTER */
-footer{
-background:#000;
-padding:30px;
-text-align:center;
-margin-top:40px;
-}
-
-footer a{
-color:#25D366;
-text-decoration:none;
-}
+footer{background:#000;padding:40px;text-align:center;}
 </style>
 </head>
 
 <body>
 
 <header>
-
 <div class="logo">
 <img src="images/logo.jpg">
-<h2>Flofentry Foods</h2>
+<h2>Flofentry</h2>
 </div>
 
 <nav>
 <a href="#">Home</a>
 <a href="#products">Products</a>
-<a href="#" onclick="openTracking()">Track Order</a>
+<a href="#" onclick="openTracking()">Track</a>
 <a href="#contact">Contact</a>
 <a href="#" onclick="openAdmin()">Admin</a>
 </nav>
 
 <div>🛒 <span id="cart-count">0</span></div>
-
 </header>
 
+<!-- HERO -->
 <section class="hero">
-<h1>Premium Nuts & Superfoods</h1>
-<p>Healthy • Natural • Delivered in Kenya</p>
+<div class="slider">
+<div class="slide active" style="background-image:url('images/almond-1kg.jpg')">
+<h1>Premium Almonds</h1><p>Healthy & Fresh</p>
+</div>
+<div class="slide" style="background-image:url('images/cashew-1kg.jpg')">
+<h1>Fresh Cashews</h1><p>Rich Taste</p>
+</div>
+<div class="slide" style="background-image:url('images/brazil-500g.jpg')">
+<h1>Brazil Nuts</h1><p>Superfood Energy</p>
+</div>
+</div>
+</section>
+
+<!-- TRUST -->
+<section>
+<h2>Why Choose Us</h2>
+<div class="trust">
+<div>🚚 Fast Delivery</div>
+<div>🌿 Organic</div>
+<div>🔒 Secure</div>
+<div>📦 Fresh</div>
+</div>
 </section>
 
 <!-- PRODUCTS -->
-<section id="products" class="products"></section>
+<section id="products">
+<h2>Products</h2>
+<div class="products" id="products-list"></div>
+</section>
 
-<!-- CUSTOMER FORM + CART -->
+<!-- STEPS -->
+<section>
+<h2>How It Works</h2>
+<div class="steps">
+<div>1️⃣ Select</div>
+<div>2️⃣ Order</div>
+<div>3️⃣ Delivery</div>
+</div>
+</section>
+
+<!-- CART -->
 <div id="cart-box">
-
 <h3>Customer Details</h3>
-<input id="name" placeholder="Full Name">
-<input id="phone" placeholder="Phone Number">
-<input id="location" placeholder="Delivery Location">
+<input id="name" placeholder="Name">
+<input id="phone" placeholder="Phone">
+<input id="location" placeholder="Location">
 
-<button class="btn" onclick="getLocation()">📍 Auto Detect Location</button>
+<button class="btn" onclick="getLocation()">📍 Auto Detect</button>
 
-<h3>Your Cart</h3>
+<h3>Cart</h3>
 <div id="cart-items"></div>
 
 <h3>Total: KSh <span id="total">0</span></h3>
@@ -138,70 +192,54 @@ text-decoration:none;
 </div>
 
 <!-- CONTACT -->
-<section id="contact" style="text-align:center;padding:40px;">
-<h2>Contact Us</h2>
-<p>📞 <a href="https://wa.me/254726718968">+254 726 718 968</a></p>
-<p>📧 <a href="mailto:flofrenry@gmail.com">flofrenry@gmail.com</a></p>
-<p>🚚 Delivery available at a small fee depending on location</p>
+<section id="contact">
+<h2>Contact</h2>
+<p>📞 <a href="https://wa.me/254726718968">+254726718968</a></p>
+<p>📧 flofrenry@gmail.com</p>
 </section>
 
-<!-- TRACKING PANEL -->
+<!-- TRACK -->
 <div id="tracking">
-<h2>Track Your Order</h2>
+<h2>Track Order</h2>
 <button onclick="closeTracking()">Close</button>
-
-<input id="track-phone" placeholder="Enter Phone Number">
+<input id="track-phone" placeholder="Phone">
 <button class="btn" onclick="trackOrders()">Track</button>
-
 <div id="track-results"></div>
 </div>
 
-<!-- ADMIN PANEL -->
+<!-- ADMIN -->
 <div id="admin">
-<h2>Admin Dashboard</h2>
+<h2>Admin</h2>
 <button onclick="closeAdmin()">Close</button>
-
-<h3>📊 Daily Analytics</h3>
 <div id="analytics"></div>
-
-<h3>Orders</h3>
 <div id="orders"></div>
 </div>
 
-<!-- FOOTER -->
 <footer>
 <p>© 2026 Flofentry Foods</p>
-<p>
-📞 <a href="https://wa.me/254726718968">+254726718968</a> |
-📧 <a href="mailto:flofrenry@gmail.com">flofrenry@gmail.com</a>
-</p>
 </footer>
 
 <script>
 
-/* FIREBASE CONFIG */
-const firebaseConfig = {
-apiKey: "YOUR_KEY",
-authDomain: "YOUR_PROJECT.firebaseapp.com",
-projectId: "YOUR_PROJECT_ID"
+/* FIREBASE */
+const firebaseConfig={
+apiKey:"YOUR_KEY",
+authDomain:"YOUR_PROJECT.firebaseapp.com",
+projectId:"YOUR_PROJECT_ID"
 };
-
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const db=firebase.firestore();
 
 /* PRODUCTS */
 let products=[
 {name:"Bitter Kola 60g",price:600,img:"images/bitterkola-60g.jpg"},
 {name:"Bitter Kola 125g",price:1200,img:"images/bitterkola-125g.jpg"},
-
 {name:"Almond 1kg",price:2000,img:"images/almond-1kg.jpg"},
 {name:"Almond 500g",price:1200,img:"images/almond-500g.jpg"},
 {name:"Almond 250g",price:700,img:"images/almond-250g.jpg"},
-
 {name:"Cashew 1kg",price:1800,img:"images/cashew-1kg.jpg"},
 {name:"Cashew 500g",price:1000,img:"images/cashew-500g.jpg"},
 {name:"Cashew 250g",price:600,img:"images/cashew-250g.jpg"},
-
 {name:"Brazil Nuts 500g",price:3500,img:"images/brazil-500g.jpg"},
 {name:"Brazil Nuts 250g",price:2000,img:"images/brazil-250g.jpg"},
 {name:"Brazil Nuts 125g",price:1200,img:"images/brazil-125g.jpg"}
@@ -211,7 +249,7 @@ let cart=[];
 
 /* RENDER */
 function render(){
-let box=document.getElementById("products");
+let box=document.getElementById("products-list");
 box.innerHTML="";
 products.forEach(p=>{
 box.innerHTML+=`
@@ -226,8 +264,7 @@ box.innerHTML+=`
 
 /* CART */
 function addToCart(name){
-let p=products.find(x=>x.name===name);
-cart.push(p);
+cart.push(products.find(p=>p.name===name));
 updateCart();
 }
 
@@ -238,9 +275,7 @@ let total=0;
 
 cart.forEach((i,index)=>{
 total+=i.price;
-box.innerHTML+=`
-${i.name} - ${i.price}
-<button onclick="removeItem(${index})">X</button><br>`;
+box.innerHTML+=`${i.name} - ${i.price} <button onclick="removeItem(${index})">X</button><br>`;
 });
 
 document.getElementById("cart-count").innerText=cart.length;
@@ -255,141 +290,67 @@ updateCart();
 /* LOCATION */
 function getLocation(){
 navigator.geolocation.getCurrentPosition(pos=>{
-document.getElementById("location").value =
-pos.coords.latitude+","+pos.coords.longitude;
+location.value=pos.coords.latitude+","+pos.coords.longitude;
 });
 }
 
 /* CHECKOUT */
 function checkout(){
-
-let name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
-let location=document.getElementById("location").value;
-
-if(!name||!phone||!location||cart.length===0){
-alert("Fill all fields");
-return;
-}
+let name=name.value,phone=phone.value,loc=location.value;
+if(!name||!phone||!loc||cart.length===0)return alert("Fill all");
 
 let total=0;
-let msg=`Hello Flofentry Foods,%0AName:${name}%0APhone:${phone}%0ALocation:${location}%0A%0A`;
+let msg=`Order:%0AName:${name}%0APhone:${phone}%0ALocation:${loc}%0A`;
 
-cart.forEach((i,index)=>{
-msg+=`${index+1}. ${i.name} - KSh ${i.price}%0A`;
+cart.forEach(i=>{
+msg+=`${i.name} - ${i.price}%0A`;
 total+=i.price;
 });
 
-msg+=`Total: KSh ${total}%0A🚚 Delivery fee depends on location`;
+msg+=`Total: ${total}`;
 
 db.collection("orders").add({
-customer:{name,phone,location},
-items:cart,
-total,
-status:"Pending",
-date:new Date().toISOString()
+customer:{name,phone,location:loc},
+items:cart,total,status:"Pending",date:new Date().toISOString()
 });
 
 window.open("https://wa.me/254726718968?text="+msg);
 
-cart=[];
-updateCart();
+cart=[];updateCart();
 }
 
-/* TRACKING */
+/* SLIDER */
+let slides=document.querySelectorAll(".slide");
+let i=0;
+setInterval(()=>{
+slides.forEach(s=>s.classList.remove("active"));
+i=(i+1)%slides.length;
+slides[i].classList.add("active");
+},4000);
+
+/* TRACK */
 function openTracking(){tracking.style.display="block";}
 function closeTracking(){tracking.style.display="none";}
 
 function trackOrders(){
 let phone=document.getElementById("track-phone").value;
 
-db.collection("orders")
-.where("customer.phone","==",phone)
+db.collection("orders").where("customer.phone","==",phone)
 .onSnapshot(snap=>{
-let box=document.getElementById("track-results");
-box.innerHTML="";
-
-if(snap.empty){
-box.innerHTML="No orders found";
-return;
-}
-
+track-results.innerHTML="";
 snap.forEach(doc=>{
 let d=doc.data();
-
-box.innerHTML+=`
-<div class="order">
-Status: ${d.status}<br>
-Total: KSh ${d.total}<br>
-${d.items.map(i=>i.name).join("<br>")}
-</div>`;
+track-results.innerHTML+=`<div class="order">${d.status} - KSh ${d.total}</div>`;
 });
 });
 }
 
 /* ADMIN */
 function openAdmin(){
-let pass=prompt("Password");
-if(pass!=="Newtonohms@1")return;
-
+if(prompt("Password")!=="Newtonohms@1")return;
 admin.style.display="block";
-loadOrders();
-loadAnalytics();
 }
-
 function closeAdmin(){admin.style.display="none";}
-
-/* ORDERS */
-function loadOrders(){
-db.collection("orders").onSnapshot(snap=>{
-orders.innerHTML="";
-snap.forEach(doc=>{
-let d=doc.data();
-
-orders.innerHTML+=`
-<div class="order">
-<b>${d.customer.name}</b><br>
-${d.customer.phone}<br>
-${d.customer.location}<br><br>
-
-${d.items.map(i=>i.name).join("<br>")}
-
-<br>Total: ${d.total}
-<br>Status: ${d.status}
-
-<select onchange="updateStatus('${doc.id}',this.value)">
-<option ${d.status=="Pending"?"selected":""}>Pending</option>
-<option ${d.status=="Paid"?"selected":""}>Paid</option>
-<option ${d.status=="Delivered"?"selected":""}>Delivered</option>
-</select>
-
-</div>`;
-});
-});
-}
-
-function updateStatus(id,status){
-db.collection("orders").doc(id).update({status});
-}
-
-/* ANALYTICS */
-function loadAnalytics(){
-db.collection("orders").onSnapshot(snap=>{
-let today=new Date().toISOString().slice(0,10);
-let ordersCount=0,revenue=0;
-
-snap.forEach(doc=>{
-let d=doc.data();
-if(d.date.startsWith(today)){
-ordersCount++;
-revenue+=d.total;
-}
-});
-
-analytics.innerHTML=
-`Orders Today: ${ordersCount}<br>Revenue: KSh ${revenue}`;
-});
-}
 
 render();
 
