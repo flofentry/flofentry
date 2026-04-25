@@ -12,13 +12,12 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
-body{background:#0f0f0f;color:#fff;}
-
+body{background:#0f0f0f;color:#fff;line-height:1.6;}
 section{padding:60px 20px;max-width:1200px;margin:auto;}
 
 header{
 display:flex;justify-content:space-between;align-items:center;
-padding:15px 30px;background:#000;position:sticky;top:0;
+padding:15px 30px;background:#000;position:sticky;top:0;z-index:1000;
 }
 
 .logo{display:flex;align-items:center;gap:10px;}
@@ -27,8 +26,9 @@ padding:15px 30px;background:#000;position:sticky;top:0;
 nav a{color:#fff;margin-left:20px;text-decoration:none;}
 
 .hero{padding:20px;}
+
 .slider{
-position:relative;height:400px;overflow:hidden;border-radius:10px;
+position:relative;height:420px;overflow:hidden;border-radius:12px;
 }
 
 .slide{
@@ -36,17 +36,20 @@ position:absolute;width:100%;height:100%;
 background-size:cover;background-position:center;
 opacity:0;transition:1s;
 display:flex;flex-direction:column;justify-content:center;align-items:center;
+text-align:center;
 }
 
 .slide.active{opacity:1;}
 
 .slide h1{
-background:rgba(0,0,0,0.6);padding:10px;border-radius:5px;
+font-size:2.5rem;
+background:rgba(0,0,0,0.6);
+padding:10px 20px;border-radius:6px;
 }
 
 .slide p{
-background:rgba(0,0,0,0.6);padding:5px;border-radius:5px;
-margin-top:10px;
+margin-top:10px;background:rgba(0,0,0,0.5);
+padding:6px 15px;border-radius:5px;
 }
 
 /* TRUST */
@@ -80,9 +83,12 @@ transition:0.4s;
 
 .card:hover img{transform:scale(1.1);}
 
+.card p{color:#bbb;font-size:14px;}
+
 .btn{
-background:#25D366;border:none;padding:10px;color:#fff;width:100%;cursor:pointer;
-transition:0.3s;border-radius:5px;
+background:#25D366;border:none;padding:10px;color:#fff;width:100%;
+cursor:pointer;border-radius:5px;margin-top:10px;
+transition:0.3s;
 }
 
 .btn:hover{background:#1ebe5d;}
@@ -102,6 +108,7 @@ max-width:500px;margin:40px auto;background:#111;padding:20px;border-radius:10px
 
 input{width:100%;padding:10px;margin:5px 0;}
 
+/* PANELS */
 #admin,#tracking{
 display:none;position:fixed;top:0;left:0;width:100%;height:100%;
 background:#000;padding:20px;overflow:auto;z-index:9999;
@@ -109,7 +116,11 @@ background:#000;padding:20px;overflow:auto;z-index:9999;
 
 .order{background:#111;padding:10px;margin:10px 0;border-radius:10px;}
 
-footer{background:#000;padding:40px;text-align:center;}
+footer{background:#000;padding:40px;text-align:center;margin-top:40px;}
+
+/* SCROLL ANIMATION */
+.fade{opacity:0;transform:translateY(20px);transition:0.8s;}
+.fade.show{opacity:1;transform:translateY(0);}
 </style>
 </head>
 
@@ -132,19 +143,9 @@ footer{background:#000;padding:40px;text-align:center;}
 <div>🛒 <span id="cart-count">0</span></div>
 </header>
 
-<!-- HERO -->
+<!-- HERO SLIDER -->
 <section class="hero">
-<div class="slider">
-<div class="slide active" style="background-image:url('images/almond-1kg.jpg')">
-<h1>Premium Almonds</h1><p>Healthy & Fresh</p>
-</div>
-<div class="slide" style="background-image:url('images/cashew-1kg.jpg')">
-<h1>Fresh Cashews</h1><p>Rich Taste</p>
-</div>
-<div class="slide" style="background-image:url('images/brazil-500g.jpg')">
-<h1>Brazil Nuts</h1><p>Superfood Energy</p>
-</div>
-</div>
+<div class="slider" id="product-slider"></div>
 </section>
 
 <!-- TRUST -->
@@ -154,22 +155,22 @@ footer{background:#000;padding:40px;text-align:center;}
 <div>🚚 Fast Delivery</div>
 <div>🌿 Organic</div>
 <div>🔒 Secure</div>
-<div>📦 Fresh</div>
+<div>📦 Fresh Packaging</div>
 </div>
 </section>
 
 <!-- PRODUCTS -->
 <section id="products">
-<h2>Products</h2>
+<h2>Our Products</h2>
 <div class="products" id="products-list"></div>
 </section>
 
-<!-- STEPS -->
+<!-- HOW -->
 <section>
 <h2>How It Works</h2>
 <div class="steps">
-<div>1️⃣ Select</div>
-<div>2️⃣ Order</div>
+<div>1️⃣ Choose Products</div>
+<div>2️⃣ Place Order</div>
 <div>3️⃣ Delivery</div>
 </div>
 </section>
@@ -177,13 +178,13 @@ footer{background:#000;padding:40px;text-align:center;}
 <!-- CART -->
 <div id="cart-box">
 <h3>Customer Details</h3>
-<input id="name" placeholder="Name">
-<input id="phone" placeholder="Phone">
-<input id="location" placeholder="Location">
+<input id="name" placeholder="Full Name">
+<input id="phone" placeholder="Phone Number">
+<input id="location" placeholder="Delivery Location">
 
-<button class="btn" onclick="getLocation()">📍 Auto Detect</button>
+<button class="btn" onclick="getLocation()">📍 Auto Detect Location</button>
 
-<h3>Cart</h3>
+<h3>Your Cart</h3>
 <div id="cart-items"></div>
 
 <h3>Total: KSh <span id="total">0</span></h3>
@@ -202,14 +203,14 @@ footer{background:#000;padding:40px;text-align:center;}
 <div id="tracking">
 <h2>Track Order</h2>
 <button onclick="closeTracking()">Close</button>
-<input id="track-phone" placeholder="Phone">
+<input id="track-phone" placeholder="Phone Number">
 <button class="btn" onclick="trackOrders()">Track</button>
 <div id="track-results"></div>
 </div>
 
 <!-- ADMIN -->
 <div id="admin">
-<h2>Admin</h2>
+<h2>Admin Dashboard</h2>
 <button onclick="closeAdmin()">Close</button>
 <div id="analytics"></div>
 <div id="orders"></div>
@@ -232,35 +233,57 @@ const db=firebase.firestore();
 
 /* PRODUCTS */
 let products=[
-{name:"Bitter Kola 60g",price:600,img:"images/bitterkola-60g.jpg"},
-{name:"Bitter Kola 125g",price:1200,img:"images/bitterkola-125g.jpg"},
-{name:"Almond 1kg",price:2000,img:"images/almond-1kg.jpg"},
-{name:"Almond 500g",price:1200,img:"images/almond-500g.jpg"},
-{name:"Almond 250g",price:700,img:"images/almond-250g.jpg"},
-{name:"Cashew 1kg",price:1800,img:"images/cashew-1kg.jpg"},
-{name:"Cashew 500g",price:1000,img:"images/cashew-500g.jpg"},
-{name:"Cashew 250g",price:600,img:"images/cashew-250g.jpg"},
-{name:"Brazil Nuts 500g",price:3500,img:"images/brazil-500g.jpg"},
-{name:"Brazil Nuts 250g",price:2000,img:"images/brazil-250g.jpg"},
-{name:"Brazil Nuts 125g",price:1200,img:"images/brazil-125g.jpg"}
+{name:"Bitter Kola 60g",price:600,img:"images/bitterkola-60g.jpg",desc:"Natural immune booster"},
+{name:"Bitter Kola 125g",price:1200,img:"images/bitterkola-125g.jpg",desc:"Rich antioxidants"},
+{name:"Almond 1kg",price:2000,img:"images/almond-1kg.jpg",desc:"High protein snack"},
+{name:"Almond 500g",price:1200,img:"images/almond-500g.jpg",desc:"Healthy daily snack"},
+{name:"Almond 250g",price:700,img:"images/almond-250g.jpg",desc:"Perfect portion"},
+{name:"Cashew 1kg",price:1800,img:"images/cashew-1kg.jpg",desc:"Creamy premium nuts"},
+{name:"Cashew 500g",price:1000,img:"images/cashew-500g.jpg",desc:"Energy snack"},
+{name:"Cashew 250g",price:600,img:"images/cashew-250g.jpg",desc:"Affordable healthy snack"},
+{name:"Brazil Nuts 500g",price:3500,img:"images/brazil-500g.jpg",desc:"High selenium superfood"},
+{name:"Brazil Nuts 250g",price:2000,img:"images/brazil-250g.jpg",desc:"Premium nutrition"},
+{name:"Brazil Nuts 125g",price:1200,img:"images/brazil-125g.jpg",desc:"Small but powerful"}
 ];
 
 let cart=[];
 
-/* RENDER */
+/* RENDER PRODUCTS */
 function render(){
 let box=document.getElementById("products-list");
 box.innerHTML="";
 products.forEach(p=>{
 box.innerHTML+=`
-<div class="card">
+<div class="card fade">
 <img src="${p.img}">
 <h3>${p.name}</h3>
-<p>KSh ${p.price}</p>
+<p>${p.desc}</p>
+<h4>KSh ${p.price}</h4>
 <button class="btn" onclick="addToCart('${p.name}')">Add</button>
 </div>`;
 });
+animate();
 }
+
+/* SLIDER */
+function createSlider(){
+let slider=document.getElementById("product-slider");
+products.forEach((p,i)=>{
+slider.innerHTML+=`
+<div class="slide ${i===0?"active":""}" style="background-image:url('${p.img}')">
+<h1>${p.name}</h1>
+<p>${p.desc}</p>
+</div>`;
+});
+}
+
+let i=0;
+setInterval(()=>{
+let slides=document.querySelectorAll(".slide");
+slides.forEach(s=>s.classList.remove("active"));
+i=(i+1)%slides.length;
+slides[i].classList.add("active");
+},3500);
 
 /* CART */
 function addToCart(name){
@@ -278,8 +301,8 @@ total+=i.price;
 box.innerHTML+=`${i.name} - ${i.price} <button onclick="removeItem(${index})">X</button><br>`;
 });
 
-document.getElementById("cart-count").innerText=cart.length;
-document.getElementById("total").innerText=total;
+cart-count.innerText=cart.length;
+total.innerText=total;
 }
 
 function removeItem(i){
@@ -296,21 +319,20 @@ location.value=pos.coords.latitude+","+pos.coords.longitude;
 
 /* CHECKOUT */
 function checkout(){
-let name=name.value,phone=phone.value,loc=location.value;
-if(!name||!phone||!loc||cart.length===0)return alert("Fill all");
+let n=name.value,p=phone.value,l=location.value;
+if(!n||!p||!l||cart.length===0)return alert("Fill all fields");
 
-let total=0;
-let msg=`Order:%0AName:${name}%0APhone:${phone}%0ALocation:${loc}%0A`;
+let total=0,msg=`Order:%0AName:${n}%0APhone:${p}%0ALocation:${l}%0A`;
 
 cart.forEach(i=>{
 msg+=`${i.name} - ${i.price}%0A`;
 total+=i.price;
 });
 
-msg+=`Total: ${total}`;
+msg+=`Total:${total}`;
 
 db.collection("orders").add({
-customer:{name,phone,location:loc},
+customer:{name:n,phone:p,location:l},
 items:cart,total,status:"Pending",date:new Date().toISOString()
 });
 
@@ -318,15 +340,6 @@ window.open("https://wa.me/254726718968?text="+msg);
 
 cart=[];updateCart();
 }
-
-/* SLIDER */
-let slides=document.querySelectorAll(".slide");
-let i=0;
-setInterval(()=>{
-slides.forEach(s=>s.classList.remove("active"));
-i=(i+1)%slides.length;
-slides[i].classList.add("active");
-},4000);
 
 /* TRACK */
 function openTracking(){tracking.style.display="block";}
@@ -352,7 +365,19 @@ admin.style.display="block";
 }
 function closeAdmin(){admin.style.display="none";}
 
+/* ANIMATION */
+function animate(){
+const obs=new IntersectionObserver(e=>{
+e.forEach(x=>{
+if(x.isIntersecting)x.target.classList.add("show");
+});
+});
+document.querySelectorAll(".fade").forEach(el=>obs.observe(el));
+}
+
+/* INIT */
 render();
+createSlider();
 
 </script>
 
