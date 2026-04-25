@@ -5,19 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flofentry Foods | Premium Nuts Kenya</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
-body{background:#0f0f0f;color:#fff;line-height:1.6;}
-section{padding:60px 20px;max-width:1200px;margin:auto;}
+body{background:#0f0f0f;color:#fff;}
 
 header{
 display:flex;justify-content:space-between;align-items:center;
-padding:15px 30px;background:#000;position:sticky;top:0;z-index:1000;
+padding:15px 30px;background:#000;
 }
 
 .logo{display:flex;align-items:center;gap:10px;}
@@ -25,10 +21,9 @@ padding:15px 30px;background:#000;position:sticky;top:0;z-index:1000;
 
 nav a{color:#fff;margin-left:20px;text-decoration:none;}
 
-.hero{padding:20px;}
-
 .slider{
-position:relative;height:420px;overflow:hidden;border-radius:12px;
+position:relative;height:400px;overflow:hidden;margin:20px;
+border-radius:10px;
 }
 
 .slide{
@@ -36,91 +31,38 @@ position:absolute;width:100%;height:100%;
 background-size:cover;background-position:center;
 opacity:0;transition:1s;
 display:flex;flex-direction:column;justify-content:center;align-items:center;
-text-align:center;
 }
 
 .slide.active{opacity:1;}
 
-.slide h1{
-font-size:2.5rem;
-background:rgba(0,0,0,0.6);
-padding:10px 20px;border-radius:6px;
-}
-
-.slide p{
-margin-top:10px;background:rgba(0,0,0,0.5);
-padding:6px 15px;border-radius:5px;
-}
-
-/* TRUST */
-.trust{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;text-align:center;
-}
-
-.trust div{background:#1a1a1a;padding:20px;border-radius:10px;}
-
-/* PRODUCTS */
 .products{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;padding:20px;
 }
 
 .card{
 background:#1a1a1a;padding:15px;border-radius:10px;text-align:center;
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-8px) scale(1.02);
-box-shadow:0 10px 25px rgba(0,0,0,0.5);
 }
 
 .card img{
 width:100%;height:160px;object-fit:cover;border-radius:10px;
-transition:0.4s;
 }
-
-.card:hover img{transform:scale(1.1);}
-
-.card p{color:#bbb;font-size:14px;}
 
 .btn{
-background:#25D366;border:none;padding:10px;color:#fff;width:100%;
-cursor:pointer;border-radius:5px;margin-top:10px;
-transition:0.3s;
+background:#25D366;border:none;padding:10px;color:#fff;
+width:100%;margin-top:10px;cursor:pointer;border-radius:5px;
 }
 
-.btn:hover{background:#1ebe5d;}
-
-/* STEPS */
-.steps{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;text-align:center;
-}
-
-.steps div{background:#1a1a1a;padding:20px;border-radius:10px;}
-
-/* CART */
-#cart-box{
-max-width:500px;margin:40px auto;background:#111;padding:20px;border-radius:10px;
+#cart{
+max-width:500px;margin:20px auto;background:#111;padding:20px;border-radius:10px;
 }
 
 input{width:100%;padding:10px;margin:5px 0;}
 
-/* PANELS */
-#admin,#tracking{
-display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-background:#000;padding:20px;overflow:auto;z-index:9999;
+footer{
+background:#000;padding:30px;text-align:center;margin-top:40px;
 }
-
-.order{background:#111;padding:10px;margin:10px 0;border-radius:10px;}
-
-footer{background:#000;padding:40px;text-align:center;margin-top:40px;}
-
-/* SCROLL ANIMATION */
-.fade{opacity:0;transform:translateY(20px);transition:0.8s;}
-.fade.show{opacity:1;transform:translateY(0);}
 </style>
 </head>
 
@@ -135,86 +77,41 @@ footer{background:#000;padding:40px;text-align:center;margin-top:40px;}
 <nav>
 <a href="#">Home</a>
 <a href="#products">Products</a>
-<a href="#" onclick="openTracking()">Track</a>
 <a href="#contact">Contact</a>
-<a href="#" onclick="openAdmin()">Admin</a>
 </nav>
 
-<div>🛒 <span id="cart-count">0</span></div>
+<div>Cart: <span id="cart-count">0</span></div>
 </header>
 
-<!-- HERO SLIDER -->
-<section class="hero">
-<div class="slider" id="product-slider"></div>
-</section>
-
-<!-- TRUST -->
-<section>
-<h2>Why Choose Us</h2>
-<div class="trust">
-<div>🚚 Fast Delivery</div>
-<div>🌿 Organic</div>
-<div>🔒 Secure</div>
-<div>📦 Fresh Packaging</div>
-</div>
-</section>
+<!-- SLIDER -->
+<div class="slider" id="slider"></div>
 
 <!-- PRODUCTS -->
 <section id="products">
-<h2>Our Products</h2>
+<h2 style="padding:20px;">Our Products</h2>
 <div class="products" id="products-list"></div>
 </section>
 
-<!-- HOW -->
-<section>
-<h2>How It Works</h2>
-<div class="steps">
-<div>1️⃣ Choose Products</div>
-<div>2️⃣ Place Order</div>
-<div>3️⃣ Delivery</div>
-</div>
-</section>
-
 <!-- CART -->
-<div id="cart-box">
+<div id="cart">
 <h3>Customer Details</h3>
 <input id="name" placeholder="Full Name">
-<input id="phone" placeholder="Phone Number">
-<input id="location" placeholder="Delivery Location">
+<input id="phone" placeholder="Phone">
+<input id="location" placeholder="Location">
 
-<button class="btn" onclick="getLocation()">📍 Auto Detect Location</button>
-
-<h3>Your Cart</h3>
+<h3>Cart</h3>
 <div id="cart-items"></div>
 
 <h3>Total: KSh <span id="total">0</span></h3>
-
 <button class="btn" onclick="checkout()">Order via WhatsApp</button>
 </div>
 
 <!-- CONTACT -->
-<section id="contact">
+<section id="contact" style="text-align:center;">
 <h2>Contact</h2>
-<p>📞 <a href="https://wa.me/254726718968">+254726718968</a></p>
-<p>📧 flofrenry@gmail.com</p>
+<p>+254726718968</p>
+<p>flofrenry@gmail.com</p>
 </section>
-
-<!-- TRACK -->
-<div id="tracking">
-<h2>Track Order</h2>
-<button onclick="closeTracking()">Close</button>
-<input id="track-phone" placeholder="Phone Number">
-<button class="btn" onclick="trackOrders()">Track</button>
-<div id="track-results"></div>
-</div>
-
-<!-- ADMIN -->
-<div id="admin">
-<h2>Admin Dashboard</h2>
-<button onclick="closeAdmin()">Close</button>
-<div id="analytics"></div>
-<div id="orders"></div>
-</div>
 
 <footer>
 <p>© 2026 Flofentry Foods</p>
@@ -222,68 +119,66 @@ footer{background:#000;padding:40px;text-align:center;margin-top:40px;}
 
 <script>
 
-/* FIREBASE */
-const firebaseConfig={
-apiKey:"YOUR_KEY",
-authDomain:"YOUR_PROJECT.firebaseapp.com",
-projectId:"YOUR_PROJECT_ID"
-};
-firebase.initializeApp(firebaseConfig);
-const db=firebase.firestore();
-
-/* PRODUCTS */
+/* PRODUCTS (ALL INCLUDED) */
 let products=[
-{name:"Bitter Kola 60g",price:600,img:"images/bitterkola-60g.jpg",desc:"Natural immune booster"},
-{name:"Bitter Kola 125g",price:1200,img:"images/bitterkola-125g.jpg",desc:"Rich antioxidants"},
-{name:"Almond 1kg",price:2000,img:"images/almond-1kg.jpg",desc:"High protein snack"},
-{name:"Almond 500g",price:1200,img:"images/almond-500g.jpg",desc:"Healthy daily snack"},
-{name:"Almond 250g",price:700,img:"images/almond-250g.jpg",desc:"Perfect portion"},
-{name:"Cashew 1kg",price:1800,img:"images/cashew-1kg.jpg",desc:"Creamy premium nuts"},
-{name:"Cashew 500g",price:1000,img:"images/cashew-500g.jpg",desc:"Energy snack"},
-{name:"Cashew 250g",price:600,img:"images/cashew-250g.jpg",desc:"Affordable healthy snack"},
-{name:"Brazil Nuts 500g",price:3500,img:"images/brazil-500g.jpg",desc:"High selenium superfood"},
-{name:"Brazil Nuts 250g",price:2000,img:"images/brazil-250g.jpg",desc:"Premium nutrition"},
-{name:"Brazil Nuts 125g",price:1200,img:"images/brazil-125g.jpg",desc:"Small but powerful"}
+{name:"Bitter Kola 60g",price:600,img:"images/bitterkola-60g.jpg"},
+{name:"Bitter Kola 125g",price:1200,img:"images/bitterkola-125g.jpg"},
+
+{name:"Almond 1kg",price:2000,img:"images/almond-1kg.jpg"},
+{name:"Almond 500g",price:1200,img:"images/almond-500g.jpg"},
+{name:"Almond 250g",price:700,img:"images/almond-250g.jpg"},
+
+{name:"Cashew 1kg",price:1800,img:"images/cashew-1kg.jpg"},
+{name:"Cashew 500g",price:1000,img:"images/cashew-500g.jpg"},
+{name:"Cashew 250g",price:600,img:"images/cashew-250g.jpg"},
+
+{name:"Brazil Nuts 500g",price:3500,img:"images/brazil-500g.jpg"},
+{name:"Brazil Nuts 250g",price:2000,img:"images/brazil-250g.jpg"},
+{name:"Brazil Nuts 125g",price:1200,img:"images/brazil-125g.jpg"}
 ];
 
 let cart=[];
 
 /* RENDER PRODUCTS */
 function render(){
-let box=document.getElementById("products-list");
+const box=document.getElementById("products-list");
 box.innerHTML="";
+
 products.forEach(p=>{
 box.innerHTML+=`
-<div class="card fade">
-<img src="${p.img}">
+<div class="card">
+<img src="${p.img}" onerror="this.src='images/logo.jpg'">
 <h3>${p.name}</h3>
-<p>${p.desc}</p>
-<h4>KSh ${p.price}</h4>
+<p>KSh ${p.price}</p>
 <button class="btn" onclick="addToCart('${p.name}')">Add</button>
-</div>`;
+</div>
+`;
 });
-animate();
 }
 
 /* SLIDER */
 function createSlider(){
-let slider=document.getElementById("product-slider");
+const slider=document.getElementById("slider");
+slider.innerHTML="";
+
 products.forEach((p,i)=>{
 slider.innerHTML+=`
 <div class="slide ${i===0?"active":""}" style="background-image:url('${p.img}')">
-<h1>${p.name}</h1>
-<p>${p.desc}</p>
-</div>`;
+<h2>${p.name}</h2>
+</div>
+`;
 });
 }
 
-let i=0;
+let slideIndex=0;
 setInterval(()=>{
 let slides=document.querySelectorAll(".slide");
+if(slides.length===0) return;
+
 slides.forEach(s=>s.classList.remove("active"));
-i=(i+1)%slides.length;
-slides[i].classList.add("active");
-},3500);
+slideIndex=(slideIndex+1)%slides.length;
+slides[slideIndex].classList.add("active");
+},3000);
 
 /* CART */
 function addToCart(name){
@@ -296,13 +191,14 @@ let box=document.getElementById("cart-items");
 box.innerHTML="";
 let total=0;
 
-cart.forEach((i,index)=>{
-total+=i.price;
-box.innerHTML+=`${i.name} - ${i.price} <button onclick="removeItem(${index})">X</button><br>`;
+cart.forEach((item,index)=>{
+total+=item.price;
+box.innerHTML+=`${item.name} - ${item.price} 
+<button onclick="removeItem(${index})">X</button><br>`;
 });
 
-cart-count.innerText=cart.length;
-total.innerText=total;
+document.getElementById("cart-count").innerText=cart.length;
+document.getElementById("total").innerText=total;
 }
 
 function removeItem(i){
@@ -310,69 +206,31 @@ cart.splice(i,1);
 updateCart();
 }
 
-/* LOCATION */
-function getLocation(){
-navigator.geolocation.getCurrentPosition(pos=>{
-location.value=pos.coords.latitude+","+pos.coords.longitude;
-});
-}
-
 /* CHECKOUT */
 function checkout(){
-let n=name.value,p=phone.value,l=location.value;
-if(!n||!p||!l||cart.length===0)return alert("Fill all fields");
+let n=document.getElementById("name").value;
+let p=document.getElementById("phone").value;
+let l=document.getElementById("location").value;
 
-let total=0,msg=`Order:%0AName:${n}%0APhone:${p}%0ALocation:${l}%0A`;
+if(!n||!p||!l||cart.length===0){
+alert("Fill all fields");
+return;
+}
+
+let total=0;
+let msg=`Hello Flofentry Foods,%0AName:${n}%0APhone:${p}%0ALocation:${l}%0A`;
 
 cart.forEach(i=>{
 msg+=`${i.name} - ${i.price}%0A`;
 total+=i.price;
 });
 
-msg+=`Total:${total}`;
-
-db.collection("orders").add({
-customer:{name:n,phone:p,location:l},
-items:cart,total,status:"Pending",date:new Date().toISOString()
-});
+msg+=`Total: ${total}`;
 
 window.open("https://wa.me/254726718968?text="+msg);
 
-cart=[];updateCart();
-}
-
-/* TRACK */
-function openTracking(){tracking.style.display="block";}
-function closeTracking(){tracking.style.display="none";}
-
-function trackOrders(){
-let phone=document.getElementById("track-phone").value;
-
-db.collection("orders").where("customer.phone","==",phone)
-.onSnapshot(snap=>{
-track-results.innerHTML="";
-snap.forEach(doc=>{
-let d=doc.data();
-track-results.innerHTML+=`<div class="order">${d.status} - KSh ${d.total}</div>`;
-});
-});
-}
-
-/* ADMIN */
-function openAdmin(){
-if(prompt("Password")!=="Newtonohms@1")return;
-admin.style.display="block";
-}
-function closeAdmin(){admin.style.display="none";}
-
-/* ANIMATION */
-function animate(){
-const obs=new IntersectionObserver(e=>{
-e.forEach(x=>{
-if(x.isIntersecting)x.target.classList.add("show");
-});
-});
-document.querySelectorAll(".fade").forEach(el=>obs.observe(el));
+cart=[];
+updateCart();
 }
 
 /* INIT */
