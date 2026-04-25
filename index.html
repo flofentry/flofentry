@@ -12,123 +12,117 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
-body{background:#0f0f0f;color:#fff;line-height:1.6;}
-section{padding:70px 20px;max-width:1200px;margin:auto;}
+body{background:#f7f8fa;color:#222;}
 
+/* HEADER */
 header{
 display:flex;justify-content:space-between;align-items:center;
-padding:20px 40px;background:#000;position:sticky;top:0;z-index:1000;
+padding:18px 40px;background:#fff;
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
+position:sticky;top:0;z-index:1000;
 }
 
-.logo{display:flex;align-items:center;gap:10px;}
-.logo img{height:45px;}
-
-nav a{color:#fff;margin-left:25px;text-decoration:none;font-weight:500;}
-
-.hero{
-text-align:center;
-padding:100px 20px;
-background:linear-gradient(to right,#000,#111);
+nav a{
+margin-left:20px;text-decoration:none;color:#333;font-weight:500;
 }
 
-.hero h1{font-size:3rem;margin-bottom:15px;}
-.hero p{color:#ccc;font-size:18px;}
+nav a:hover{color:#25D366;}
 
-.trust, .steps{
+/* HERO SLIDER */
+.hero{padding:20px;}
+.slider{
+height:420px;border-radius:12px;overflow:hidden;position:relative;
+background:#fff;
+}
+
+.slide{
+position:absolute;width:100%;height:100%;
+opacity:0;transition:1s;
+display:flex;flex-direction:column;justify-content:center;align-items:center;
+background-size:contain;background-repeat:no-repeat;background-position:center;
+}
+
+.slide.active{opacity:1;}
+
+.slide h1{
+background:rgba(255,255,255,0.85);
+padding:10px 20px;border-radius:8px;
+}
+
+.slide p{
+margin-top:10px;
+background:rgba(255,255,255,0.7);
+padding:5px 12px;border-radius:6px;
+}
+
+/* SECTIONS */
+section{padding:70px 20px;max-width:1200px;margin:auto;}
+
+/* TRUST */
+.trust,.steps{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
-margin-top:30px;
 }
 
 .trust div,.steps div{
-background:#1a1a1a;
-padding:25px;
-border-radius:12px;
+background:#fff;padding:25px;border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,0.05);
 text-align:center;
-font-weight:500;
 }
 
+/* PRODUCTS */
 .products{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
 gap:25px;
-margin-top:30px;
 }
 
 .card{
-background:#1a1a1a;
-padding:15px;
-border-radius:12px;
+background:#fff;padding:15px;border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,0.05);
 transition:0.3s;
 }
 
-.card:hover{
-transform:translateY(-8px);
-box-shadow:0 10px 25px rgba(0,0,0,0.5);
-}
+.card:hover{transform:translateY(-6px);}
 
 .card img{
-width:100%;
-height:180px;
-object-fit:cover;
-border-radius:10px;
-margin-bottom:10px;
+width:100%;height:180px;object-fit:contain;background:#fafafa;
+border-radius:10px;margin-bottom:10px;
 }
-
-.card h3{margin-bottom:5px;}
-.card p{color:#aaa;font-size:14px;}
 
 .btn{
-background:#25D366;
-border:none;
-padding:10px;
-color:#fff;
-width:100%;
-margin-top:10px;
-cursor:pointer;
-border-radius:6px;
+background:#25D366;color:#fff;border:none;
+padding:10px;width:100%;margin-top:10px;
+border-radius:6px;cursor:pointer;
 }
 
+/* CART */
 #cart-box{
-max-width:500px;
-margin:50px auto;
-background:#111;
-padding:20px;
-border-radius:12px;
+max-width:500px;margin:50px auto;background:#fff;
+padding:20px;border-radius:12px;
+box-shadow:0 5px 25px rgba(0,0,0,0.08);
 }
 
 input{
-width:100%;
-padding:10px;
-margin:6px 0;
-border:none;
-border-radius:6px;
-}
-
-footer{
-background:#000;
-padding:40px;
-text-align:center;
-margin-top:50px;
+width:100%;padding:10px;margin:5px 0;
+border-radius:6px;border:1px solid #ddd;
 }
 
 /* PANELS */
 #admin,#tracking{
 display:none;
-position:fixed;
-top:0;left:0;width:100%;height:100%;
-background:#000;
-padding:20px;
-overflow:auto;
-z-index:9999;
+position:fixed;top:0;left:0;width:100%;height:100%;
+background:#fff;padding:20px;overflow:auto;z-index:9999;
 }
 
 .order{
-background:#111;
-padding:10px;
-margin:10px 0;
-border-radius:10px;
+background:#f4f4f4;padding:10px;margin:10px 0;border-radius:10px;
+}
+
+footer{
+background:#fff;padding:40px;text-align:center;margin-top:50px;
+border-top:1px solid #eee;
 }
 </style>
 </head>
@@ -136,74 +130,56 @@ border-radius:10px;
 <body>
 
 <header>
-<div class="logo">
-<img src="images/logo.jpg">
 <h2>Flofentry</h2>
-</div>
-
 <nav>
 <a href="#">Home</a>
 <a href="#products">Products</a>
-<a href="#about">About</a>
-<a href="#" onclick="openTracking()">Track Order</a>
+<a href="#" onclick="openTracking()">Track</a>
 <a href="#" onclick="openAdmin()">Admin</a>
 </nav>
-
 <div>Cart: <span id="cart-count">0</span></div>
 </header>
 
-<!-- HERO -->
+<!-- HERO SLIDER -->
 <section class="hero">
-<h1>Premium Nuts & Superfoods</h1>
-<p>Carefully sourced, quality-checked, and delivered across Kenya</p>
+<div class="slider" id="slider"></div>
 </section>
 
 <!-- TRUST -->
 <section>
-<h2>Why Choose Flofentry</h2>
+<h2>Why Choose Us</h2>
 <div class="trust">
-<div>Fast and reliable delivery nationwide</div>
-<div>Carefully selected premium quality products</div>
-<div>Secure and trusted ordering process</div>
-<div>Fresh packaging for maximum shelf life</div>
+<div>Fast Delivery Across Kenya</div>
+<div>Premium Quality Products</div>
+<div>Secure Ordering Process</div>
+<div>Fresh Packaging Guaranteed</div>
 </div>
 </section>
 
 <!-- PRODUCTS -->
 <section id="products">
 <h2>Our Products</h2>
-<div class="products" id="products-list"></div>
+<div id="products-list" class="products"></div>
 </section>
 
 <!-- HOW -->
 <section>
 <h2>How It Works</h2>
 <div class="steps">
-<div>Select your preferred products</div>
-<div>Place your order quickly</div>
-<div>We deliver to your location</div>
+<div>Select Products</div>
+<div>Place Order</div>
+<div>We Deliver</div>
 </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-<h2>About Flofentry</h2>
-<p>
-Flofentry Foods is committed to delivering premium quality nuts and superfoods across Kenya.
-Our products are carefully sourced, hygienically packaged, and delivered fresh to support
-your healthy lifestyle.
-</p>
 </section>
 
 <!-- CART -->
 <div id="cart-box">
 <h3>Customer Details</h3>
-
 <input id="name" placeholder="Full Name">
 <input id="phone" placeholder="Phone Number">
-<input id="location" placeholder="Delivery Location">
+<input id="location" placeholder="Location">
 
-<button class="btn" onclick="getLocation()">Detect Location</button>
+<button class="btn" onclick="getLocation()">Auto Location</button>
 
 <h3>Your Cart</h3>
 <div id="cart-items"></div>
@@ -217,10 +193,8 @@ your healthy lifestyle.
 <div id="tracking">
 <h2>Track Order</h2>
 <button onclick="closeTracking()">Close</button>
-
 <input id="track-phone" placeholder="Phone Number">
 <button class="btn" onclick="trackOrders()">Track</button>
-
 <div id="track-results"></div>
 </div>
 
@@ -228,11 +202,7 @@ your healthy lifestyle.
 <div id="admin">
 <h2>Admin Dashboard</h2>
 <button onclick="closeAdmin()">Close</button>
-
-<h3>Analytics</h3>
 <div id="analytics"></div>
-
-<h3>Orders</h3>
 <div id="orders"></div>
 </div>
 
@@ -244,12 +214,10 @@ your healthy lifestyle.
 <script>
 
 /* FIREBASE */
-const firebaseConfig={
+firebase.initializeApp({
 apiKey:"YOUR_KEY",
-authDomain:"YOUR_PROJECT.firebaseapp.com",
 projectId:"YOUR_PROJECT_ID"
-};
-firebase.initializeApp(firebaseConfig);
+});
 const db=firebase.firestore();
 
 /* PRODUCTS */
@@ -269,7 +237,7 @@ let products=[
 
 let cart=[];
 
-/* RENDER PRODUCTS */
+/* RENDER */
 function render(){
 let box=document.getElementById("products-list");
 box.innerHTML="";
@@ -280,9 +248,30 @@ box.innerHTML+=`
 <img src="${p.img}">
 <h3>${p.name}</h3>
 <p>KSh ${p.price}</p>
-<button class="btn" onclick="addToCart('${p.name}')">Add to Cart</button>
+<button class="btn" onclick="addToCart('${p.name}')">Add</button>
 </div>`;
 });
+}
+
+/* SLIDER */
+let i=0;
+function buildSlider(){
+let slider=document.getElementById("slider");
+
+products.forEach((p,index)=>{
+slider.innerHTML+=`
+<div class="slide ${index===0?"active":""}" style="background-image:url('${p.img}')">
+<h1>${p.name}</h1>
+<p>KSh ${p.price}</p>
+</div>`;
+});
+
+setInterval(()=>{
+let slides=document.querySelectorAll(".slide");
+slides.forEach(s=>s.classList.remove("active"));
+i=(i+1)%slides.length;
+slides[i].classList.add("active");
+},3500);
 }
 
 /* CART */
@@ -298,8 +287,7 @@ let total=0;
 
 cart.forEach((i,index)=>{
 total+=i.price;
-box.innerHTML+=`${i.name} - ${i.price} 
-<button onclick="removeItem(${index})">X</button><br>`;
+box.innerHTML+=`${i.name} - ${i.price} <button onclick="removeItem(${index})">X</button><br>`;
 });
 
 document.getElementById("cart-count").innerText=cart.length;
@@ -367,19 +355,9 @@ db.collection("orders")
 let box=document.getElementById("track-results");
 box.innerHTML="";
 
-if(snap.empty){
-box.innerHTML="No orders found";
-return;
-}
-
 snap.forEach(doc=>{
 let d=doc.data();
-
-box.innerHTML+=`
-<div class="order">
-Status: ${d.status}<br>
-Total: KSh ${d.total}
-</div>`;
+box.innerHTML+=`<div class="order">${d.status} - KSh ${d.total}</div>`;
 });
 });
 }
@@ -399,13 +377,7 @@ db.collection("orders").onSnapshot(snap=>{
 orders.innerHTML="";
 snap.forEach(doc=>{
 let d=doc.data();
-
-orders.innerHTML+=`
-<div class="order">
-${d.customer.name}<br>
-${d.customer.phone}<br>
-${d.total} - ${d.status}
-</div>`;
+orders.innerHTML+=`<div class="order">${d.customer.name} - ${d.total} (${d.status})</div>`;
 });
 });
 }
@@ -418,7 +390,11 @@ analytics.innerHTML=`Total Revenue: KSh ${revenue}`;
 });
 }
 
+/* INIT */
+document.addEventListener("DOMContentLoaded",()=>{
 render();
+buildSlider();
+});
 
 </script>
 
