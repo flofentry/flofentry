@@ -3,76 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flofentry Foods | Premium Nuts Kenya</title>
+<title>Flofentry Foods</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
-body{background:#0f0f0f;color:#fff;line-height:1.6;}
+body{background:#0f0f0f;color:#fff;}
 
+/* HEADER */
 header{
-display:flex;justify-content:space-between;align-items:center;
-padding:20px 40px;background:#000;position:sticky;top:0;z-index:1000;
+display:flex;
+justify-content:space-between;
+padding:20px;
+background:#000;
+position:sticky;top:0;
 }
 
 .container{max-width:1200px;margin:auto;padding:40px 20px;}
 
-/* HERO SLIDER */
-.slider{height:320px;overflow:hidden;border-radius:12px;position:relative;}
+/* SLIDER */
+.slider{height:300px;position:relative;overflow:hidden;}
 .slide{
 position:absolute;width:100%;height:100%;
-display:flex;flex-direction:column;align-items:center;justify-content:center;
+display:flex;flex-direction:column;
+align-items:center;justify-content:center;
 opacity:0;transition:1s;
 }
 .slide.active{opacity:1;}
-.slide img{max-width:220px;}
+.slide img{max-width:200px;}
 
 /* PRODUCTS */
 .products{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
 gap:25px;
-margin-top:30px;
 }
 
 .card{
-background:#1a1a1a;padding:15px;border-radius:12px;
-cursor:pointer;transition:.3s;
+background:#1a1a1a;
+padding:15px;
+border-radius:10px;
+cursor:pointer;
+transition:.3s;
 }
-.card:hover{transform:translateY(-8px);}
-.card img{width:100%;height:180px;object-fit:cover;border-radius:10px;}
+.card:hover{transform:translateY(-6px);}
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+border-radius:8px;
+}
 
 .btn{
-background:#25D366;color:#fff;border:none;
-padding:12px;border-radius:6px;width:100%;margin-top:10px;
+background:#25D366;
+border:none;
+padding:10px;
+width:100%;
+color:#fff;
+margin-top:10px;
+cursor:pointer;
+}
+
+/* CART FLOAT */
+#cart-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+padding:15px;
+border-radius:50px;
 cursor:pointer;
 }
 
 /* MODAL */
 .modal{
-display:none;position:fixed;top:0;left:0;
+display:none;
+position:fixed;
+top:0;left:0;
 width:100%;height:100%;
 background:rgba(0,0,0,0.8);
-justify-content:center;align-items:center;z-index:9999;
+justify-content:center;
+align-items:center;
 }
 .modal-content{
-background:#1a1a1a;padding:25px;border-radius:10px;width:90%;max-width:400px;
+background:#1a1a1a;
+padding:20px;
+border-radius:10px;
+width:90%;
+max-width:400px;
 }
-
-/* CART FLOAT */
-#cart-float{
-position:fixed;bottom:20px;right:20px;
-background:#25D366;padding:15px 20px;border-radius:50px;cursor:pointer;
-}
-
-/* REVIEWS */
-.review{background:#1a1a1a;padding:15px;margin:10px 0;border-radius:10px;}
-.badge{background:#25D366;padding:3px 8px;font-size:12px;border-radius:5px;}
-
 </style>
 </head>
 
@@ -80,14 +100,12 @@ background:#25D366;padding:15px 20px;border-radius:50px;cursor:pointer;
 
 <header>
 <h2>Flofentry</h2>
-<div>
 <button onclick="openAdmin()">Admin</button>
-</div>
 </header>
 
-<!-- HERO -->
+<!-- SLIDER -->
 <div class="container">
-<div class="slider" id="slider"></div>
+<div id="slider" class="slider"></div>
 </div>
 
 <!-- PRODUCTS -->
@@ -96,43 +114,28 @@ background:#25D366;padding:15px 20px;border-radius:50px;cursor:pointer;
 <div id="products-list" class="products"></div>
 </section>
 
-<!-- REVIEWS -->
-<section class="container">
-<h2>Customer Reviews</h2>
-
-<select id="filter-product" onchange="filterReviews()"></select>
-
-<input id="fb-name" placeholder="Name">
-<input id="fb-phone" placeholder="Phone">
-<select id="fb-product"></select>
-
-<textarea id="fb-message" placeholder="Write review"></textarea>
-<input type="file" id="fb-image">
-
-<button class="btn" onclick="submitFeedback()">Submit Review</button>
-
-<div id="feedback-list"></div>
-</section>
-
 <!-- CART FLOAT -->
 <div id="cart-float" onclick="openCheckout()">🛒 <span id="cart-count">0</span></div>
 
 <!-- CHECKOUT -->
 <div id="checkout-modal" class="modal">
 <div class="modal-content">
+
 <h2>Checkout</h2>
 
-<input id="name" placeholder="Name">
-<input id="phone" placeholder="Phone">
-<input id="location" placeholder="Location">
+<input id="name" placeholder="Name"><br><br>
+<input id="phone" placeholder="Phone"><br><br>
+<input id="location" placeholder="Location"><br>
 
 <button class="btn" onclick="getLocation()">Auto Location</button>
 
 <div id="cart-items"></div>
+
 <h3>Total: KSh <span id="total">0</span></h3>
 
-<button class="btn" onclick="checkout()">Confirm</button>
+<button class="btn" onclick="checkout()">Order</button>
 <button onclick="closeCheckout()">Close</button>
+
 </div>
 </div>
 
@@ -142,13 +145,6 @@ background:#25D366;padding:15px 20px;border-radius:50px;cursor:pointer;
 </div>
 
 <script>
-
-/* FIREBASE */
-firebase.initializeApp({
-apiKey:"YOUR_KEY",
-projectId:"YOUR_PROJECT_ID"
-});
-const db=firebase.firestore();
 
 /* PRODUCTS */
 let products=[
@@ -167,9 +163,15 @@ let products=[
 
 let cart=[];
 
-/* RENDER */
+/* RENDER PRODUCTS */
 function render(){
 const box=document.getElementById("products-list");
+
+if(!box){
+console.error("products-list missing");
+return;
+}
+
 box.innerHTML="";
 
 products.forEach(p=>{
@@ -189,7 +191,7 @@ const slider=document.getElementById("slider");
 
 products.forEach((p,index)=>{
 slider.innerHTML+=`
-<div class="slide ${index===0?"active":""}">
+<div class="slide ${index===0?'active':''}">
 <img src="${p.img}">
 <h3>${p.name}</h3>
 </div>`;
@@ -203,7 +205,7 @@ slides[i].classList.add("active");
 },3000);
 }
 
-/* PRODUCT MODAL */
+/* PRODUCT POPUP */
 function openProduct(name){
 let p=products.find(x=>x.name===name);
 
@@ -217,6 +219,7 @@ document.getElementById("product-details").innerHTML=`
 
 document.getElementById("product-modal").style.display="flex";
 }
+
 function closeProduct(){
 document.getElementById("product-modal").style.display="none";
 }
@@ -226,14 +229,15 @@ function addToCart(name){
 cart.push(products.find(p=>p.name===name));
 updateCart();
 }
+
 function updateCart(){
 let total=0;
-const box=document.getElementById("cart-items");
+let box=document.getElementById("cart-items");
 box.innerHTML="";
 
 cart.forEach(i=>{
 total+=i.price;
-box.innerHTML+=`${i.name}<br>`;
+box.innerHTML+=i.name+"<br>";
 });
 
 document.getElementById("total").innerText=total;
@@ -241,30 +245,38 @@ document.getElementById("cart-count").innerText=cart.length;
 }
 
 /* CHECKOUT */
-function openCheckout(){checkout-modal.style.display="flex";}
-function closeCheckout(){checkout-modal.style.display="none";}
+function openCheckout(){
+document.getElementById("checkout-modal").style.display="flex";
+}
+function closeCheckout(){
+document.getElementById("checkout-modal").style.display="none";
+}
 
+/* LOCATION */
 function getLocation(){
 navigator.geolocation.getCurrentPosition(pos=>{
-location.value=pos.coords.latitude+","+pos.coords.longitude;
+document.getElementById("location").value=
+pos.coords.latitude+","+pos.coords.longitude;
 });
 }
 
+/* ORDER */
 function checkout(){
-alert("Order sent via WhatsApp");
+alert("Order placed via WhatsApp");
 }
 
 /* ADMIN */
 function openAdmin(){
-if(prompt("Password")!=="Newtonohms@1")return;
-alert("Admin panel coming next upgrade");
+let pass=prompt("Enter password");
+if(pass!=="Newtonohms@1") return;
+alert("Admin panel coming next");
 }
 
 /* INIT */
-window.onload=function(){
+document.addEventListener("DOMContentLoaded",function(){
 render();
 buildSlider();
-};
+});
 
 </script>
 
