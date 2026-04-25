@@ -7,154 +7,112 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
 body{background:#0f0f0f;color:#fff;}
 
-header{
-display:flex;justify-content:space-between;align-items:center;
-padding:15px 30px;background:#000;
-}
+header{display:flex;justify-content:space-between;padding:15px;background:#000;}
+.logo img{height:40px;}
 
-.logo{display:flex;align-items:center;gap:10px;}
-.logo img{height:45px;}
+.slider{height:350px;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.slide{display:none;text-align:center;}
+.slide.active{display:block;}
+.slide img{max-width:220px;}
 
-nav a{color:#fff;margin-left:20px;text-decoration:none;}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:20px;}
+.card{background:#1a1a1a;padding:15px;border-radius:10px;text-align:center;}
+.card img{width:100%;height:160px;object-fit:cover;}
 
-.slider{
-position:relative;height:380px;overflow:hidden;margin:20px;
-border-radius:12px;background:#111;
-}
+.btn{background:#25D366;border:none;padding:10px;color:#fff;width:100%;cursor:pointer;margin-top:10px;}
 
-/* NEW SLIDE DESIGN */
-.slide{
-position:absolute;
-width:100%;
-height:100%;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-opacity:0;
-transition:1s;
-text-align:center;
-padding:20px;
-}
+.review{background:#1a1a1a;padding:15px;margin:10px;border-radius:10px;}
+.badge{background:#25D366;padding:3px 8px;font-size:12px;border-radius:5px;}
 
-.slide.active{opacity:1;}
+#stars span{font-size:25px;cursor:pointer;color:#555;}
+#stars .active{color:gold;}
 
-.slide img{
-max-width:220px;
-height:auto;
-border-radius:12px;
-margin-bottom:15px;
-transition:0.4s;
-}
-
-.slide img:hover{
-transform:scale(1.05);
-}
-
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;padding:20px;
-}
-
-.card{
-background:#1a1a1a;padding:15px;border-radius:10px;text-align:center;
-transition:0.3s;
-}
-
-.card:hover{transform:translateY(-5px);}
-
-.card img{
-width:100%;height:160px;object-fit:cover;border-radius:10px;
-}
-
-.btn{
-background:#25D366;border:none;padding:10px;color:#fff;
-width:100%;margin-top:10px;cursor:pointer;border-radius:5px;
-}
-
-#cart{
-max-width:500px;margin:20px auto;background:#111;padding:20px;border-radius:10px;
-}
-
-input{width:100%;padding:10px;margin:5px 0;}
-
-footer{
-background:#000;padding:30px;text-align:center;margin-top:40px;
-}
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="logo">
-<img src="images/logo.jpg">
 <h2>Flofentry</h2>
-</div>
-
-<nav>
-<a href="#">Home</a>
-<a href="#products">Products</a>
-<a href="#contact">Contact</a>
-</nav>
-
 <div>Cart: <span id="cart-count">0</span></div>
 </header>
 
 <!-- SLIDER -->
-<div class="slider" id="slider"></div>
+<div id="slider"></div>
 
-<!-- PRODUCTS -->
-<section id="products">
-<h2 style="padding:20px;">Our Products</h2>
-<div class="products" id="products-list"></div>
-</section>
-
-<!-- CART -->
-<div id="cart">
-<h3>Customer Details</h3>
-<input id="name" placeholder="Full Name">
-<input id="phone" placeholder="Phone">
-<input id="location" placeholder="Location">
-
-<h3>Cart</h3>
-<div id="cart-items"></div>
-
-<h3>Total: KSh <span id="total">0</span></h3>
-<button class="btn" onclick="checkout()">Order via WhatsApp</button>
+<!-- AVG RATING -->
+<div id="rating-summary" style="text-align:center;margin:20px;">
+<h2>Customer Satisfaction</h2>
+<div id="avg-rating">★★★★★</div>
+<p id="rating-count"></p>
 </div>
 
-<!-- CONTACT -->
-<section id="contact" style="text-align:center;">
-<h2>Contact</h2>
-<p>+254726718968</p>
-<p>flofrenry@gmail.com</p>
-</section>
+<!-- PRODUCTS -->
+<div class="products" id="products-list"></div>
 
-<footer>
-<p>© 2026 Flofentry Foods</p>
-</footer>
+<!-- CART -->
+<div style="max-width:500px;margin:auto;">
+<input id="name" placeholder="Name">
+<input id="phone" placeholder="Phone">
+<input id="location" placeholder="Location">
+<button onclick="getLocation()">Detect Location</button>
+
+<div id="cart-items"></div>
+<div>Total: <span id="total">0</span></div>
+<button onclick="checkout()">Order</button>
+</div>
+
+<!-- FEEDBACK -->
+<h2 style="text-align:center;">Reviews</h2>
+
+<select id="filter-product" onchange="filterReviews()"></select>
+
+<input id="fb-name" placeholder="Name">
+<input id="fb-phone" placeholder="Phone">
+
+<select id="fb-product"></select>
+
+<div id="stars">
+<span onclick="setRating(1)">★</span>
+<span onclick="setRating(2)">★</span>
+<span onclick="setRating(3)">★</span>
+<span onclick="setRating(4)">★</span>
+<span onclick="setRating(5)">★</span>
+</div>
+
+<textarea id="fb-message"></textarea>
+<input type="file" id="fb-image">
+
+<button onclick="submitFeedback()">Submit</button>
+
+<div id="feedback-list"></div>
 
 <script>
 
-/* PRODUCTS (ALL INCLUDED) */
+/* FIREBASE */
+firebase.initializeApp({
+apiKey:"YOUR_KEY",
+projectId:"YOUR_PROJECT_ID"
+});
+const db=firebase.firestore();
+
+/* PRODUCTS */
 let products=[
 {name:"Bitter Kola 60g",price:600,img:"images/bitterkola-60g.jpg"},
 {name:"Bitter Kola 125g",price:1200,img:"images/bitterkola-125g.jpg"},
-
 {name:"Almond 1kg",price:2000,img:"images/almond-1kg.jpg"},
 {name:"Almond 500g",price:1200,img:"images/almond-500g.jpg"},
 {name:"Almond 250g",price:700,img:"images/almond-250g.jpg"},
-
 {name:"Cashew 1kg",price:1800,img:"images/cashew-1kg.jpg"},
 {name:"Cashew 500g",price:1000,img:"images/cashew-500g.jpg"},
 {name:"Cashew 250g",price:600,img:"images/cashew-250g.jpg"},
-
 {name:"Brazil Nuts 500g",price:3500,img:"images/brazil-500g.jpg"},
 {name:"Brazil Nuts 250g",price:2000,img:"images/brazil-250g.jpg"},
 {name:"Brazil Nuts 125g",price:1200,img:"images/brazil-125g.jpg"}
@@ -164,45 +122,33 @@ let cart=[];
 
 /* RENDER PRODUCTS */
 function render(){
-const box=document.getElementById("products-list");
-box.innerHTML="";
-
+products-list.innerHTML="";
 products.forEach(p=>{
-box.innerHTML+=`
+products-list.innerHTML+=`
 <div class="card">
 <img src="${p.img}" onerror="this.src='images/logo.jpg'">
 <h3>${p.name}</h3>
+<div id="rating-${p.name}">Loading...</div>
 <p>KSh ${p.price}</p>
-<button class="btn" onclick="addToCart('${p.name}')">Add</button>
-</div>
-`;
+<button onclick="addToCart('${p.name}')">Add</button>
+</div>`;
 });
 }
 
-/* SLIDER (FIXED SMALL IMAGES) */
-function createSlider(){
-const slider=document.getElementById("slider");
-slider.innerHTML="";
-
-products.forEach((p,i)=>{
-slider.innerHTML+=`
-<div class="slide ${i===0?"active":""}">
-<img src="${p.img}" onerror="this.src='images/logo.jpg'">
-<h2>${p.name}</h2>
-<p>KSh ${p.price}</p>
-</div>
-`;
-});
+/* SLIDER */
+let i=0;
+function buildSlider(){
+slider.innerHTML=products.map((p,index)=>`
+<div class="slide ${index===0?"active":""}">
+<img src="${p.img}">
+<h3>${p.name}</h3>
+</div>`).join("");
 }
-
-let index=0;
 setInterval(()=>{
 let slides=document.querySelectorAll(".slide");
-if(slides.length===0) return;
-
 slides.forEach(s=>s.classList.remove("active"));
-index=(index+1)%slides.length;
-slides[index].classList.add("active");
+i=(i+1)%slides.length;
+slides[i].classList.add("active");
 },3000);
 
 /* CART */
@@ -210,57 +156,140 @@ function addToCart(name){
 cart.push(products.find(p=>p.name===name));
 updateCart();
 }
-
 function updateCart(){
-let box=document.getElementById("cart-items");
-box.innerHTML="";
-let total=0;
-
-cart.forEach((item,index)=>{
-total+=item.price;
-box.innerHTML+=`${item.name} - ${item.price} 
-<button onclick="removeItem(${index})">X</button><br>`;
-});
-
-document.getElementById("cart-count").innerText=cart.length;
-document.getElementById("total").innerText=total;
+let t=0;
+cart-items.innerHTML="";
+cart.forEach(i=>{t+=i.price;cart-items.innerHTML+=i.name+"<br>";});
+total.innerText=t;
+cart-count.innerText=cart.length;
 }
 
-function removeItem(i){
-cart.splice(i,1);
-updateCart();
+/* LOCATION */
+function getLocation(){
+navigator.geolocation.getCurrentPosition(pos=>{
+location.value=pos.coords.latitude+","+pos.coords.longitude;
+});
 }
 
 /* CHECKOUT */
 function checkout(){
-let n=document.getElementById("name").value;
-let p=document.getElementById("phone").value;
-let l=document.getElementById("location").value;
-
-if(!n||!p||!l||cart.length===0){
-alert("Fill all fields");
-return;
+window.open("https://wa.me/254726718968");
 }
 
-let total=0;
-let msg=`Hello Flofentry Foods,%0AName:${n}%0APhone:${p}%0ALocation:${l}%0A`;
+/* REVIEWS */
+let rating=0;
+function setRating(r){rating=r;}
 
-cart.forEach(i=>{
-msg+=`${i.name} - ${i.price}%0A`;
-total+=i.price;
+async function submitFeedback(){
+
+let name=fb-name.value;
+let phone=fb-phone.value;
+let product=fb-product.value;
+let message=fb-message.value;
+let file=fb-image.files[0];
+
+if(!name||!phone||!product||!message||rating===0) return;
+
+let spam=["http","www"];
+if(spam.some(w=>message.includes(w))) return alert("Spam");
+
+let verified=false;
+let orders=await db.collection("orders").where("customer.phone","==",phone).get();
+if(!orders.empty) verified=true;
+
+let image="";
+if(file){
+let reader=new FileReader();
+reader.onload=()=>save(reader.result);
+reader.readAsDataURL(file);
+}else save("");
+
+function save(img){
+db.collection("feedback").add({
+name,phone,product,message,
+rating,likes:0,verified,image:img,date:new Date().toISOString()
+});
+}
+
+}
+
+/* LOAD REVIEWS */
+function loadFeedback(){
+db.collection("feedback").onSnapshot(snap=>{
+
+let totalR=0,count=0;
+let ratings={};
+feedback-list.innerHTML="";
+
+snap.forEach(doc=>{
+let d=doc.data();
+
+if(!ratings[d.product]) ratings[d.product]={t:0,c:0};
+ratings[d.product].t+=d.rating;
+ratings[d.product].c++;
+
+totalR+=d.rating;count++;
+
+feedback-list.innerHTML+=`
+<div class="review" data-product="${d.product}">
+<b>${d.name}</b> ${d.verified?'<span class="badge">Verified</span>':''}<br>
+${"★".repeat(d.rating)}<br>
+<i>${d.product}</i>
+<p>${d.message}</p>
+${d.image?`<img src="${d.image}" width="100">`:''}
+<div onclick="like('${doc.id}')">👍 ${d.likes}</div>
+<button onclick="del('${doc.id}')">Delete</button>
+</div>`;
 });
 
-msg+=`Total: ${total}`;
+/* AVG */
+let avg=(totalR/count||0).toFixed(1);
+avg-rating.innerText="★".repeat(Math.round(avg));
+rating-count.innerText=`${avg}/5 (${count})`;
 
-window.open("https://wa.me/254726718968?text="+msg);
+/* PER PRODUCT */
+products.forEach(p=>{
+let el=document.getElementById(`rating-${p.name}`);
+if(ratings[p.name]){
+let a=(ratings[p.name].t/ratings[p.name].c).toFixed(1);
+el.innerText="★".repeat(Math.round(a));
+}else el.innerText="No reviews";
+});
 
-cart=[];
-updateCart();
+});
+}
+
+/* FILTER */
+function filterReviews(){
+let val=filter-product.value;
+document.querySelectorAll(".review").forEach(r=>{
+r.style.display=(val==="all"||r.dataset.product===val)?"block":"none";
+});
+}
+
+/* LIKE */
+function like(id){
+db.collection("feedback").doc(id).update({
+likes:firebase.firestore.FieldValue.increment(1)
+});
+}
+
+/* DELETE */
+function del(id){
+if(prompt("Admin password")!=="Newtonohms@1")return;
+db.collection("feedback").doc(id).delete();
 }
 
 /* INIT */
+products.forEach(p=>{
+fb-product.innerHTML+=`<option>${p.name}</option>`;
+filter-product.innerHTML+=`<option>${p.name}</option>`;
+});
+filter-product.innerHTML='<option value="all">All</option>'+filter-product.innerHTML;
+
 render();
-createSlider();
+buildSlider();
+loadFeedback();
 
 </script>
 
