@@ -4,10 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flofentry Foods | Buy Premium Nuts in Kenya</title>
+<title>Flofentry Foods | Premium Nuts Kenya</title>
 
-<meta name="description" content="Buy premium almonds, cashews, bitter kola & Brazil nuts in Kenya. Fresh, healthy snacks delivered in Nairobi and across Kenya.">
-<meta name="keywords" content="nuts Kenya, almonds Nairobi, cashews Kenya, healthy snacks Kenya, buy nuts online">
+<meta name="description" content="Buy fresh almonds, cashews, bitter kola and Brazil nuts in Kenya. Premium healthy snacks delivered in Nairobi.">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -21,7 +20,6 @@
 --primary:#2e7d32;
 --accent:#d4af37;
 --text:#f5f5f5;
---muted:#bbbbbb;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
@@ -34,10 +32,10 @@ color:var(--text);
 /* HEADER */
 header{
 display:flex;justify-content:space-between;align-items:center;
-padding:15px 30px;
+padding:15px 25px;
 background:rgba(0,0,0,0.6);
-backdrop-filter:blur(10px);
 position:sticky;top:0;z-index:1000;
+flex-wrap:wrap;gap:10px;
 }
 
 .logo{display:flex;align-items:center;gap:10px;}
@@ -45,22 +43,19 @@ position:sticky;top:0;z-index:1000;
 .logo h2{color:var(--accent);}
 
 nav a{
-margin-left:20px;
+margin-left:15px;
 text-decoration:none;
 color:#fff;
 font-size:14px;
 }
 
-nav a:hover{color:var(--accent);}
+#search{
+padding:8px;border-radius:6px;border:none;width:160px;
+}
 
 /* HERO */
-.slider{
-height:380px;
-border-radius:12px;
-overflow:hidden;
-position:relative;
-background:#000;
-}
+.hero{padding:20px;}
+.slider{height:380px;border-radius:12px;overflow:hidden;position:relative;}
 
 .slide{
 position:absolute;width:100%;height:100%;
@@ -71,25 +66,16 @@ padding:20px;
 }
 
 .slide::before{
-content:"";
-position:absolute;width:100%;height:100%;
-background:rgba(0,0,0,0.6);
+content:"";position:absolute;width:100%;height:100%;
+background:rgba(0,0,0,0.5);
 }
 
 .slide.active{opacity:1;}
 
 .slide h1{
-position:relative;
 z-index:2;
 font-size:clamp(18px,3.5vw,32px);
 text-align:center;
-max-width:90%;
-line-height:1.2;
-}
-
-.slide p{
-z-index:2;
-margin-top:10px;
 }
 
 /* PRODUCTS */
@@ -104,55 +90,48 @@ gap:20px;
 .card{
 background:var(--card);
 padding:15px;
-border-radius:12px;
-transition:0.3s;
+border-radius:10px;
 }
-
-.card:hover{transform:translateY(-5px);}
 
 .card img{
 width:100%;height:160px;object-fit:contain;
-background:#0d1511;border-radius:10px;
-}
-
-.card h3{
-font-size:15px;
-margin:10px 0;
+background:#0d1511;border-radius:8px;
 }
 
 .btn{
 background:var(--primary);
 padding:10px;
-border:none;
-width:100%;
-border-radius:8px;
-color:#fff;
-cursor:pointer;
+border:none;width:100%;
+border-radius:6px;color:#fff;
+margin-top:8px;
 }
 
 /* CART */
 #cart-box{
-max-width:450px;
-margin:40px auto;
+max-width:500px;margin:40px auto;
 background:var(--card);
-padding:20px;
-border-radius:12px;
+padding:20px;border-radius:10px;
 }
 
 input{
-width:100%;
-padding:10px;
-margin:5px 0;
-border:none;
-border-radius:6px;
+width:100%;padding:10px;margin:6px 0;
+border:none;border-radius:6px;
+}
+
+/* CONFIRMATION */
+#confirmation{
+display:none;
+position:fixed;
+top:0;left:0;width:100%;height:100%;
+background:#0f1a14;
+z-index:9999;
+padding:20px;
+text-align:center;
 }
 
 /* FOOTER */
 footer{
-text-align:center;
-padding:30px;
-background:#000;
-margin-top:40px;
+background:#000;padding:20px;text-align:center;margin-top:40px;
 }
 </style>
 </head>
@@ -170,11 +149,13 @@ margin-top:40px;
 <a href="#products">Products</a>
 </nav>
 
+<input id="search" placeholder="Search...">
+
 <div>Cart: <span id="cart-count">0</span></div>
 </header>
 
-<section>
-<div class="slider" id="slider"></div>
+<section class="hero">
+<div id="slider" class="slider"></div>
 </section>
 
 <section id="products">
@@ -194,8 +175,16 @@ margin-top:40px;
 <button class="btn" onclick="checkout()">Order via WhatsApp</button>
 </div>
 
+<!-- CONFIRMATION -->
+<div id="confirmation">
+<h2>✅ Order Placed Successfully</h2>
+<div id="order-summary"></div>
+<button class="btn" onclick="closeConfirmation()">Continue Shopping</button>
+</div>
+
 <footer>
-<p>© Flofentry Foods</p>
+<p>© 2026 Flofentry Foods</p>
+<p>📞 +254726718968 | 📧 flofentryfoods@gmail.com</p>
 </footer>
 
 <script>
@@ -247,7 +236,7 @@ let products=[
 
 let cart=[];
 
-/* RENDER PRODUCTS */
+/* RENDER */
 function render(){
 let box=document.getElementById("products-list");
 box.innerHTML="";
@@ -262,6 +251,14 @@ box.innerHTML+=`
 });
 }
 
+/* SEARCH */
+document.getElementById("search").addEventListener("input",function(){
+let val=this.value.toLowerCase();
+document.querySelectorAll(".card").forEach(card=>{
+card.style.display=card.innerText.toLowerCase().includes(val)?"block":"none";
+});
+});
+
 /* SLIDER */
 let i=0;
 function buildSlider(){
@@ -271,7 +268,6 @@ products.forEach((p,index)=>{
 slider.innerHTML+=`
 <div class="slide ${index===0?"active":""}" style="background-image:url('${p.img}')">
 <h1>${p.name}</h1>
-<p>KSh ${p.price}</p>
 </div>`;
 });
 
@@ -294,13 +290,22 @@ let box=document.getElementById("cart-items");
 box.innerHTML="";
 let total=0;
 
-cart.forEach(i=>{
+cart.forEach((i,index)=>{
 total+=i.price;
-box.innerHTML+=`${i.name} - ${i.price}<br>`;
+box.innerHTML+=`
+<div style="display:flex;justify-content:space-between;margin:6px 0;">
+<span>${i.name}</span>
+<button onclick="removeItem(${index})">X</button>
+</div>`;
 });
 
 document.getElementById("cart-count").innerText=cart.length;
 document.getElementById("total").innerText=total;
+}
+
+function removeItem(i){
+cart.splice(i,1);
+updateCart();
 }
 
 /* CHECKOUT */
@@ -314,20 +319,25 @@ alert("Fill all fields");
 return;
 }
 
-let msg=`Hello Flofentry Foods,%0AName:${name}%0APhone:${phone}%0ALocation:${location}%0A`;
+let total=0;
+let summary="";
 
 cart.forEach((i,index)=>{
-msg+=`${index+1}. ${i.name} - KSh ${i.price}%0A`;
+summary+=`${index+1}. ${i.name} - KSh ${i.price}<br>`;
+total+=i.price;
 });
 
-window.open("https://wa.me/254726718968?text="+msg);
+document.getElementById("confirmation").style.display="block";
+document.getElementById("order-summary").innerHTML=summary + "<br><b>Total: KSh "+total+"</b>";
 
-db.collection("orders").add({
-name,phone,location,cart,date:new Date()
-});
+window.open("https://wa.me/254726718968");
 
 cart=[];
 updateCart();
+}
+
+function closeConfirmation(){
+document.getElementById("confirmation").style.display="none";
 }
 
 /* INIT */
