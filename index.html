@@ -168,10 +168,15 @@ background:#000;padding:20px;text-align:center;margin-top:40px;
 <input id="name" placeholder="Full Name">
 <input id="phone" placeholder="Phone Number">
 <input id="location" placeholder="Location">
+<button class="btn" onclick="getLocation()">
+Auto Detect Location
+</button> 
 
 <div id="cart-items"></div>
 <h3>Total: KSh <span id="total">0</span></h3>
-
+<p style="font-size:13px;color:#bbb;margin-top:10px;">
+🚚 We deliver across Kenya at a small fee depending on your location.
+</p>
 <button class="btn" onclick="checkout()">Order via WhatsApp</button>
 </div>
 
@@ -339,7 +344,33 @@ updateCart();
 function closeConfirmation(){
 document.getElementById("confirmation").style.display="none";
 }
+function getLocation(){
+if(!navigator.geolocation){
+alert("Geolocation not supported");
+return;
+}
 
+navigator.geolocation.getCurrentPosition(
+async (position)=>{
+let lat=position.coords.latitude;
+let lon=position.coords.longitude;
+
+try{
+let res=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+let data=await res.json();
+
+let address = data.display_name || `${lat}, ${lon}`;
+document.getElementById("location").value = address;
+
+}catch{
+document.getElementById("location").value = `${lat}, ${lon}`;
+}
+},
+()=>{
+alert("Please allow location access");
+}
+);
+}
 /* INIT */
 document.addEventListener("DOMContentLoaded",()=>{
 render();
