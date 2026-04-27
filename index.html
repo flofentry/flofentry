@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flofentry Foods | Premium Nuts Kenya</title>
+
+<title>Flofentry Foods | Buy Premium Nuts in Kenya</title>
+
+<meta name="description" content="Buy premium almonds, cashews, bitter kola & Brazil nuts in Kenya. Fresh, healthy snacks delivered in Nairobi and across Kenya.">
+<meta name="keywords" content="nuts Kenya, almonds Nairobi, cashews Kenya, healthy snacks Kenya, buy nuts online">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -30,39 +34,29 @@ color:var(--text);
 /* HEADER */
 header{
 display:flex;justify-content:space-between;align-items:center;
-padding:18px 40px;
+padding:15px 30px;
 background:rgba(0,0,0,0.6);
 backdrop-filter:blur(10px);
 position:sticky;top:0;z-index:1000;
 }
 
-.logo{
-display:flex;align-items:center;gap:10px;
-}
-
-.logo img{
-height:45px;
-}
-
-.logo h2{
-color:var(--accent);
-}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo img{height:40px;}
+.logo h2{color:var(--accent);}
 
 nav a{
-margin-left:25px;
+margin-left:20px;
 text-decoration:none;
-color:var(--text);
-font-weight:500;
+color:#fff;
+font-size:14px;
 }
 
 nav a:hover{color:var(--accent);}
 
-/* HERO SLIDER */
-.hero{padding:20px;}
-
+/* HERO */
 .slider{
-height:420px;
-border-radius:14px;
+height:380px;
+border-radius:12px;
 overflow:hidden;
 position:relative;
 background:#000;
@@ -73,157 +67,92 @@ position:absolute;width:100%;height:100%;
 opacity:0;transition:1s;
 display:flex;flex-direction:column;justify-content:center;align-items:center;
 background-size:contain;background-repeat:no-repeat;background-position:center;
+padding:20px;
 }
 
 .slide::before{
 content:"";
-position:absolute;
-width:100%;height:100%;
-background:rgba(0,0,0,0.5);
+position:absolute;width:100%;height:100%;
+background:rgba(0,0,0,0.6);
 }
 
 .slide.active{opacity:1;}
 
-.slide h1,.slide p{
+.slide h1{
 position:relative;
 z-index:2;
-}
-
-.slide h1{
-font-size:32px;
-color:#fff;
+font-size:clamp(18px,3.5vw,32px);
+text-align:center;
+max-width:90%;
+line-height:1.2;
 }
 
 .slide p{
-margin-top:8px;
-color:#ddd;
-}
-
-/* SECTIONS */
-section{
-padding:80px 20px;
-max-width:1200px;
-margin:auto;
-}
-
-h2{
-text-align:center;
-margin-bottom:30px;
-color:var(--accent);
-}
-
-/* TRUST */
-.trust,.steps{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-}
-
-.trust div,.steps div{
-background:var(--card);
-padding:25px;
-border-radius:12px;
-box-shadow:0 8px 30px rgba(0,0,0,0.4);
-transition:0.3s;
-}
-
-.trust div:hover,.steps div:hover{
-transform:translateY(-5px);
+z-index:2;
+margin-top:10px;
 }
 
 /* PRODUCTS */
+section{padding:60px 20px;max-width:1200px;margin:auto;}
+
 .products{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:25px;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
 }
 
 .card{
 background:var(--card);
 padding:15px;
 border-radius:12px;
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
 transition:0.3s;
 }
 
-.card:hover{
-transform:translateY(-8px);
-}
+.card:hover{transform:translateY(-5px);}
 
 .card img{
-width:100%;
-height:180px;
-object-fit:contain;
-background:#0d1511;
-border-radius:10px;
-margin-bottom:10px;
+width:100%;height:160px;object-fit:contain;
+background:#0d1511;border-radius:10px;
 }
 
-.card h3{color:#fff;}
-.card p{color:var(--muted);}
+.card h3{
+font-size:15px;
+margin:10px 0;
+}
 
-/* BUTTON */
 .btn{
 background:var(--primary);
-color:#fff;
+padding:10px;
 border:none;
-padding:12px;
 width:100%;
-margin-top:10px;
 border-radius:8px;
+color:#fff;
 cursor:pointer;
-font-weight:600;
-}
-
-.btn:hover{
-background:#1b5e20;
 }
 
 /* CART */
 #cart-box{
-max-width:500px;
-margin:60px auto;
+max-width:450px;
+margin:40px auto;
 background:var(--card);
-padding:25px;
+padding:20px;
 border-radius:12px;
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 
 input{
 width:100%;
-padding:12px;
-margin:6px 0;
-border-radius:6px;
+padding:10px;
+margin:5px 0;
 border:none;
-background:#0f1a14;
-color:#fff;
-}
-
-/* PANELS */
-#admin,#tracking{
-display:none;
-position:fixed;
-top:0;left:0;width:100%;height:100%;
-background:var(--bg);
-padding:20px;
-overflow:auto;
-z-index:9999;
-}
-
-.order{
-background:var(--card);
-padding:12px;
-margin:10px 0;
-border-radius:10px;
+border-radius:6px;
 }
 
 /* FOOTER */
 footer{
-background:#000;
-padding:40px;
 text-align:center;
-margin-top:50px;
-color:#aaa;
+padding:30px;
+background:#000;
+margin-top:40px;
 }
 </style>
 </head>
@@ -239,26 +168,13 @@ color:#aaa;
 <nav>
 <a href="#">Home</a>
 <a href="#products">Products</a>
-<a href="#about">About</a>
-<a href="#" onclick="openTracking()">Track</a>
-<a href="#" onclick="openAdmin()">Admin</a>
 </nav>
 
 <div>Cart: <span id="cart-count">0</span></div>
 </header>
 
-<section class="hero">
-<div class="slider" id="slider"></div>
-</section>
-
 <section>
-<h2>Why Choose Flofentry</h2>
-<div class="trust">
-<div>Premium carefully selected products</div>
-<div>Fast delivery across Kenya</div>
-<div>Secure and reliable ordering</div>
-<div>Fresh packaging guaranteed</div>
-</div>
+<div class="slider" id="slider"></div>
 </section>
 
 <section id="products">
@@ -266,57 +182,20 @@ color:#aaa;
 <div id="products-list" class="products"></div>
 </section>
 
-<section>
-<h2>How It Works</h2>
-<div class="steps">
-<div>Select products</div>
-<div>Place your order</div>
-<div>We deliver to you</div>
-</div>
-</section>
-
-<section id="about">
-<h2>About Flofentry</h2>
-<p style="text-align:center;color:#ccc;max-width:700px;margin:auto;">
-We supply premium nuts and superfoods across Kenya, focusing on quality,
-freshness, and customer satisfaction.
-</p>
-</section>
-
 <div id="cart-box">
-<h3>Customer Details</h3>
+<h3>Checkout</h3>
 <input id="name" placeholder="Full Name">
 <input id="phone" placeholder="Phone Number">
 <input id="location" placeholder="Location">
 
-<button class="btn" onclick="getLocation()">Auto Detect Location</button>
-
-<h3>Your Cart</h3>
 <div id="cart-items"></div>
-
 <h3>Total: KSh <span id="total">0</span></h3>
 
 <button class="btn" onclick="checkout()">Order via WhatsApp</button>
 </div>
 
-<div id="tracking">
-<h2>Track Order</h2>
-<button onclick="closeTracking()">Close</button>
-<input id="track-phone" placeholder="Phone Number">
-<button class="btn" onclick="trackOrders()">Track</button>
-<div id="track-results"></div>
-</div>
-
-<div id="admin">
-<h2>Admin Dashboard</h2>
-<button onclick="closeAdmin()">Close</button>
-<div id="analytics"></div>
-<div id="orders"></div>
-</div>
-
 <footer>
-<p>© 2026 Flofentry Foods</p>
-<p>+254726718968 | flofrenry@gmail.com</p>
+<p>© Flofentry Foods</p>
 </footer>
 
 <script>
@@ -328,39 +207,47 @@ projectId:"YOUR_PROJECT_ID"
 });
 const db=firebase.firestore();
 
-/* PRODUCTS */
+/* PRODUCTS (PRO TITLES) */
 let products=[
 
-{name:"Bitter Kola 60g – Organic Bitter Kola Kenya Herbal Nuts Nairobi Natural Health",price:1000,img:"images/bitterkola-60g.jpg"},
-{name:"Bitter Kola 125g – Premium Bitter Kola Bulk Kenya Buy Online Nairobi Herbal",price:2000,img:"images/bitterkola-125g.jpg"},
+// BITTER KOLA
+{name:"Bitter Kola 60g – Natural Herbal Wellness",price:1000,img:"images/bitterkola-60g.jpg"},
+{name:"Bitter Kola 125g – Premium Herbal Kola Nuts",price:2000,img:"images/bitterkola-125g.jpg"},
 
-{name:"Almond Nuts 1kg Raw – Buy Raw Almonds Kenya Nairobi Healthy Superfoods Premium",price:2200,img:"images/almond-1kg.jpg"},
-{name:"Almond Nuts 1kg Roasted – Crunchy Roasted Almonds Kenya Best Price Healthy Snacks",price:2400,img:"images/almond-1kg.jpg"},
+// ALMONDS 1KG
+{name:"Raw Almonds 1kg – Premium Healthy Nuts",price:2200,img:"images/almond-1kg.jpg"},
+{name:"Roasted Almonds 1kg – Crunchy Snack Pack",price:2400,img:"images/almond-1kg.jpg"},
 
-{name:"Almond Nuts 500g Raw – Fresh Almonds Kenya Online Nairobi Healthy Snacks",price:1200,img:"images/almond-500g.jpg"},
-{name:"Almond Nuts 500g Roasted – Tasty Roasted Almonds Kenya Nairobi Best Quality",price:1400,img:"images/almond-500g.jpg"},
+// ALMONDS 500G
+{name:"Raw Almonds 500g – Fresh Natural Nuts",price:1200,img:"images/almond-500g.jpg"},
+{name:"Roasted Almonds 500g – Crunchy & Tasty",price:1400,img:"images/almond-500g.jpg"},
 
-{name:"Almond Nuts 250g Raw – Small Pack Almonds Kenya Healthy Diet Snacks Nairobi",price:700,img:"images/almond-250g.jpg"},
-{name:"Almond Nuts 250g Roasted – Crunchy Almond Snacks Kenya Nairobi Ready to Eat",price:900,img:"images/almond-250g.jpg"},
+// ALMONDS 250G
+{name:"Raw Almonds 250g – Healthy Snack Pack",price:700,img:"images/almond-250g.jpg"},
+{name:"Roasted Almonds 250g – Ready-to-Eat Crunchy Nuts",price:900,img:"images/almond-250g.jpg"},
 
-{name:"Cashew Nuts 1kg Raw – Fresh Cashews Kenya Nairobi Premium Quality Healthy Nuts",price:1800,img:"images/cashew-1kg.jpg"},
-{name:"Cashew Nuts 1kg Roasted – Roasted Cashews Kenya Buy Online Healthy Snacks Nairobi",price:2000,img:"images/cashew-1kg.jpg"},
+// CASHEWS 1KG
+{name:"Raw Cashew Nuts 1kg – Premium Fresh Quality",price:1800,img:"images/cashew-1kg.jpg"},
+{name:"Roasted Cashew Nuts 1kg – Crunchy Snack Pack",price:2000,img:"images/cashew-1kg.jpg"},
 
-{name:"Cashew Nuts 500g Raw – Buy Cashew Nuts Kenya Nairobi Best Price Fresh Quality",price:1000,img:"images/cashew-500g.jpg"},
-{name:"Cashew Nuts 500g Roasted – Crunchy Cashews Kenya Healthy Snacks Nairobi",price:1200,img:"images/cashew-500g.jpg"},
+// CASHEWS 500G
+{name:"Raw Cashew Nuts 500g – Fresh Natural Snack",price:1000,img:"images/cashew-500g.jpg"},
+{name:"Roasted Cashew Nuts 500g – Crunchy & Tasty",price:1200,img:"images/cashew-500g.jpg"},
 
-{name:"Cashew Nuts 250g Raw – Small Pack Cashews Kenya Healthy Snack Nairobi",price:600,img:"images/cashew-250g.jpg"},
-{name:"Cashew Nuts 250g Roasted – Tasty Cashew Snacks Kenya Ready to Eat Nairobi",price:800,img:"images/cashew-250g.jpg"},
+// CASHEWS 250G
+{name:"Raw Cashew Nuts 250g – Healthy Snack Pack",price:600,img:"images/cashew-250g.jpg"},
+{name:"Roasted Cashew Nuts 250g – Ready-to-Eat Snack",price:800,img:"images/cashew-250g.jpg"},
 
-{name:"Brazil Nuts 500g – Bulk Brazil Nuts Kenya Nairobi Buy Online Superfoods Premium",price:5500,img:"images/brazil-500g.jpg"},
-{name:"Brazil Nuts 250g – Organic Brazil Nuts Kenya Healthy Living Selenium Rich Nairobi",price:3500,img:"images/brazil-250g.jpg"},
-{name:"Brazil Nuts 125g – Small Pack Brazil Nuts Kenya Healthy Snacks Nairobi",price:1800,img:"images/brazil-125g.jpg"}
+// BRAZIL NUTS
+{name:"Brazil Nuts 500g – Premium Selenium-Rich Nuts",price:5500,img:"images/brazil-500g.jpg"},
+{name:"Brazil Nuts 250g – Healthy Superfood Snack",price:3500,img:"images/brazil-250g.jpg"},
+{name:"Brazil Nuts 125g – Small Healthy Snack Pack",price:1800,img:"images/brazil-125g.jpg"}
 
 ];
 
 let cart=[];
 
-/* RENDER */
+/* RENDER PRODUCTS */
 function render(){
 let box=document.getElementById("products-list");
 box.innerHTML="";
@@ -393,7 +280,7 @@ let slides=document.querySelectorAll(".slide");
 slides.forEach(s=>s.classList.remove("active"));
 i=(i+1)%slides.length;
 slides[i].classList.add("active");
-},3500);
+},3000);
 }
 
 /* CART */
@@ -407,26 +294,13 @@ let box=document.getElementById("cart-items");
 box.innerHTML="";
 let total=0;
 
-cart.forEach((i,index)=>{
+cart.forEach(i=>{
 total+=i.price;
-box.innerHTML+=`${i.name} - ${i.price} <button onclick="removeItem(${index})">X</button><br>`;
+box.innerHTML+=`${i.name} - ${i.price}<br>`;
 });
 
 document.getElementById("cart-count").innerText=cart.length;
 document.getElementById("total").innerText=total;
-}
-
-function removeItem(i){
-cart.splice(i,1);
-updateCart();
-}
-
-/* LOCATION */
-function getLocation(){
-navigator.geolocation.getCurrentPosition(pos=>{
-document.getElementById("location").value =
-pos.coords.latitude+","+pos.coords.longitude;
-});
 }
 
 /* CHECKOUT */
@@ -440,75 +314,20 @@ alert("Fill all fields");
 return;
 }
 
-let total=0;
 let msg=`Hello Flofentry Foods,%0AName:${name}%0APhone:${phone}%0ALocation:${location}%0A`;
 
 cart.forEach((i,index)=>{
 msg+=`${index+1}. ${i.name} - KSh ${i.price}%0A`;
-total+=i.price;
-});
-
-msg+=`Total: KSh ${total}`;
-
-db.collection("orders").add({
-customer:{name,phone,location},
-items:cart,
-total,
-status:"Pending",
-date:new Date().toISOString()
 });
 
 window.open("https://wa.me/254726718968?text="+msg);
 
+db.collection("orders").add({
+name,phone,location,cart,date:new Date()
+});
+
 cart=[];
 updateCart();
-}
-
-/* TRACK */
-function openTracking(){tracking.style.display="block";}
-function closeTracking(){tracking.style.display="none";}
-
-function trackOrders(){
-let phone=document.getElementById("track-phone").value;
-
-db.collection("orders")
-.where("customer.phone","==",phone)
-.onSnapshot(snap=>{
-let box=document.getElementById("track-results");
-box.innerHTML="";
-snap.forEach(doc=>{
-let d=doc.data();
-box.innerHTML+=`<div class="order">${d.status} - KSh ${d.total}</div>`;
-});
-});
-}
-
-/* ADMIN */
-function openAdmin(){
-if(prompt("Password")!=="Newtonohms@1")return;
-admin.style.display="block";
-loadOrders();
-loadAnalytics();
-}
-
-function closeAdmin(){admin.style.display="none";}
-
-function loadOrders(){
-db.collection("orders").onSnapshot(snap=>{
-orders.innerHTML="";
-snap.forEach(doc=>{
-let d=doc.data();
-orders.innerHTML+=`<div class="order">${d.customer.name} - ${d.total} (${d.status})</div>`;
-});
-});
-}
-
-function loadAnalytics(){
-db.collection("orders").onSnapshot(snap=>{
-let revenue=0;
-snap.forEach(doc=>revenue+=doc.data().total);
-analytics.innerHTML=`Total Revenue: KSh ${revenue}`;
-});
 }
 
 /* INIT */
@@ -516,7 +335,6 @@ document.addEventListener("DOMContentLoaded",()=>{
 render();
 buildSlider();
 });
-
 </script>
 
 </body>
