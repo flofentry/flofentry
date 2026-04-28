@@ -4,10 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Flofentry Foods | Buy Nuts in Kenya | Almonds Cashews Nairobi</title>
-
-<meta name="description" content="Buy almonds, cashews, bitter kola, Brazil nuts in Kenya. Flofentry Foods delivers across Kenya at affordable cost.">
-<meta name="keywords" content="nuts kenya, almonds nairobi, cashews kenya, bitter kola kenya, brazil nuts kenya">
+<title>Flofentry Foods | Buy Nuts in Kenya</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -25,7 +22,6 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
-
 body{background:linear-gradient(135deg,#0f1a14,#121f18);color:var(--text);}
 
 /* HEADER */
@@ -35,7 +31,10 @@ padding:15px;background:#000;position:sticky;top:0;z-index:1000;
 }
 .logo{display:flex;align-items:center;gap:10px;}
 .logo img{height:40px;}
-nav a{margin:0 10px;color:#fff;text-decoration:none;font-size:14px;}
+
+nav a{
+margin:0 10px;color:#fff;text-decoration:none;font-size:14px;
+}
 nav a:hover{color:var(--accent);}
 
 /* SLIDER */
@@ -47,7 +46,7 @@ background-size:contain;background-repeat:no-repeat;background-position:center;
 }
 .slide.active{opacity:1;}
 
-/* SECTIONS */
+/* SECTION */
 section{padding:40px 20px;max-width:1200px;margin:auto;}
 h2{text-align:center;color:var(--accent);margin-bottom:20px;}
 
@@ -56,6 +55,7 @@ display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:15px;
 }
+
 .box{
 background:var(--card);
 padding:20px;border-radius:10px;text-align:center;
@@ -67,44 +67,100 @@ display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 gap:20px;
 }
+
 .card{
 background:var(--card);
 padding:10px;border-radius:10px;
 position:relative;
 }
-.card img{width:100%;height:150px;object-fit:contain;cursor:pointer;}
+
+.card img{width:100%;height:150px;object-fit:contain;}
+
 .badge{
 position:absolute;top:10px;left:10px;
 background:red;padding:5px;border-radius:5px;font-size:12px;
 }
+
 .btn{
-background:var(--primary);padding:8px;border:none;width:100%;
-margin-top:5px;border-radius:5px;color:#fff;cursor:pointer;
+background:var(--primary);
+padding:10px;border:none;width:100%;
+margin-top:8px;border-radius:6px;color:#fff;cursor:pointer;
 }
 
-/* CART DRAWER */
+/* CART */
 #cartDrawer{
-position:fixed;right:-350px;top:0;width:350px;height:100%;
-background:#111;padding:20px;transition:0.3s;overflow:auto;
+position:fixed;
+right:-360px;
+top:0;
+width:360px;
+height:100%;
+background:#111;
+padding:80px 20px 20px;
+transition:0.3s;
+display:flex;
+flex-direction:column;
+z-index:2000;
 }
+
 #cartDrawer.active{right:0;}
 
+#cart-items{
+flex:1;
+overflow-y:auto;
+margin-bottom:15px;
+padding-top:10px;
+}
+
 .cart-item{
-display:flex;justify-content:space-between;align-items:center;
-margin-bottom:8px;background:#1b2a22;padding:6px;border-radius:6px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+background:#1b2a22;
+padding:10px;
+border-radius:6px;
+gap:10px;
+}
+
+.cart-item span{flex:1;}
+
+.cart-item button{
+background:red;border:none;color:#fff;
+padding:5px 8px;border-radius:4px;cursor:pointer;
+}
+
+/* INPUT */
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:6px;
+border:none;
 }
 
 /* ADMIN */
 #admin{
-display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-background:#000;padding:20px;overflow:auto;
+display:none;
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:#000;
+padding:20px;
+overflow:auto;
+z-index:3000;
 }
 
 /* WHATSAPP */
 .whatsapp{
-position:fixed;bottom:20px;right:20px;
-background:#25D366;color:#fff;padding:15px;border-radius:50%;
-font-size:20px;text-decoration:none;
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:#fff;
+padding:15px;
+border-radius:50%;
+font-size:20px;
+text-decoration:none;
 }
 </style>
 </head>
@@ -127,10 +183,8 @@ font-size:20px;text-decoration:none;
 <div onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
 </header>
 
-<!-- SLIDER -->
 <div class="slider" id="slider"></div>
 
-<!-- WHY -->
 <section>
 <h2>Why Choose Flofentry</h2>
 <div class="trust">
@@ -141,20 +195,12 @@ font-size:20px;text-decoration:none;
 </div>
 </section>
 
-<!-- PRODUCTS -->
 <section id="products">
 <h2>Our Products</h2>
-
-<input placeholder="Search..." oninput="search(this.value)" style="width:100%;padding:10px;margin-bottom:10px;">
-
-<button onclick="filter('all')">All</button>
-<button onclick="filter('Almond')">Almonds</button>
-<button onclick="filter('Cashew')">Cashews</button>
-
+<input placeholder="Search..." oninput="search(this.value)">
 <div id="products-list" class="products"></div>
 </section>
 
-<!-- HOW -->
 <section>
 <h2>How It Works</h2>
 <div class="steps">
@@ -164,7 +210,6 @@ font-size:20px;text-decoration:none;
 </div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
 <h2>About Flofentry</h2>
 <p style="text-align:center;">
@@ -175,12 +220,14 @@ We supply premium nuts across Kenya with quality and freshness guaranteed.
 <!-- CART -->
 <div id="cartDrawer">
 <h3>Your Cart</h3>
+
 <div id="cart-items"></div>
+
 <h3>Total: KSh <span id="total">0</span></h3>
 
 <input id="name" placeholder="Name">
 <input id="phone" placeholder="Phone">
-<input id="location" placeholder="Location">
+<input id="location" placeholder="Click auto detect location">
 
 <button class="btn" onclick="getLocation()">Auto Location</button>
 <button class="btn" onclick="checkout()">Order via WhatsApp</button>
@@ -188,13 +235,15 @@ We supply premium nuts across Kenya with quality and freshness guaranteed.
 
 <!-- ADMIN -->
 <div id="admin">
-<h2>Admin Panel</h2>
+<h2>Admin Dashboard</h2>
 <button onclick="closeAdmin()">Close</button>
-<canvas id="chart"></canvas>
+
+<canvas id="chart" style="max-width:500px;margin:20px auto;"></canvas>
+
+<h3>Orders</h3>
 <div id="orders"></div>
 </div>
 
-<!-- WHATSAPP -->
 <a class="whatsapp" href="https://wa.me/254726718968">💬</a>
 
 <footer style="text-align:center;padding:20px;background:#000;">
@@ -204,7 +253,7 @@ We supply premium nuts across Kenya with quality and freshness guaranteed.
 
 <script>
 
-/* FIREBASE */
+/* FIREBASE SETUP */
 firebase.initializeApp({
 apiKey:"YOUR_KEY",
 projectId:"YOUR_PROJECT_ID"
@@ -213,23 +262,7 @@ const db=firebase.firestore();
 
 /* PRODUCTS */
 let products=[
-{name:"Bitter Kola 60g – Natural Herbal Wellness",price:1000,img:"images/bitterkola-60g.jpg"},
-{name:"Bitter Kola 125g – Premium Herbal Kola Nuts",price:2000,img:"images/bitterkola-125g.jpg"},
-{name:"Raw Almonds 1kg – Premium Healthy Nuts",price:2200,img:"images/almond-1kg.jpg"},
-{name:"Roasted Almonds 1kg – Crunchy Snack Pack",price:2400,img:"images/almond-1kg.jpg"},
-{name:"Raw Almonds 500g – Fresh Natural Nuts",price:1200,img:"images/almond-500g.jpg"},
-{name:"Roasted Almonds 500g – Crunchy & Tasty",price:1400,img:"images/almond-500g.jpg"},
-{name:"Raw Almonds 250g – Healthy Snack Pack",price:700,img:"images/almond-250g.jpg"},
-{name:"Roasted Almonds 250g – Ready-to-Eat Crunchy Nuts",price:900,img:"images/almond-250g.jpg"},
-{name:"Raw Cashew Nuts 1kg – Premium Fresh Quality",price:1800,img:"images/cashew-1kg.jpg"},
-{name:"Roasted Cashew Nuts 1kg – Crunchy Snack Pack",price:2000,img:"images/cashew-1kg.jpg"},
-{name:"Raw Cashew Nuts 500g – Fresh Natural Snack",price:1000,img:"images/cashew-500g.jpg"},
-{name:"Roasted Cashew Nuts 500g – Crunchy & Tasty",price:1200,img:"images/cashew-500g.jpg"},
-{name:"Raw Cashew Nuts 250g – Healthy Snack Pack",price:600,img:"images/cashew-250g.jpg"},
-{name:"Roasted Cashew Nuts 250g – Ready-to-Eat Snack",price:800,img:"images/cashew-250g.jpg"},
-{name:"Brazil Nuts 500g",price:5500,img:"images/brazil-500g.jpg"},
-{name:"Brazil Nuts 250g",price:3500,img:"images/brazil-250g.jpg"},
-{name:"Brazil Nuts 125g",price:1800,img:"images/brazil-125g.jpg"}
+{name:"Bitter Kola 60g – Natural Herbal Wellness",price:1000,img:"images/bitterkola-60g.jpg"}, {name:"Bitter Kola 125g – Premium Herbal Kola Nuts",price:2000,img:"images/bitterkola-125g.jpg"}, {name:"Raw Almonds 1kg – Premium Healthy Nuts",price:2200,img:"images/almond-1kg.jpg"}, {name:"Roasted Almonds 1kg – Crunchy Snack Pack",price:2400,img:"images/almond-1kg.jpg"}, {name:"Raw Almonds 500g – Fresh Natural Nuts",price:1200,img:"images/almond-500g.jpg"}, {name:"Roasted Almonds 500g – Crunchy & Tasty",price:1400,img:"images/almond-500g.jpg"}, {name:"Raw Almonds 250g – Healthy Snack Pack",price:700,img:"images/almond-250g.jpg"}, {name:"Roasted Almonds 250g – Ready-to-Eat Crunchy Nuts",price:900,img:"images/almond-250g.jpg"}, {name:"Raw Cashew Nuts 1kg – Premium Fresh Quality",price:1800,img:"images/cashew-1kg.jpg"}, {name:"Roasted Cashew Nuts 1kg – Crunchy Snack Pack",price:2000,img:"images/cashew-1kg.jpg"}, {name:"Raw Cashew Nuts 500g – Fresh Natural Snack",price:1000,img:"images/cashew-500g.jpg"}, {name:"Roasted Cashew Nuts 500g – Crunchy & Tasty",price:1200,img:"images/cashew-500g.jpg"}, {name:"Raw Cashew Nuts 250g – Healthy Snack Pack",price:600,img:"images/cashew-250g.jpg"}, {name:"Roasted Cashew Nuts 250g – Ready-to-Eat Snack",price:800,img:"images/cashew-250g.jpg"}, {name:"Brazil Nuts 500g",price:5500,img:"images/brazil-500g.jpg"}, {name:"Brazil Nuts 250g",price:3500,img:"images/brazil-250g.jpg"}, {name:"Brazil Nuts 125g",price:1800,img:"images/brazil-125g.jpg"}
 ];
 
 let cart=[];
@@ -255,12 +288,6 @@ function search(q){
 render(products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())));
 }
 
-/* FILTER */
-function filter(cat){
-if(cat==="all") render();
-else render(products.filter(p=>p.name.includes(cat)));
-}
-
 /* CART */
 function add(name){
 cart.push(products.find(p=>p.name===name));
@@ -277,7 +304,7 @@ total+=i.price;
 box.innerHTML+=`
 <div class="cart-item">
 <span>${i.name}</span>
-<button onclick="removeItem(${index})">❌</button>
+<button onclick="removeItem(${index})">X</button>
 </div>`;
 });
 
@@ -294,45 +321,34 @@ function toggleCart(){
 document.getElementById("cartDrawer").classList.toggle("active");
 }
 
-/* REAL LOCATION (FIXED) */
+/* 🔥 EXACT LOCATION (FULL ADDRESS) */
 function getLocation(){
 navigator.geolocation.getCurrentPosition(async pos=>{
-try{
-let res=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
-let data=await res.json();
+let res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
+let data = await res.json();
 
-let place =
-data.address.city ||
-data.address.town ||
-data.address.suburb ||
-data.address.county ||
-data.address.state ||
-"Your Area";
-
-document.getElementById("location").value = place;
-
-}catch{
-document.getElementById("location").value="Location detected";
-}
+/* FULL ADDRESS */
+document.getElementById("location").value = data.display_name;
 });
 }
 
 /* CHECKOUT */
 function checkout(){
-let name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
-let loc=document.getElementById("location").value;
-
-let msg=`Flofentry Order:%0AName:${name}%0APhone:${phone}%0ALocation:${loc}%0A`;
+let name=name.value;
+let phone=phone.value;
+let loc=location.value;
 
 let total=0;
+let msg=`Flofentry Order:%0AName:${name}%0APhone:${phone}%0ALocation:${loc}%0A`;
+
 cart.forEach((i,idx)=>{
 msg+=`${idx+1}. ${i.name} - KSh ${i.price}%0A`;
 total+=i.price;
 });
+
 msg+=`Total: KSh ${total}`;
 
-db.collection("orders").add({name,phone,loc,cart,total,status:"Pending"});
+db.collection("orders").add({name,phone,loc,total,cart});
 
 window.open("https://wa.me/254726718968?text="+msg);
 
@@ -342,20 +358,41 @@ updateCart();
 
 /* ADMIN */
 function openAdmin(){
-if(prompt("Password")!=="1234")return;
-admin.style.display="block";
+if(prompt("Password")!=="Flo@0726718968")return;
+
+document.getElementById("admin").style.display="block";
 
 db.collection("orders").onSnapshot(snap=>{
 let revenue=0;
-snap.forEach(doc=>revenue+=doc.data().total);
+let ordersHTML="";
 
+snap.forEach(doc=>{
+let d=doc.data();
+revenue+=d.total;
+
+ordersHTML+=`<div style="margin:10px 0;background:#222;padding:10px;">
+${d.name} - ${d.phone}<br>
+${d.loc}<br>
+Total: KSh ${d.total}
+</div>`;
+});
+
+document.getElementById("orders").innerHTML=ordersHTML;
+
+/* CHART */
 new Chart(document.getElementById("chart"),{
 type:'bar',
-data:{labels:["Revenue"],datasets:[{data:[revenue]}]}
+data:{
+labels:["Revenue"],
+datasets:[{data:[revenue]}]
+}
 });
 });
 }
-function closeAdmin(){admin.style.display="none";}
+
+function closeAdmin(){
+document.getElementById("admin").style.display="none";
+}
 
 /* SLIDER */
 let i=0;
