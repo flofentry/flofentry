@@ -3,164 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Flofentry Foods | Premium Nuts Kenya</title>
 
-<meta name="description" content="Buy fresh almonds, cashews, bitter kola and Brazil nuts in Kenya. Premium healthy snacks delivered across Kenya.">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-:root{
---bg:#0f1a14;
---card:#16241c;
---primary:#2e7d32;
---accent:#d4af37;
---text:#f5f5f5;
---muted:#bbb;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
-
-body{
-background:linear-gradient(135deg,#0f1a14,#121f18);
-color:var(--text);
-}
+body{margin:0;font-family:Poppins;background:#0f1a14;color:#fff}
 
 /* HEADER */
-header{
-display:flex;justify-content:space-between;align-items:center;
-padding:15px 25px;
-background:rgba(0,0,0,0.6);
-position:sticky;top:0;z-index:1000;
-flex-wrap:wrap;gap:10px;
+header{display:flex;justify-content:space-between;align-items:center;padding:10px;background:#000;flex-wrap:wrap}
+.logo{display:flex;gap:10px;align-items:center}
+.logo img{height:35px}
+.menu-toggle{display:none;font-size:24px;cursor:pointer}
+
+nav{display:flex;gap:10px}
+nav a{color:#fff;text-decoration:none;font-size:14px}
+
+@media(max-width:768px){
+.menu-toggle{display:block}
+nav{display:none;flex-direction:column;width:100%;background:#000}
+nav.active{display:flex}
 }
-
-.logo{display:flex;align-items:center;gap:10px;}
-.logo img{height:40px;}
-.logo h2{color:var(--accent);}
-
-nav a{
-margin-left:15px;
-text-decoration:none;
-color:#fff;
-font-size:14px;
-}
-
-nav a:hover{color:var(--accent);}
 
 /* HERO */
-.hero{padding:20px;}
-.slider{height:380px;border-radius:12px;overflow:hidden;position:relative;}
+.slider{height:250px;position:relative;overflow:hidden}
+.slide{position:absolute;width:100%;height:100%;opacity:0;transition:1s;
+display:flex;justify-content:center;align-items:center;background-size:contain;background-repeat:no-repeat;background-position:center}
+.slide.active{opacity:1}
 
-.slide{
-position:absolute;width:100%;height:100%;
-opacity:0;transition:1s;
-display:flex;flex-direction:column;justify-content:center;align-items:center;
-background-size:contain;background-repeat:no-repeat;background-position:center;
-}
+/* GRID */
+.products,.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px}
 
-.slide::before{
-content:"";position:absolute;width:100%;height:100%;
-background:rgba(0,0,0,0.5);
-}
+.card{background:#16241c;padding:10px;border-radius:10px}
+.card img{width:100%;height:120px;object-fit:contain}
 
-.slide.active{opacity:1;}
+.btn{background:#2e7d32;color:#fff;border:none;padding:10px;width:100%;margin-top:5px}
 
-.slide h1,.slide p{z-index:2;text-align:center;}
+input{width:100%;padding:10px;margin:5px 0;border-radius:5px;border:none}
 
-/* SECTIONS */
-section{padding:60px 20px;max-width:1200px;margin:auto;}
-h2{text-align:center;margin-bottom:25px;color:var(--accent);}
+/* FLOAT WHATSAPP */
+.whatsapp{
+position:fixed;bottom:20px;right:20px;background:#25D366;
+padding:15px;border-radius:50%;color:#fff;text-decoration:none;font-size:20px}
 
-/* TRUST + STEPS */
-.trust,.steps{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-}
-
-.trust div,.steps div{
-background:var(--card);
-padding:20px;
-border-radius:10px;
-}
-
-/* PRODUCTS */
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-}
-
-.card{
-background:var(--card);
-padding:15px;
-border-radius:10px;
-}
-
-.card img{
-width:100%;height:160px;object-fit:contain;
-background:#0d1511;border-radius:8px;
-}
-
-.btn{
-background:var(--primary);
-padding:10px;
-border:none;width:100%;
-border-radius:6px;color:#fff;
-margin-top:8px;
-cursor:pointer;
-}
-
-/* CART */
-#cart-box{
-max-width:500px;margin:40px auto;
-background:var(--card);
-padding:20px;border-radius:10px;
-}
-
-input{
-width:100%;padding:10px;margin:6px 0;
-border:none;border-radius:6px;
-}
+/* STARS */
+.stars span{cursor:pointer;color:#555;font-size:18px}
+.stars span:hover{color:gold}
 
 /* PANELS */
-#tracking,#admin{
-display:none;
-position:fixed;
-top:0;left:0;width:100%;height:100%;
-background:#0f1a14;
-z-index:9999;
-padding:20px;
-overflow:auto;
-}
-
-.order{
-background:var(--card);
-padding:10px;
-margin:10px 0;
-border-radius:8px;
-}
-
-/* CONFIRMATION */
-#confirmation{
-display:none;
-position:fixed;
-top:0;left:0;width:100%;height:100%;
-background:#0f1a14;
-z-index:9999;
-padding:20px;
-text-align:center;
-}
-
-/* FOOTER */
-footer{
-background:#000;padding:20px;text-align:center;margin-top:40px;
-}
+#admin,#tracking{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0f1a14;padding:20px;overflow:auto}
 </style>
 </head>
 
@@ -169,272 +64,213 @@ background:#000;padding:20px;text-align:center;margin-top:40px;
 <header>
 <div class="logo">
 <img src="images/logo.jpg">
-<h2>Flofentry</h2>
+<h3>Flofentry</h3>
 </div>
 
-<nav>
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+<nav id="menu">
 <a href="#">Home</a>
 <a href="#products">Products</a>
-<a href="#about">About</a>
-<a href="#" onclick="openTracking()">Track</a>
 <a href="#" onclick="openAdmin()">Admin</a>
 </nav>
 
-<div>Cart: <span id="cart-count">0</span></div>
+<div>Cart: <span id="count">0</span></div>
 </header>
 
-<section class="hero">
-<div id="slider" class="slider"></div>
-</section>
+<!-- HERO -->
+<div class="slider" id="slider"></div>
 
-<section>
-<h2>Why Choose Flofentry</h2>
-<div class="trust">
-<div>Premium carefully selected products</div>
-<div>Fast delivery across Kenya</div>
-<div>Secure and reliable ordering</div>
-<div>Fresh packaging guaranteed</div>
-</div>
-</section>
-
-<section id="products">
-<h2>Our Products</h2>
-<div id="products-list" class="products"></div>
-</section>
-
-<section>
-<h2>How It Works</h2>
-<div class="steps">
-<div>Select products</div>
-<div>Place your order</div>
-<div>We deliver to you</div>
-</div>
-</section>
-
-<section id="about">
-<h2>About Flofentry</h2>
-<p style="text-align:center;color:#ccc;max-width:700px;margin:auto;">
-We supply premium nuts and superfoods across Kenya, focusing on quality,
-freshness, and customer satisfaction.
+<!-- DELIVERY -->
+<p style="text-align:center;color:#ccc;padding:10px">
+🚚 We deliver across Kenya at a small fee depending on your location.
 </p>
-</section>
 
-<div id="cart-box">
+<!-- SEARCH -->
+<input id="search" placeholder="Search products..." onkeyup="searchProducts()">
+
+<!-- CATEGORIES -->
+<div style="text-align:center">
+<button onclick="filterCategory('All')">All</button>
+<button onclick="filterCategory('Almonds')">Almonds</button>
+<button onclick="filterCategory('Cashews')">Cashews</button>
+<button onclick="filterCategory('Bitter Kola')">Bitter Kola</button>
+<button onclick="filterCategory('Brazil Nuts')">Brazil Nuts</button>
+</div>
+
+<!-- PRODUCTS -->
+<div id="products" class="products"></div>
+
+<!-- CART -->
+<div style="padding:10px">
 <h3>Checkout</h3>
-<input id="name" placeholder="Full Name">
-<input id="phone" placeholder="Phone Number">
+<input id="name" placeholder="Name">
+<input id="phone" placeholder="Phone">
 <input id="location" placeholder="Location">
+<button class="btn" onclick="getLocation()">Use My Location 📍</button>
 
-<button class="btn" onclick="getLocation()">Auto Detect Location</button>
-
-<div id="cart-items"></div>
-
+<div id="cart"></div>
 <h3>Total: KSh <span id="total">0</span></h3>
 
 <button class="btn" onclick="checkout()">Order via WhatsApp</button>
 </div>
 
-<!-- TRACKING -->
-<div id="tracking">
-<h2>Track Order</h2>
-<button onclick="closeTracking()">Close</button>
-<input id="track-phone" placeholder="Phone Number">
-<button class="btn" onclick="trackOrders()">Track</button>
-<div id="track-results"></div>
+<!-- ORDER HISTORY -->
+<div style="padding:10px">
+<h3>Your Orders</h3>
+<input id="history-phone" placeholder="Phone">
+<button onclick="loadHistory()">Check</button>
+<div id="history"></div>
 </div>
 
 <!-- ADMIN -->
 <div id="admin">
-<h2>Admin Dashboard</h2>
-<button onclick="closeAdmin()">Close</button>
+<h2>Admin</h2>
+<button onclick="admin.style.display='none'">Close</button>
 <div id="analytics"></div>
+<canvas id="chart"></canvas>
 <div id="orders"></div>
 </div>
 
-<!-- CONFIRMATION -->
-<div id="confirmation">
-<h2>✅ Order Placed Successfully</h2>
-<div id="order-summary"></div>
-<button class="btn" onclick="closeConfirmation()">Continue Shopping</button>
-</div>
-
-<footer>
-<p>© 2026 Flofentry Foods</p>
-<p>📞 +254726718968 | 📧 flofentryfoods@gmail.com</p>
-</footer>
+<!-- WHATSAPP -->
+<a href="https://wa.me/254726718968" class="whatsapp">💬</a>
 
 <script>
 
 /* FIREBASE */
 firebase.initializeApp({
 apiKey:"YOUR_KEY",
-projectId:"YOUR_PROJECT_ID"
+projectId:"YOUR_PROJECT"
 });
 const db=firebase.firestore();
 
-/* PRODUCTS (PRO TITLES) */
+/* PRODUCTS */
 let products=[
 
-// BITTER KOLA
-{name:"Bitter Kola 60g – Natural Herbal Wellness",price:1000,img:"images/bitterkola-60g.jpg"},
-{name:"Bitter Kola 125g – Premium Herbal Kola Nuts",price:2000,img:"images/bitterkola-125g.jpg"},
+{name:"Bitter Kola 60g – Natural Herbal Wellness",price:1000,img:"images/bitterkola-60g.jpg",category:"Bitter Kola"},
+{name:"Bitter Kola 125g – Premium Herbal Kola Nuts",price:2000,img:"images/bitterkola-125g.jpg",category:"Bitter Kola"},
 
-// ALMONDS 1KG
-{name:"Raw Almonds 1kg – Premium Healthy Nuts",price:2200,img:"images/almond-1kg.jpg"},
-{name:"Roasted Almonds 1kg – Crunchy Snack Pack",price:2400,img:"images/almond-1kg.jpg"},
+{name:"Raw Almonds 1kg – Premium Healthy Nuts",price:2200,img:"images/almond-1kg.jpg",category:"Almonds"},
+{name:"Roasted Almonds 1kg – Crunchy Snack Pack",price:2400,img:"images/almond-1kg.jpg",category:"Almonds"},
 
-// ALMONDS 500G
-{name:"Raw Almonds 500g – Fresh Natural Nuts",price:1200,img:"images/almond-500g.jpg"},
-{name:"Roasted Almonds 500g – Crunchy & Tasty",price:1400,img:"images/almond-500g.jpg"},
+{name:"Raw Almonds 500g – Fresh Natural Nuts",price:1200,img:"images/almond-500g.jpg",category:"Almonds"},
+{name:"Roasted Almonds 500g – Crunchy & Tasty",price:1400,img:"images/almond-500g.jpg",category:"Almonds"},
 
-// ALMONDS 250G
-{name:"Raw Almonds 250g – Healthy Snack Pack",price:700,img:"images/almond-250g.jpg"},
-{name:"Roasted Almonds 250g – Ready-to-Eat Crunchy Nuts",price:900,img:"images/almond-250g.jpg"},
+{name:"Raw Almonds 250g – Healthy Snack Pack",price:700,img:"images/almond-250g.jpg",category:"Almonds"},
+{name:"Roasted Almonds 250g – Ready-to-Eat Crunchy Nuts",price:900,img:"images/almond-250g.jpg",category:"Almonds"},
 
-// CASHEWS 1KG
-{name:"Raw Cashew Nuts 1kg – Premium Fresh Quality",price:1800,img:"images/cashew-1kg.jpg"},
-{name:"Roasted Cashew Nuts 1kg – Crunchy Snack Pack",price:2000,img:"images/cashew-1kg.jpg"},
+{name:"Raw Cashew Nuts 1kg – Premium Fresh Quality",price:1800,img:"images/cashew-1kg.jpg",category:"Cashews"},
+{name:"Roasted Cashew Nuts 1kg – Crunchy Snack Pack",price:2000,img:"images/cashew-1kg.jpg",category:"Cashews"},
 
-// CASHEWS 500G
-{name:"Raw Cashew Nuts 500g – Fresh Natural Snack",price:1000,img:"images/cashew-500g.jpg"},
-{name:"Roasted Cashew Nuts 500g – Crunchy & Tasty",price:1200,img:"images/cashew-500g.jpg"},
+{name:"Raw Cashew Nuts 500g – Fresh Natural Snack",price:1000,img:"images/cashew-500g.jpg",category:"Cashews"},
+{name:"Roasted Cashew Nuts 500g – Crunchy & Tasty",price:1200,img:"images/cashew-500g.jpg",category:"Cashews"},
 
-// CASHEWS 250G
-{name:"Raw Cashew Nuts 250g – Healthy Snack Pack",price:600,img:"images/cashew-250g.jpg"},
-{name:"Roasted Cashew Nuts 250g – Ready-to-Eat Snack",price:800,img:"images/cashew-250g.jpg"},
+{name:"Raw Cashew Nuts 250g – Healthy Snack Pack",price:600,img:"images/cashew-250g.jpg",category:"Cashews"},
+{name:"Roasted Cashew Nuts 250g – Ready-to-Eat Snack",price:800,img:"images/cashew-250g.jpg",category:"Cashews"},
 
-// BRAZIL NUTS
-{name:"Brazil Nuts 500g – Premium Selenium-Rich Nuts",price:5500,img:"images/brazil-500g.jpg"},
-{name:"Brazil Nuts 250g – Healthy Superfood Snack",price:3500,img:"images/brazil-250g.jpg"},
-{name:"Brazil Nuts 125g – Small Healthy Snack Pack",price:1800,img:"images/brazil-125g.jpg"}
+{name:"Brazil Nuts 500g – Premium Selenium-Rich Nuts",price:5500,img:"images/brazil-500g.jpg",category:"Brazil Nuts"},
+{name:"Brazil Nuts 250g – Healthy Superfood Snack",price:3500,img:"images/brazil-250g.jpg",category:"Brazil Nuts"},
+{name:"Brazil Nuts 125g – Small Healthy Snack Pack",price:1800,img:"images/brazil-125g.jpg",category:"Brazil Nuts"}
 
 ];
 
 let cart=[];
 
 /* RENDER */
-function render(){
-let box=document.getElementById("products-list");
+function render(list=products){
+let box=document.getElementById("products");
 box.innerHTML="";
-products.forEach(p=>{
+
+list.forEach(p=>{
 box.innerHTML+=`
 <div class="card">
 <img src="${p.img}">
-<h3>${p.name}</h3>
+<h4>${p.name}</h4>
 <p>KSh ${p.price}</p>
-<button class="btn" onclick="addToCart('${p.name}')">Add</button>
-</div>`;
+
+<div class="stars">
+<span onclick="rate('${p.name}',1)">★</span>
+<span onclick="rate('${p.name}',2)">★</span>
+<span onclick="rate('${p.name}',3)">★</span>
+<span onclick="rate('${p.name}',4)">★</span>
+<span onclick="rate('${p.name}',5)">★</span>
+</div>
+
+<div id="avg-${p.name}"></div>
+
+<button class="btn" onclick="add('${p.name}')">Add</button>
+</div>
+`;
+setTimeout(()=>loadRating(p.name),300);
 });
 }
 
-/* SLIDER */
-let i=0;
-function buildSlider(){
-let slider=document.getElementById("slider");
+/* SEARCH */
+function searchProducts(){
+let v=search.value.toLowerCase();
+render(products.filter(p=>p.name.toLowerCase().includes(v)));
+}
 
-products.forEach((p,index)=>{
-slider.innerHTML+=`
-<div class="slide ${index===0?"active":""}" style="background-image:url('${p.img}')">
-<h1>${p.name}</h1>
-<p>KSh ${p.price}</p>
-</div>`;
-});
-
-setInterval(()=>{
-let slides=document.querySelectorAll(".slide");
-slides.forEach(s=>s.classList.remove("active"));
-i=(i+1)%slides.length;
-slides[i].classList.add("active");
-},3000);
+/* FILTER */
+function filterCategory(c){
+render(c==="All"?products:products.filter(p=>p.category===c));
 }
 
 /* CART */
-function addToCart(name){
+function add(name){
 cart.push(products.find(p=>p.name===name));
 updateCart();
 }
 
 function updateCart(){
-let box=document.getElementById("cart-items");
+let box=document.getElementById("cart");
 box.innerHTML="";
 let total=0;
 
 cart.forEach((i,index)=>{
 total+=i.price;
-box.innerHTML+=`
-<div style="display:flex;justify-content:space-between;">
-<span>${i.name}</span>
-<button onclick="removeItem(${index})">X</button>
-</div>`;
+box.innerHTML+=`<div>${i.name} <button onclick="remove(${index})">X</button></div>`;
 });
 
-document.getElementById("cart-count").innerText=cart.length;
+count.innerText=cart.length;
 document.getElementById("total").innerText=total;
 }
 
-function removeItem(i){
-cart.splice(i,1);
-updateCart();
-}
+function remove(i){cart.splice(i,1);updateCart();}
 
 /* LOCATION */
-function getLocation(){
-navigator.geolocation.getCurrentPosition(pos=>{
-document.getElementById("location").value =
-pos.coords.latitude+","+pos.coords.longitude;
+async function getLocation(){
+navigator.geolocation.getCurrentPosition(async pos=>{
+let res=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
+let data=await res.json();
+location.value=(data.address.city||data.address.county||"Location")+", Kenya";
 });
 }
 
 /* CHECKOUT */
 function checkout(){
-let name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
-let location=document.getElementById("location").value;
-
-if(!name||!phone||!location||cart.length===0){
-alert("Fill all fields");
-return;
-}
-
+let msg="Order:%0A";
 let total=0;
-let msg=`Hello Flofentry Foods,%0AName:${name}%0APhone:${phone}%0ALocation:${location}%0A`;
 
-cart.forEach((i,index)=>{
-msg+=`${index+1}. ${i.name} - KSh ${i.price}%0A`;
+cart.forEach(i=>{
+msg+=`${i.name} KSh${i.price}%0A`;
 total+=i.price;
 });
 
-msg+=`Total: KSh ${total}`;
-
-db.collection("orders").add({
-customer:{name,phone,location},
-items:cart,
-total,
-status:"Pending"
-});
-
-window.open("https://wa.me/254726718968?text="+msg);
-
-cart=[];
-updateCart();
+window.open(`https://wa.me/254726718968?text=${msg}`);
 }
 
-/* TRACKING */
-function openTracking(){tracking.style.display="block";}
-function closeTracking(){tracking.style.display="none";}
+/* RATINGS */
+function rate(p,v){
+db.collection("ratings").add({product:p,value:v});
+}
 
-function trackOrders(){
-let phone=document.getElementById("track-phone").value;
-
-db.collection("orders")
-.where("customer.phone","==",phone)
+function loadRating(p){
+db.collection("ratings").where("product","==",p)
 .onSnapshot(snap=>{
-let box=document.getElementById("track-results");
-box.innerHTML="";
-snap.forEach(doc=>{
-let d=doc.data();
-box.innerHTML+=`<div class="order">${d.status} - KSh ${d.total}</div>`;
-});
+let t=0,c=0;
+snap.forEach(d=>{t+=d.data().value;c++});
+document.getElementById(`avg-${p}`).innerText=`⭐ ${(t/c||0).toFixed(1)} (${c})`;
 });
 }
 
@@ -442,35 +278,36 @@ box.innerHTML+=`<div class="order">${d.status} - KSh ${d.total}</div>`;
 function openAdmin(){
 if(prompt("Password")!=="Newtonohms@1")return;
 admin.style.display="block";
-loadOrders();
-loadAnalytics();
-}
 
-function closeAdmin(){admin.style.display="none";}
-
-function loadOrders(){
 db.collection("orders").onSnapshot(snap=>{
 orders.innerHTML="";
+let total=0;
+
 snap.forEach(doc=>{
 let d=doc.data();
-orders.innerHTML+=`<div class="order">${d.customer.name} - ${d.total}</div>`;
+total+=d.total;
+
+orders.innerHTML+=`
+<div>
+${d.customer.name} - ${d.total}
+<select onchange="updateStatus('${doc.id}',this.value)">
+<option>Pending</option>
+<option>On the way</option>
+<option>Delivered</option>
+</select>
+</div>`;
 });
+
+analytics.innerHTML="Total Revenue: "+total;
 });
 }
 
-function loadAnalytics(){
-db.collection("orders").onSnapshot(snap=>{
-let revenue=0;
-snap.forEach(doc=>revenue+=doc.data().total);
-analytics.innerHTML=`Total Revenue: KSh ${revenue}`;
-});
+function updateStatus(id,s){
+db.collection("orders").doc(id).update({status:s});
 }
 
 /* INIT */
-document.addEventListener("DOMContentLoaded",()=>{
 render();
-buildSlider();
-});
 
 </script>
 
