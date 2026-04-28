@@ -8,10 +8,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
 <style>
 :root{
 --bg:#0f1a14;
@@ -21,135 +17,163 @@
 --text:#f5f5f5;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
-body{background:linear-gradient(135deg,#0f1a14,#121f18);color:var(--text);}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
 
+body{
+background:linear-gradient(135deg,#0f1a14,#121f18);
+color:var(--text);
+}
+
+/* HEADER */
 header{
-display:flex;justify-content:space-between;align-items:center;
-padding:15px;background:#000;position:sticky;top:0;z-index:1000;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 15px;
+background:#000;
+position:sticky;
+top:0;
+z-index:1000;
+flex-wrap:wrap;
 }
 
-.logo{display:flex;align-items:center;gap:10px;}
-.logo img{height:40px;}
+.logo{
+display:flex;
+align-items:center;
+gap:8px;
+}
 
-nav a{margin:0 10px;color:#fff;text-decoration:none;font-size:14px;}
-nav a:hover{color:var(--accent);}
+.logo img{height:35px;}
 
-.slider{height:300px;position:relative;overflow:hidden;}
+.logo h2{font-size:18px;}
+
+nav{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+nav a{
+margin:5px 8px;
+color:#fff;
+text-decoration:none;
+font-size:13px;
+}
+
+/* SLIDER */
+.slider{
+height:200px;
+position:relative;
+overflow:hidden;
+}
+
 .slide{
-position:absolute;width:100%;height:100%;
-opacity:0;transition:1s;
-background-size:contain;background-repeat:no-repeat;background-position:center;
+position:absolute;
+width:100%;
+height:100%;
+opacity:0;
+transition:1s;
+background-size:cover;
+background-position:center;
 }
+
 .slide.active{opacity:1;}
 
-section{padding:40px 20px;max-width:1200px;margin:auto;}
-h2{text-align:center;color:var(--accent);margin-bottom:20px;}
+/* SECTION */
+section{
+padding:30px 15px;
+max-width:1200px;
+margin:auto;
+}
 
+h2{
+text-align:center;
+color:var(--accent);
+margin-bottom:15px;
+font-size:20px;
+}
+
+/* GRID */
 .trust,.steps{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:12px;
 }
 
 .box{
 background:var(--card);
-padding:20px;border-radius:10px;text-align:center;
+padding:15px;
+border-radius:10px;
+text-align:center;
+font-size:14px;
 }
 
+/* PRODUCTS */
 .products{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
 }
 
 .card{
 background:var(--card);
-padding:10px;border-radius:10px;
-position:relative;
+padding:10px;
+border-radius:10px;
 }
 
-.card img{width:100%;height:150px;object-fit:contain;}
-
-.badge{
-position:absolute;top:10px;left:10px;
-background:red;padding:5px;border-radius:5px;font-size:12px;
+.card img{
+width:100%;
+height:120px;
+object-fit:contain;
 }
+
+.card h4{font-size:14px;margin:5px 0;}
+.card p{font-size:13px;}
 
 .btn{
 background:var(--primary);
-padding:10px;border:none;width:100%;
-margin-top:8px;border-radius:6px;color:#fff;cursor:pointer;
+padding:8px;
+border:none;
+width:100%;
+margin-top:6px;
+border-radius:6px;
+color:#fff;
+cursor:pointer;
 }
 
 /* CART */
 #cartDrawer{
 position:fixed;
-right:-360px;
+right:-100%;
 top:0;
-width:360px;
+width:100%;
+max-width:350px;
 height:100%;
 background:#111;
-padding:80px 20px 20px;
+padding:70px 15px;
 transition:0.3s;
-display:flex;
-flex-direction:column;
 z-index:2000;
 }
+
 #cartDrawer.active{right:0;}
-
-#cart-items{
-flex:1;
-overflow-y:auto;
-margin-bottom:15px;
-}
-
-.cart-item{
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:#1b2a22;
-padding:10px;
-margin-bottom:10px;
-border-radius:6px;
-gap:5px;
-}
-
-.cart-item button{
-background:red;border:none;color:#fff;padding:5px;border-radius:4px;
-}
 
 input{
 width:100%;
-padding:10px;
-margin-top:10px;
+padding:8px;
+margin-top:8px;
 border-radius:6px;
 border:none;
 }
 
-/* MODALS */
-#admin,#trackingBox{
-display:none;
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:rgba(0,0,0,0.95);
-z-index:3000;
-padding:20px;
-overflow:auto;
-}
-
-/* WHATSAPP */
-.whatsapp{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-color:#fff;
-padding:15px;
-border-radius:50%;
-font-size:20px;
-text-decoration:none;
+/* MOBILE */
+@media(min-width:768px){
+.products{grid-template-columns:repeat(4,1fr);}
+.slider{height:300px;}
 }
 </style>
 </head>
@@ -166,257 +190,123 @@ text-decoration:none;
 <a href="#">Home</a>
 <a href="#products">Products</a>
 <a href="#about">About</a>
-<a href="#" onclick="openTracking()">Track</a>
-<a href="#" onclick="openAdmin()">Admin</a>
 </nav>
 
 <div onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
 </header>
 
+<!-- SLIDER -->
 <div id="slider" class="slider"></div>
 
+<!-- TRUST -->
 <section>
-<h2>Why Choose Flofentry</h2>
+<h2>Why Choose Us</h2>
 <div class="trust">
-<div class="box">Premium carefully selected products</div>
-<div class="box">Fast delivery across Kenya</div>
+<div class="box">Premium quality nuts</div>
+<div class="box">Fast delivery in Kenya</div>
 <div class="box">Secure ordering</div>
-<div class="box">Fresh packaging</div>
 </div>
 </section>
 
+<!-- PRODUCTS -->
 <section id="products">
-<h2>Our Products</h2>
-<input placeholder="Search..." oninput="search(this.value)">
+<h2>Products</h2>
+<input placeholder="Search products..." oninput="search(this.value)">
 <div id="products-list" class="products"></div>
 </section>
 
-<section>
-<h2>How It Works</h2>
-<div class="steps">
-<div class="box">Select products</div>
-<div class="box">Place order</div>
-<div class="box">We deliver</div>
-</div>
-</section>
-
+<!-- ABOUT -->
 <section id="about">
-<h2>About Flofentry</h2>
+<h2>About</h2>
 <p style="text-align:center;">We supply premium nuts across Kenya.</p>
 </section>
 
 <!-- CART -->
 <div id="cartDrawer">
-<h3>Your Cart <button onclick="closeCart()">✖</button></h3>
+<h3>Your Cart</h3>
 <div id="cart-items"></div>
 <h3>Total: KSh <span id="total">0</span></h3>
 
 <input id="name" placeholder="Name">
 <input id="phone" placeholder="Phone">
-<input id="location" placeholder="Click auto detect location">
 
-<button class="btn" onclick="getLocation()">Auto Location</button>
 <button class="btn" onclick="checkout()">Order via WhatsApp</button>
-<button class="btn" onclick="closeCart()">Continue Shopping</button>
+<button class="btn" onclick="closeCart()">Close</button>
 </div>
 
-<!-- TRACK -->
-<div id="trackingBox">
-<div style="max-width:400px;margin:auto;background:#111;padding:20px;border-radius:10px;">
-<h3>Track Order</h3>
-<input id="trackId" placeholder="Enter Order ID">
-<button class="btn" onclick="trackOrder()">Track</button>
-<button class="btn" onclick="closeTracking()">Close</button>
-<div id="trackResult"></div>
-</div>
-</div>
-
-<!-- ADMIN -->
-<div id="admin">
-<button onclick="closeAdmin()">Close</button>
-<canvas id="chart"></canvas>
-<div id="orders"></div>
-</div>
-
-<a class="whatsapp" href="https://wa.me/254726718968">💬</a>
-
-<footer style="text-align:center;padding:20px;background:#000;">
+<!-- FOOTER -->
+<footer style="text-align:center;padding:15px;background:#000;">
 <p>© Flofentry Foods</p>
-<p>📞 0726718968 | 📧 flofentryfoods@gmail.com</p>
+<p>📞 0726718968</p>
 </footer>
 
 <script>
 
-/* FIREBASE */
-firebase.initializeApp({
-apiKey:"YOUR_KEY",
-projectId:"YOUR_PROJECT_ID"
-});
-const db=firebase.firestore();
-
 /* PRODUCTS */
-/* PRODUCTS */ let products=[ {name:"Bitter Kola 60g – Natural Herbal Wellness",price:1000,img:"images/bitterkola-60g.jpg"}, {name:"Bitter Kola 125g – Premium Herbal Kola Nuts",price:2000,img:"images/bitterkola-125g.jpg"}, {name:"Raw Almonds 1kg – Premium Healthy Nuts",price:2200,img:"images/almond-1kg.jpg"}, {name:"Roasted Almonds 1kg – Crunchy Snack Pack",price:2400,img:"images/almond-1kg.jpg"}, {name:"Raw Almonds 500g – Fresh Natural Nuts",price:1200,img:"images/almond-500g.jpg"}, {name:"Roasted Almonds 500g – Crunchy & Tasty",price:1400,img:"images/almond-500g.jpg"}, {name:"Raw Almonds 250g – Healthy Snack Pack",price:700,img:"images/almond-250g.jpg"}, {name:"Roasted Almonds 250g – Ready-to-Eat Crunchy Nuts",price:900,img:"images/almond-250g.jpg"}, {name:"Raw Cashew Nuts 1kg – Premium Fresh Quality",price:1800,img:"images/cashew-1kg.jpg"}, {name:"Roasted Cashew Nuts 1kg – Crunchy Snack Pack",price:2000,img:"images/cashew-1kg.jpg"}, {name:"Raw Cashew Nuts 500g – Fresh Natural Snack",price:1000,img:"images/cashew-500g.jpg"}, {name:"Roasted Cashew Nuts 500g – Crunchy & Tasty",price:1200,img:"images/cashew-500g.jpg"}, {name:"Raw Cashew Nuts 250g – Healthy Snack Pack",price:600,img:"images/cashew-250g.jpg"}, {name:"Roasted Cashew Nuts 250g – Ready-to-Eat Snack",price:800,img:"images/cashew-250g.jpg"}, {name:"Brazil Nuts 500g",price:5500,img:"images/brazil-500g.jpg"}, {name:"Brazil Nuts 250g",price:3500,img:"images/brazil-250g.jpg"}, {name:"Brazil Nuts 125g",price:1800,img:"images/brazil-125g.jpg"} ];
+let products=[ {name:"Bitter Kola 60g – Natural Herbal Wellness",price:1000,img:"images/bitterkola-60g.jpg"}, {name:"Bitter Kola 125g – Premium Herbal Kola Nuts",price:2000,img:"images/bitterkola-125g.jpg"}, {name:"Raw Almonds 1kg – Premium Healthy Nuts",price:2200,img:"images/almond-1kg.jpg"}, {name:"Roasted Almonds 1kg – Crunchy Snack Pack",price:2400,img:"images/almond-1kg.jpg"}, {name:"Raw Almonds 500g – Fresh Natural Nuts",price:1200,img:"images/almond-500g.jpg"}, {name:"Roasted Almonds 500g – Crunchy & Tasty",price:1400,img:"images/almond-500g.jpg"}, {name:"Raw Almonds 250g – Healthy Snack Pack",price:700,img:"images/almond-250g.jpg"}, {name:"Roasted Almonds 250g – Ready-to-Eat Crunchy Nuts",price:900,img:"images/almond-250g.jpg"}, {name:"Raw Cashew Nuts 1kg – Premium Fresh Quality",price:1800,img:"images/cashew-1kg.jpg"}, {name:"Roasted Cashew Nuts 1kg – Crunchy Snack Pack",price:2000,img:"images/cashew-1kg.jpg"}, {name:"Raw Cashew Nuts 500g – Fresh Natural Snack",price:1000,img:"images/cashew-500g.jpg"}, {name:"Roasted Cashew Nuts 500g – Crunchy & Tasty",price:1200,img:"images/cashew-500g.jpg"}, {name:"Raw Cashew Nuts 250g – Healthy Snack Pack",price:600,img:"images/cashew-250g.jpg"}, {name:"Roasted Cashew Nuts 250g – Ready-to-Eat Snack",price:800,img:"images/cashew-250g.jpg"}, {name:"Brazil Nuts 500g",price:5500,img:"images/brazil-500g.jpg"}, {name:"Brazil Nuts 250g",price:3500,img:"images/brazil-250g.jpg"}, {name:"Brazil Nuts 125g",price:1800,img:"images/brazil-125g.jpg"} ];
 
 /* CART */
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-function saveCart(){
-localStorage.setItem("cart", JSON.stringify(cart));
-}
+let cart=[];
 
 function add(name){
-let item = cart.find(p=>p.name===name);
+let item=cart.find(p=>p.name===name);
 if(item){item.qty++;}
 else{
-let p = products.find(p=>p.name===name);
-cart.push({...p, qty:1});
+let p=products.find(p=>p.name===name);
+cart.push({...p,qty:1});
 }
 updateCart();
 }
 
 function updateCart(){
-let box = document.getElementById("cart-items");
-box.innerHTML = "";
-let totalAmount = 0;
+let box=document.getElementById("cart-items");
+box.innerHTML="";
+let total=0;
 
 cart.forEach((i,index)=>{
-totalAmount += i.price * i.qty;
-
-box.innerHTML += `
-<div class="cart-item">
-<span>${i.name}</span>
-<button onclick="decrease(${index})">-</button>
-<span>${i.qty}</span>
-<button onclick="increase(${index})">+</button>
-<span>KSh ${i.price*i.qty}</span>
+total+=i.price*i.qty;
+box.innerHTML+=`
+<div>
+${i.name} x${i.qty} - KSh ${i.price*i.qty}
 <button onclick="removeItem(${index})">X</button>
 </div>`;
 });
 
-document.getElementById("total").innerText = totalAmount;
-document.getElementById("cart-count").innerText = cart.reduce((a,b)=>a+b.qty,0);
-
-saveCart();
+document.getElementById("total").innerText=total;
+document.getElementById("cart-count").innerText=cart.length;
 }
 
-function increase(i){cart[i].qty++;updateCart();}
-function decrease(i){cart[i].qty>1?cart[i].qty--:cart.splice(i,1);updateCart();}
-function removeItem(i){cart.splice(i,1);updateCart();}
-
-/* CART UI */
-function toggleCart(){document.getElementById("cartDrawer").classList.add("active");}
-function closeCart(){document.getElementById("cartDrawer").classList.remove("active");}
-
-/* AUTO LOCATION (WORKING) */
-function getLocation(){
-if(!navigator.geolocation){
-alert("Location not supported");
-return;
-}
-
-navigator.geolocation.getCurrentPosition(async pos=>{
-let lat = pos.coords.latitude;
-let lon = pos.coords.longitude;
-
-try{
-let res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
-let data = await res.json();
-document.getElementById("location").value = data.display_name;
-}catch{
-document.getElementById("location").value = lat+", "+lon;
-}
-});
-}
-
-/* CHECKOUT */
-function checkout(){
-let name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
-let loc=document.getElementById("location").value;
-
-if(!name || !phone){
-alert("Enter name and phone");
-return;
-}
-
-let orderId="FLF"+Date.now();
-
-let total=0;
-let msg=`Order ID: ${orderId}%0A`;
-
-cart.forEach((i,idx)=>{
-let itemTotal=i.price*i.qty;
-total+=itemTotal;
-msg+=`${idx+1}. ${i.name} x${i.qty} - KSh ${itemTotal}%0A`;
-});
-
-msg+=`Total: KSh ${total}`;
-
-db.collection("orders").doc(orderId).set({
-orderId,name,phone,loc,total,cart,status:"Pending"
-});
-
-window.open("https://wa.me/254726718968?text="+msg);
-alert("Your Order ID: "+orderId);
-
-cart=[];
-saveCart();
+function removeItem(i){
+cart.splice(i,1);
 updateCart();
-closeCart();
 }
 
-/* TRACK */
-function openTracking(){document.getElementById("trackingBox").style.display="block";}
-function closeTracking(){document.getElementById("trackingBox").style.display="none";}
-async function trackOrder(){
-let id=document.getElementById("trackId").value;
-let doc=await db.collection("orders").doc(id).get();
-
-document.getElementById("trackResult").innerHTML =
-doc.exists ? "Status: "+doc.data().status : "Order not found";
+function toggleCart(){
+document.getElementById("cartDrawer").classList.add("active");
 }
 
-/* ADMIN */
-function openAdmin(){
-if(prompt("Password")!=="Flo@0726718968")return;
+function closeCart(){
+document.getElementById("cartDrawer").classList.remove("active");
+}
 
-document.getElementById("admin").style.display="block";
-
-db.collection("orders").onSnapshot(snap=>{
-let html="",rev=0;
-
-snap.forEach(doc=>{
-let d=doc.data();
-rev+=d.total;
-
-html+=`
-<div style="margin:10px;background:#222;padding:10px;">
-${d.orderId} - ${d.status}<br>
-
-<select onchange="updateStatus('${d.orderId}',this.value)">
-<option ${d.status=="Pending"?"selected":""}>Pending</option>
-<option ${d.status=="Processing"?"selected":""}>Processing</option>
-<option ${d.status=="Delivered"?"selected":""}>Delivered</option>
-</select>
-
-<button onclick="deleteOrder('${d.orderId}')">Delete</button>
+/* SEARCH */
+function render(list=products){
+let box=document.getElementById("products-list");
+box.innerHTML="";
+list.forEach(p=>{
+box.innerHTML+=`
+<div class="card">
+<img src="${p.img}">
+<h4>${p.name}</h4>
+<p>KSh ${p.price}</p>
+<button class="btn" onclick="add('${p.name}')">Add</button>
 </div>`;
 });
-
-document.getElementById("orders").innerHTML=html;
-
-if(window.myChart) window.myChart.destroy();
-
-window.myChart=new Chart(document.getElementById("chart"),{
-type:'bar',
-data:{labels:["Revenue"],datasets:[{data:[rev]}]}
-});
-});
 }
 
-function updateStatus(id,s){db.collection("orders").doc(id).update({status:s});}
-function deleteOrder(id){if(confirm("Delete?")) db.collection("orders").doc(id).delete();}
-function closeAdmin(){document.getElementById("admin").style.display="none";}
+function search(q){
+render(products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())));
+}
 
 /* SLIDER */
 let index=0;
@@ -435,29 +325,26 @@ slides[index].classList.add("active");
 },3000);
 }
 
-/* RENDER */
-function render(list=products){
-let box=document.getElementById("products-list");
-box.innerHTML="";
-list.forEach(p=>{
-box.innerHTML+=`
-<div class="card">
-<div class="badge">Top</div>
-<img src="${p.img}">
-<h4>${p.name}</h4>
-<p>KSh ${p.price}</p>
-<button class="btn" onclick="add('${p.name}')">Add</button>
-</div>`;
-});
+/* CHECKOUT */
+function checkout(){
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+
+if(!name || !phone){
+alert("Enter details");
+return;
 }
 
-function search(q){
-render(products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())));
+let msg="Order:%0A";
+cart.forEach(i=>{
+msg+=`${i.name} x${i.qty}%0A`;
+});
+
+window.open("https://wa.me/254726718968?text="+msg);
 }
 
 /* INIT */
 render();
-updateCart();
 buildSlider();
 
 </script>
