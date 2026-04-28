@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Flofentry Foods | Premium Nuts Kenya</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -35,27 +36,36 @@ nav.active{display:flex}
 display:flex;justify-content:center;align-items:center;background-size:contain;background-repeat:no-repeat;background-position:center}
 .slide.active{opacity:1}
 
+/* SECTIONS */
+section{padding:30px 10px;text-align:center}
+h2{color:#d4af37}
+
 /* GRID */
-.products,.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:10px}
+.products,.trust,.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
 
 .card{background:#16241c;padding:10px;border-radius:10px}
 .card img{width:100%;height:120px;object-fit:contain}
 
-.btn{background:#2e7d32;color:#fff;border:none;padding:10px;width:100%;margin-top:5px}
+.btn{background:#2e7d32;color:#fff;border:none;padding:10px;width:100%;margin-top:5px;border-radius:5px}
 
 input{width:100%;padding:10px;margin:5px 0;border-radius:5px;border:none}
 
-/* FLOAT WHATSAPP */
-.whatsapp{
-position:fixed;bottom:20px;right:20px;background:#25D366;
-padding:15px;border-radius:50%;color:#fff;text-decoration:none;font-size:20px}
+/* WHATSAPP */
+.whatsapp{position:fixed;bottom:20px;right:20px;background:#25D366;padding:15px;border-radius:50%;color:#fff;text-decoration:none}
 
 /* STARS */
 .stars span{cursor:pointer;color:#555;font-size:18px}
 .stars span:hover{color:gold}
 
 /* PANELS */
-#admin,#tracking{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0f1a14;padding:20px;overflow:auto}
+#admin,#tracking,#confirmation{
+display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+background:#0f1a14;padding:20px;overflow:auto;z-index:9999
+}
+
+.order{background:#16241c;padding:10px;margin:10px 0;border-radius:8px}
+
+footer{background:#000;padding:20px;text-align:center;margin-top:30px}
 </style>
 </head>
 
@@ -72,6 +82,7 @@ padding:15px;border-radius:50%;color:#fff;text-decoration:none;font-size:20px}
 <nav id="menu">
 <a href="#">Home</a>
 <a href="#products">Products</a>
+<a href="#about">About</a>
 <a href="#" onclick="openAdmin()">Admin</a>
 </nav>
 
@@ -79,30 +90,69 @@ padding:15px;border-radius:50%;color:#fff;text-decoration:none;font-size:20px}
 </header>
 
 <!-- HERO -->
-<div class="slider" id="slider"></div>
+<section class="hero">
+<div id="slider" class="slider"></div>
+</section>
 
 <!-- DELIVERY -->
-<p style="text-align:center;color:#ccc;padding:10px">
+<p style="text-align:center;color:#ccc;">
 🚚 We deliver across Kenya at a small fee depending on your location.
 </p>
 
 <!-- SEARCH -->
+<section>
 <input id="search" placeholder="Search products..." onkeyup="searchProducts()">
+</section>
 
 <!-- CATEGORIES -->
-<div style="text-align:center">
+<section>
+<div>
 <button onclick="filterCategory('All')">All</button>
 <button onclick="filterCategory('Almonds')">Almonds</button>
 <button onclick="filterCategory('Cashews')">Cashews</button>
 <button onclick="filterCategory('Bitter Kola')">Bitter Kola</button>
 <button onclick="filterCategory('Brazil Nuts')">Brazil Nuts</button>
 </div>
+</section>
 
 <!-- PRODUCTS -->
-<div id="products" class="products"></div>
+<section id="products">
+<h2>Our Products</h2>
+<div id="products-list" class="products"></div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+<h2>How It Works</h2>
+<div class="steps">
+<div>Select products</div>
+<div>Place your order</div>
+<div>We deliver to you</div>
+</div>
+</section>
+
+<!-- WHY CHOOSE -->
+<section>
+<h2>Why Choose Flofentry</h2>
+<div class="trust">
+<div>Premium carefully selected products</div>
+<div>Fast delivery across Kenya</div>
+<div>Secure and reliable ordering</div>
+<div>Fresh packaging guaranteed</div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+<h2>About Flofentry</h2>
+<p style="color:#ccc;max-width:700px;margin:auto;">
+We supply premium nuts and superfoods across Kenya, focusing on quality,
+freshness, and customer satisfaction.
+</p>
+</section>
 
 <!-- CART -->
-<div style="padding:10px">
+<section>
 <h3>Checkout</h3>
 <input id="name" placeholder="Name">
 <input id="phone" placeholder="Phone">
@@ -113,24 +163,37 @@ padding:15px;border-radius:50%;color:#fff;text-decoration:none;font-size:20px}
 <h3>Total: KSh <span id="total">0</span></h3>
 
 <button class="btn" onclick="checkout()">Order via WhatsApp</button>
-</div>
+</section>
 
 <!-- ORDER HISTORY -->
-<div style="padding:10px">
+<section>
 <h3>Your Orders</h3>
 <input id="history-phone" placeholder="Phone">
 <button onclick="loadHistory()">Check</button>
 <div id="history"></div>
-</div>
+</section>
 
 <!-- ADMIN -->
 <div id="admin">
-<h2>Admin</h2>
+<h2>Admin Dashboard</h2>
 <button onclick="admin.style.display='none'">Close</button>
 <div id="analytics"></div>
 <canvas id="chart"></canvas>
 <div id="orders"></div>
 </div>
+
+<!-- CONFIRMATION -->
+<div id="confirmation">
+<h2>✅ Order Placed Successfully</h2>
+<div id="order-summary"></div>
+<button class="btn" onclick="closeConfirmation()">Continue Shopping</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<p>© 2026 Flofentry Foods</p>
+<p>📞 +254726718968 | 📧 flofentryfoods@gmail.com</p>
+</footer>
 
 <!-- WHATSAPP -->
 <a href="https://wa.me/254726718968" class="whatsapp">💬</a>
@@ -176,9 +239,12 @@ let products=[
 
 let cart=[];
 
+/* MENU */
+function toggleMenu(){menu.classList.toggle("active");}
+
 /* RENDER */
 function render(list=products){
-let box=document.getElementById("products");
+let box=document.getElementById("products-list");
 box.innerHTML="";
 
 list.forEach(p=>{
@@ -199,16 +265,14 @@ box.innerHTML+=`
 <div id="avg-${p.name}"></div>
 
 <button class="btn" onclick="add('${p.name}')">Add</button>
-</div>
-`;
+</div>`;
 setTimeout(()=>loadRating(p.name),300);
 });
 }
 
 /* SEARCH */
 function searchProducts(){
-let v=search.value.toLowerCase();
-render(products.filter(p=>p.name.toLowerCase().includes(v)));
+render(products.filter(p=>p.name.toLowerCase().includes(search.value.toLowerCase())));
 }
 
 /* FILTER */
@@ -233,7 +297,8 @@ box.innerHTML+=`<div>${i.name} <button onclick="remove(${index})">X</button></di
 });
 
 count.innerText=cart.length;
-document.getElementById("total").innerText=total;
+totalEl=document.getElementById("total");
+totalEl.innerText=total;
 }
 
 function remove(i){cart.splice(i,1);updateCart();}
@@ -249,21 +314,39 @@ location.value=(data.address.city||data.address.county||"Location")+", Kenya";
 
 /* CHECKOUT */
 function checkout(){
-let msg="Order:%0A";
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let loc=document.getElementById("location").value;
+
+if(!name||!phone||!loc||cart.length===0){alert("Fill all fields");return;}
+
 let total=0;
+let summary="";
 
 cart.forEach(i=>{
-msg+=`${i.name} KSh${i.price}%0A`;
+summary+=`${i.name} - KSh ${i.price}<br>`;
 total+=i.price;
 });
 
-window.open(`https://wa.me/254726718968?text=${msg}`);
+document.getElementById("order-summary").innerHTML=summary+"<br>Total: "+total;
+confirmation.style.display="block";
+
+db.collection("orders").add({
+customer:{name,phone,location:loc},
+items:cart,total,status:"Pending"
+});
+
+window.open(`https://wa.me/254726718968?text=Order from ${name}`);
+
+cart=[];
+updateCart();
 }
 
+/* CLOSE CONFIRM */
+function closeConfirmation(){confirmation.style.display="none";}
+
 /* RATINGS */
-function rate(p,v){
-db.collection("ratings").add({product:p,value:v});
-}
+function rate(p,v){db.collection("ratings").add({product:p,value:v});}
 
 function loadRating(p){
 db.collection("ratings").where("product","==",p)
@@ -274,6 +357,18 @@ document.getElementById(`avg-${p}`).innerText=`⭐ ${(t/c||0).toFixed(1)} (${c})
 });
 }
 
+/* ORDER HISTORY */
+function loadHistory(){
+db.collection("orders").where("customer.phone","==",history-phone.value)
+.onSnapshot(snap=>{
+history.innerHTML="";
+snap.forEach(doc=>{
+let d=doc.data();
+history.innerHTML+=`<div class="order">${d.status} - KSh ${d.total}</div>`;
+});
+});
+}
+
 /* ADMIN */
 function openAdmin(){
 if(prompt("Password")!=="Newtonohms@1")return;
@@ -281,24 +376,24 @@ admin.style.display="block";
 
 db.collection("orders").onSnapshot(snap=>{
 orders.innerHTML="";
-let total=0;
+let revenue=0;
 
 snap.forEach(doc=>{
 let d=doc.data();
-total+=d.total;
+revenue+=d.total;
 
 orders.innerHTML+=`
-<div>
+<div class="order">
 ${d.customer.name} - ${d.total}
 <select onchange="updateStatus('${doc.id}',this.value)">
-<option>Pending</option>
-<option>On the way</option>
-<option>Delivered</option>
+<option ${d.status=="Pending"?"selected":""}>Pending</option>
+<option ${d.status=="On the way"?"selected":""}>On the way</option>
+<option ${d.status=="Delivered"?"selected":""}>Delivered</option>
 </select>
 </div>`;
 });
 
-analytics.innerHTML="Total Revenue: "+total;
+analytics.innerHTML="Total Revenue: KSh "+revenue;
 });
 }
 
