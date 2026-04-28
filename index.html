@@ -229,10 +229,15 @@ We supply premium nuts across Kenya.
 <script>
 
 /* FIREBASE */
-firebase.initializeApp({
-apiKey:"YOUR_KEY",
-projectId:"YOUR_PROJECT_ID"
-});
+const firebaseConfig = {
+  apiKey: "AIzaSyBlbiAN0xLWPnEmHqUbxPefNQt1wHNUHCU",
+  authDomain: "flofentryfoods.firebaseapp.com",
+  projectId: "flofentryfoods",
+  storageBucket: "flofentryfoods.firebasestorage.app",
+  messagingSenderId: "994930198837",
+  appId: "1:994930198837:web:111371e2ec0822b923e47c",
+  measurementId: "G-FLX677Z857"
+};
 const db=firebase.firestore();
 
 /* PRODUCTS */
