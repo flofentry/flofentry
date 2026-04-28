@@ -6,108 +6,75 @@
 
 <title>Flofentry Foods | Premium Nuts Kenya</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <style>
-:root{
---bg:#0f1a14;
---card:#16241c;
---primary:#2e7d32;
---accent:#d4af37;
---text:#fff;
-}
-
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
-body{background:var(--bg);color:var(--text);}
+body{margin:0;font-family:Poppins;background:#0f1a14;color:#fff}
 
 /* HEADER */
-header{
-display:flex;justify-content:space-between;align-items:center;
-padding:15px;background:#000;flex-wrap:wrap;
-}
-.logo{display:flex;align-items:center;gap:10px;}
-.logo img{height:40px;}
-nav{display:flex;gap:15px;}
+header{display:flex;justify-content:space-between;padding:15px;background:#000;position:sticky;top:0}
+nav{display:flex;gap:15px}
 nav a{color:#fff;text-decoration:none}
 
-/* HERO */
-.slider{height:320px;position:relative;overflow:hidden;}
-.slide{
-position:absolute;width:100%;height:100%;
-opacity:0;transition:1s;
-display:flex;justify-content:center;align-items:center;flex-direction:column;
+/* MOBILE MENU */
+.menu-btn{display:none;font-size:22px;cursor:pointer}
+@media(max-width:768px){
+nav{display:none;flex-direction:column}
+nav.active{display:flex}
+.menu-btn{display:block}
 }
-.slide.active{opacity:1;}
-.slide video{width:100%;height:100%;object-fit:cover;position:absolute;z-index:-1}
+
+/* HERO */
+.slider{height:300px;position:relative;overflow:hidden}
+.slide{position:absolute;width:100%;height:100%;opacity:0;transition:1s;background-size:contain;background-position:center;background-repeat:no-repeat}
+.slide.active{opacity:1}
 
 /* SEARCH */
-.search{text-align:center;padding:15px;}
-.search input{width:90%;padding:12px;border-radius:6px;border:none}
+.search{padding:15px;text-align:center}
+.search input{width:90%;padding:10px;border-radius:8px;border:none}
 
 /* FILTERS */
-.filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding:10px;}
-.filters button{padding:8px;border:none;background:#333;color:#fff;border-radius:6px;cursor:pointer}
-.filters .active{background:var(--primary);}
+.filters{text-align:center;margin:10px}
+.filters button{margin:5px;padding:8px 12px;border:none;border-radius:6px;cursor:pointer}
 
 /* PRODUCTS */
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;padding:15px;
-}
-@media(min-width:1024px){
-.products{grid-template-columns:repeat(4,1fr);}
-}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;padding:20px}
+.card{background:#16241c;padding:15px;border-radius:10px;text-align:center}
+.card img{width:100%;height:150px;object-fit:contain}
 
-/* CARD */
-.card{background:var(--card);padding:12px;border-radius:10px;}
-.card img{width:100%;height:150px;object-fit:contain;}
-.btn{background:var(--primary);padding:8px;border:none;width:100%;margin-top:6px;color:#fff;cursor:pointer}
-
-/* STARS */
-.stars span{cursor:pointer;font-size:18px;color:#777;}
-.stars span.active{color:gold;}
-
-/* CART */
-#cart-box{background:var(--card);padding:20px;margin:20px;border-radius:10px}
-
-/* FLOAT WHATSAPP */
-.whatsapp{
-position:fixed;bottom:20px;right:20px;
-background:#25D366;color:#fff;
-padding:12px;border-radius:50%;
-font-size:22px;text-decoration:none;
-}
-
-/* PANELS */
-#tracking,#admin{
-display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-background:#000;padding:20px;overflow:auto;z-index:9999;
-}
+/* BUTTON */
+.btn{background:#2e7d32;color:#fff;padding:8px;border:none;width:100%;margin-top:5px}
 
 /* SECTIONS */
-section{padding:40px;text-align:center;}
-footer{background:#000;padding:20px;text-align:center;}
+.section-box{padding:40px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
+
+/* FOOTER */
+footer{text-align:center;padding:20px;background:#000}
+
+/* WHATSAPP FLOAT */
+.whatsapp{
+position:fixed;bottom:20px;right:20px;
+background:#25D366;color:#fff;padding:15px;border-radius:50%;
+font-size:20px;text-decoration:none;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="logo">
-<img src="images/logo.jpg">
-<h2>Flofentry</h2>
-</div>
+<div>Flofentry</div>
 
-<nav>
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+<nav id="nav">
 <a href="#">Home</a>
 <a href="#products">Products</a>
 <a href="#about">About</a>
-<a href="#" onclick="openTracking()">Track</a>
-<a href="#" onclick="openAdmin()">Admin</a>
 </nav>
 
 <div>Cart: <span id="cart-count">0</span></div>
@@ -116,16 +83,19 @@ footer{background:#000;padding:20px;text-align:center;}
 <!-- SLIDER -->
 <div id="slider" class="slider"></div>
 
-<p style="text-align:center;">🚚 We deliver across Kenya at a small fee depending on location.</p>
+<!-- DELIVERY TEXT -->
+<div style="text-align:center;margin:10px">
+🚚 We deliver across Kenya at a small fee depending on location
+</div>
 
 <!-- SEARCH -->
 <div class="search">
-<input id="search" placeholder="Search products..." onkeyup="applyFilters()">
+<input id="search" placeholder="Search products..." oninput="applyFilters()">
 </div>
 
 <!-- FILTERS -->
 <div class="filters">
-<button onclick="setCategory('All')" class="active">All</button>
+<button onclick="setCategory('All')">All</button>
 <button onclick="setCategory('Almond')">Almonds</button>
 <button onclick="setCategory('Cashew')">Cashews</button>
 <button onclick="setCategory('Bitter')">Bitter Kola</button>
@@ -135,35 +105,31 @@ footer{background:#000;padding:20px;text-align:center;}
 <!-- PRODUCTS -->
 <div id="products-list" class="products"></div>
 
-<!-- CART -->
-<div id="cart-box">
-<h3>Checkout</h3>
-<input id="name" placeholder="Full Name">
-<input id="phone" placeholder="Phone Number">
-<input id="location" placeholder="Location">
-
-<button class="btn" onclick="getLocation()">Auto Detect Location</button>
-
-<div id="cart-items"></div>
-<h3>Total: KSh <span id="total">0</span></h3>
-
-<button class="btn" onclick="checkout()">Order via WhatsApp</button>
-</div>
-
-<!-- SECTIONS -->
-<section>
+<!-- HOW -->
+<section class="section-box">
 <h2>How It Works</h2>
-<p>Select products → Place order → We deliver</p>
+<div class="grid">
+<div>🛍️ Select Products</div>
+<div>📦 Place Order</div>
+<div>🚚 We Deliver</div>
+</div>
 </section>
 
-<section>
+<!-- WHY -->
+<section class="section-box">
 <h2>Why Choose Flofentry</h2>
-<p>Premium quality, fast delivery, secure ordering, fresh packaging</p>
+<div class="grid">
+<div>⭐ Premium Quality</div>
+<div>⚡ Fast Delivery</div>
+<div>🔒 Secure Ordering</div>
+<div>📦 Fresh Packaging</div>
+</div>
 </section>
 
-<section id="about">
+<!-- ABOUT -->
+<section id="about" class="section-box">
 <h2>About Flofentry</h2>
-<p>We supply premium nuts and superfoods across Kenya.</p>
+<p>We supply premium nuts across Kenya with fast delivery and top quality service.</p>
 </section>
 
 <footer>
@@ -171,7 +137,7 @@ footer{background:#000;padding:20px;text-align:center;}
 <p>📞 +254726718968 | 📧 flofentryfoods@gmail.com</p>
 </footer>
 
-<a href="https://wa.me/254726718968" class="whatsapp">💬</a>
+<a class="whatsapp" href="https://wa.me/254726718968">💬</a>
 
 <script>
 
@@ -185,35 +151,29 @@ const db=firebase.firestore();
 /* PRODUCTS */
 let products=[
 
-{name:"Bitter Kola 60g – Natural Herbal Wellness",price:1000,img:"images/bitterkola-60g.jpg"},
-{name:"Bitter Kola 125g – Premium Herbal Kola Nuts",price:2000,img:"images/bitterkola-125g.jpg"},
+{name:"Bitter Kola 60g",price:1000,img:"images/bitterkola-60g.jpg"},
+{name:"Bitter Kola 125g",price:2000,img:"images/bitterkola-125g.jpg"},
 
-{name:"Raw Almonds 1kg – Premium Healthy Nuts",price:2200,img:"images/almond-1kg.jpg"},
-{name:"Roasted Almonds 1kg – Crunchy Snack Pack",price:2400,img:"images/almond-1kg.jpg"},
+{name:"Raw Almonds 1kg",price:2200,img:"images/almond-1kg.jpg"},
+{name:"Roasted Almonds 1kg",price:2400,img:"images/almond-1kg.jpg"},
 
-{name:"Raw Almonds 500g – Fresh Natural Nuts",price:1200,img:"images/almond-500g.jpg"},
-{name:"Roasted Almonds 500g – Crunchy & Tasty",price:1400,img:"images/almond-500g.jpg"},
+{name:"Raw Almonds 500g",price:1200,img:"images/almond-500g.jpg"},
+{name:"Roasted Almonds 500g",price:1400,img:"images/almond-500g.jpg"},
 
-{name:"Raw Almonds 250g – Healthy Snack Pack",price:700,img:"images/almond-250g.jpg"},
-{name:"Roasted Almonds 250g – Ready-to-Eat Crunchy Nuts",price:900,img:"images/almond-250g.jpg"},
+{name:"Raw Cashew 1kg",price:1800,img:"images/cashew-1kg.jpg"},
+{name:"Roasted Cashew 1kg",price:2000,img:"images/cashew-1kg.jpg"},
 
-{name:"Raw Cashew Nuts 1kg – Premium Fresh Quality",price:1800,img:"images/cashew-1kg.jpg"},
-{name:"Roasted Cashew Nuts 1kg – Crunchy Snack Pack",price:2000,img:"images/cashew-1kg.jpg"},
-
-{name:"Raw Cashew Nuts 500g – Fresh Natural Snack",price:1000,img:"images/cashew-500g.jpg"},
-{name:"Roasted Cashew Nuts 500g – Crunchy & Tasty",price:1200,img:"images/cashew-500g.jpg"},
-
-{name:"Raw Cashew Nuts 250g – Healthy Snack Pack",price:600,img:"images/cashew-250g.jpg"},
-{name:"Roasted Cashew Nuts 250g – Ready-to-Eat Snack",price:800,img:"images/cashew-250g.jpg"},
-
-{name:"Brazil Nuts 500g – Premium Selenium-Rich Nuts",price:5500,img:"images/brazil-500g.jpg"},
-{name:"Brazil Nuts 250g – Healthy Superfood Snack",price:3500,img:"images/brazil-250g.jpg"},
-{name:"Brazil Nuts 125g – Small Healthy Snack Pack",price:1800,img:"images/brazil-125g.jpg"}
+{name:"Brazil Nuts 250g",price:3500,img:"images/brazil-250g.jpg"}
 
 ];
 
 let cart=[];
 let category="All";
+
+/* MENU */
+function toggleMenu(){
+document.getElementById("nav").classList.toggle("active");
+}
 
 /* FILTER */
 function setCategory(c){
@@ -222,68 +182,69 @@ applyFilters();
 }
 
 function applyFilters(){
-let s=search.value.toLowerCase();
+let s=document.getElementById("search").value.toLowerCase();
+
 let filtered=products.filter(p=>{
 return (category==="All"||p.name.includes(category)) &&
 p.name.toLowerCase().includes(s);
 });
+
 render(filtered);
 }
 
 /* RENDER */
 function render(list){
-products-list.innerHTML="";
+let box=document.getElementById("products-list");
+box.innerHTML="";
 list.forEach(p=>{
-products-list.innerHTML+=`
+box.innerHTML+=`
 <div class="card">
 <img src="${p.img}">
 <h4>${p.name}</h4>
 <p>KSh ${p.price}</p>
-<button class="btn" onclick="add('${p.name}')">Add</button>
+<button class="btn" onclick="addToCart('${p.name}')">Add</button>
 </div>`;
 });
 }
 
 /* CART */
-function add(name){
+function addToCart(name){
 cart.push(products.find(p=>p.name===name));
-cart-count.innerText=cart.length;
-}
-
-/* LOCATION (REAL WORDS) */
-function getLocation(){
-navigator.geolocation.getCurrentPosition(async pos=>{
-let res=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
-let data=await res.json();
-location.value = data.address.city || data.address.town || data.address.county || "Kenya";
-});
+document.getElementById("cart-count").innerText=cart.length;
 }
 
 /* SLIDER */
 let i=0;
 function buildSlider(){
-slider.innerHTML=`
-<div class="slide active">
-<video autoplay muted loop>
-<source src="videos/hero.mp4">
-</video>
-</div>`;
+let slider=document.getElementById("slider");
 
-products.slice(0,3).forEach(p=>{
-slider.innerHTML+=`<div class="slide"><h2>${p.name}</h2></div>`;
+products.forEach((p,index)=>{
+slider.innerHTML+=`
+<div class="slide ${index===0?'active':''}" style="background-image:url('${p.img}')"></div>`;
 });
 
 setInterval(()=>{
-let s=document.querySelectorAll(".slide");
-s.forEach(x=>x.classList.remove("active"));
-i=(i+1)%s.length;
-s[i].classList.add("active");
-},4000);
+let slides=document.querySelectorAll(".slide");
+slides.forEach(s=>s.classList.remove("active"));
+i=(i+1)%slides.length;
+slides[i].classList.add("active");
+},3000);
+}
+
+/* LOCATION */
+function getLocation(){
+navigator.geolocation.getCurrentPosition(async pos=>{
+let res=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
+let data=await res.json();
+document.getElementById("location").value=data.address.city||"Kenya";
+});
 }
 
 /* INIT */
+document.addEventListener("DOMContentLoaded",()=>{
 applyFilters();
 buildSlider();
+});
 
 </script>
 
