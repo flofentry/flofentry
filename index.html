@@ -20,14 +20,10 @@
 --accent:#d4af37;
 --text:#f5f5f5;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
 body{background:linear-gradient(135deg,#0f1a14,#121f18);color:var(--text);}
 
-header{
-display:flex;justify-content:space-between;align-items:center;
-padding:15px;background:#000;position:sticky;top:0;z-index:1000;
-}
+header{display:flex;justify-content:space-between;align-items:center;padding:15px;background:#000;position:sticky;top:0;z-index:1000;}
 .logo{display:flex;align-items:center;gap:10px;}
 .logo img{height:40px;}
 
@@ -35,75 +31,32 @@ nav a{margin:0 10px;color:#fff;text-decoration:none;font-size:14px;}
 nav a:hover{color:var(--accent);}
 
 .slider{height:300px;position:relative;overflow:hidden;}
-.slide{
-position:absolute;width:100%;height:100%;
-opacity:0;transition:1s;
-background-size:contain;background-repeat:no-repeat;background-position:center;
-}
+.slide{position:absolute;width:100%;height:100%;opacity:0;transition:1s;background-size:contain;background-repeat:no-repeat;background-position:center;}
 .slide.active{opacity:1;}
 
 section{padding:40px 20px;max-width:1200px;margin:auto;}
 h2{text-align:center;color:var(--accent);margin-bottom:20px;}
 
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:20px;
-}
+.trust,.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;}
+.box{background:var(--card);padding:20px;border-radius:10px;text-align:center;}
 
-.card{
-background:var(--card);
-padding:10px;border-radius:10px;
-}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
+.card{background:var(--card);padding:10px;border-radius:10px;position:relative;}
 .card img{width:100%;height:150px;object-fit:contain;}
 
-.btn{
-background:var(--primary);
-padding:10px;border:none;width:100%;
-margin-top:8px;border-radius:6px;color:#fff;cursor:pointer;
-}
+.badge{position:absolute;top:10px;left:10px;background:red;padding:5px;border-radius:5px;font-size:12px;}
 
-/* CART */
-#cartDrawer{
-position:fixed;
-right:-360px;
-top:0;
-width:360px;
-height:100%;
-background:#111;
-padding:80px 20px 20px;
-transition:0.3s;
-display:flex;
-flex-direction:column;
-z-index:2000;
-}
+.btn{background:var(--primary);padding:10px;border:none;width:100%;margin-top:8px;border-radius:6px;color:#fff;cursor:pointer;}
+
+#cartDrawer{position:fixed;right:-360px;top:0;width:360px;height:100%;background:#111;padding:80px 20px 20px;transition:0.3s;display:flex;flex-direction:column;z-index:2000;}
 #cartDrawer.active{right:0;}
 
-.cart-item{
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:#1b2a22;
-padding:10px;margin-bottom:10px;border-radius:6px;
-}
+.cart-item{display:flex;justify-content:space-between;align-items:center;background:#1b2a22;padding:10px;margin-bottom:10px;border-radius:6px;gap:5px;}
 
 input{width:100%;padding:10px;margin-top:10px;border-radius:6px;border:none;}
 
-#admin,#trackingBox{
-display:none;
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:#000;
-z-index:3000;
-padding:20px;
-overflow:auto;
-}
+#admin,#trackingBox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:3000;padding:20px;overflow:auto;}
 
-.whatsapp{
-position:fixed;bottom:20px;right:20px;
-background:#25D366;color:#fff;padding:15px;border-radius:50%;
-}
 </style>
 </head>
 
@@ -119,18 +72,43 @@ background:#25D366;color:#fff;padding:15px;border-radius:50%;
 <a href="#">Home</a>
 <a href="#products">Products</a>
 <a href="#about">About</a>
-<a href="#" onclick="openTracking()">Track Order</a>
+<a href="#" onclick="openTracking()">Track</a>
 <a href="#" onclick="openAdmin()">Admin</a>
 </nav>
 
 <div onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
 </header>
 
-<div id="slider" class="slider"></div>
+<div class="slider" id="slider"></div>
+
+<section>
+<h2>Why Choose Flofentry</h2>
+<div class="trust">
+<div class="box">Premium carefully selected products</div>
+<div class="box">Fast delivery across Kenya</div>
+<div class="box">Secure ordering</div>
+<div class="box">Fresh packaging</div>
+</div>
+</section>
 
 <section id="products">
-<h2>Products</h2>
+<h2>Our Products</h2>
+<input placeholder="Search..." oninput="search(this.value)">
 <div id="products-list" class="products"></div>
+</section>
+
+<section>
+<h2>How It Works</h2>
+<div class="steps">
+<div class="box">Select products</div>
+<div class="box">Place order</div>
+<div class="box">We deliver</div>
+</div>
+</section>
+
+<section id="about">
+<h2>About Flofentry</h2>
+<p style="text-align:center;">We supply premium nuts across Kenya.</p>
 </section>
 
 <!-- CART -->
@@ -193,7 +171,7 @@ updateCart();
 }
 
 function updateCart(){
-let box=document.getElementById("cart-items");
+let box=cart-items;
 box.innerHTML="";
 let total=0;
 
@@ -210,8 +188,8 @@ box.innerHTML+=`
 </div>`;
 });
 
-document.getElementById("total").innerText=total;
-document.getElementById("cart-count").innerText=cart.reduce((a,b)=>a+b.qty,0);
+total.innerText=total;
+cart-count.innerText=cart.reduce((a,b)=>a+b.qty,0);
 saveCart();
 }
 
@@ -219,26 +197,32 @@ function increase(i){cart[i].qty++;updateCart();}
 function decrease(i){cart[i].qty>1?cart[i].qty--:cart.splice(i,1);updateCart();}
 function removeItem(i){cart.splice(i,1);updateCart();}
 
-/* CART UI */
-function toggleCart(){document.getElementById("cartDrawer").classList.add("active");}
-function closeCart(){document.getElementById("cartDrawer").classList.remove("active");}
+function toggleCart(){cartDrawer.classList.add("active");}
+function closeCart(){cartDrawer.classList.remove("active");}
 
 /* LOCATION */
 function getLocation(){
 navigator.geolocation.getCurrentPosition(async pos=>{
 let res=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`);
 let data=await res.json();
-document.getElementById("location").value=data.display_name;
+location.value=data.display_name;
 });
 }
 
 /* CHECKOUT */
 function checkout(){
-let name=name.value,phone=phone.value,loc=location.value;
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let loc=document.getElementById("location").value;
+
 let orderId="FLF"+Date.now();
 
 let total=0,msg=`Order ID:${orderId}%0A`;
-cart.forEach(i=>{total+=i.price*i.qty;msg+=`${i.name} x${i.qty}%0A`;});
+
+cart.forEach(i=>{
+total+=i.price*i.qty;
+msg+=`${i.name} x${i.qty}%0A`;
+});
 
 db.collection("orders").doc(orderId).set({
 orderId,name,phone,loc,total,cart,status:"Pending"
@@ -255,7 +239,7 @@ function openTracking(){trackingBox.style.display="block";}
 function closeTracking(){trackingBox.style.display="none";}
 async function trackOrder(){
 let doc=await db.collection("orders").doc(trackId.value).get();
-trackResult.innerHTML=doc.exists?`Status: ${doc.data().status}`:"Not found";
+trackResult.innerHTML=doc.exists?"Status: "+doc.data().status:"Not found";
 }
 
 /* ADMIN */
@@ -284,7 +268,8 @@ ${d.orderId} - ${d.status}
 
 orders.innerHTML=html;
 
-new Chart(chart,{type:'bar',data:{labels:["Revenue"],datasets:[{data:[rev]}]}});
+if(window.myChart) window.myChart.destroy();
+window.myChart=new Chart(chart,{type:'bar',data:{labels:["Revenue"],datasets:[{data:[rev]}]}});
 });
 }
 
@@ -292,22 +277,44 @@ function updateStatus(id,s){db.collection("orders").doc(id).update({status:s});}
 function deleteOrder(id){db.collection("orders").doc(id).delete();}
 function closeAdmin(){admin.style.display="none";}
 
-/* RENDER PRODUCTS */
-function render(){
+/* SLIDER */
+let i=0;
+function buildSlider(){
+let s=slider;
+products.forEach((p,index)=>{
+s.innerHTML+=`<div class="slide ${index==0?"active":""}" style="background-image:url('${p.img}')"></div>`;
+});
+setInterval(()=>{
+let slides=document.querySelectorAll(".slide");
+slides.forEach(x=>x.classList.remove("active"));
+i=(i+1)%slides.length;
+slides[i].classList.add("active");
+},3000);
+}
+
+/* RENDER */
+function render(list=products){
 let box=document.getElementById("products-list");
-products.forEach(p=>{
+box.innerHTML="";
+list.forEach(p=>{
 box.innerHTML+=`
 <div class="card">
+<div class="badge">Top</div>
 <img src="${p.img}">
 <h4>${p.name}</h4>
 <p>KSh ${p.price}</p>
-<button onclick="add('${p.name}')">Add</button>
+<button class="btn" onclick="add('${p.name}')">Add</button>
 </div>`;
 });
 }
 
+function search(q){
+render(products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())));
+}
+
 render();
 updateCart();
+buildSlider();
 
 </script>
 
