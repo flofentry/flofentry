@@ -19,7 +19,6 @@
 --accent:#d4af37;
 --text:#f5f5f5;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
 body{background:linear-gradient(135deg,#0f1a14,#121f18);color:var(--text);}
 
@@ -28,37 +27,26 @@ header{
 display:flex;justify-content:space-between;align-items:center;
 padding:12px;background:#000;position:sticky;top:0;z-index:1000;flex-wrap:wrap;
 }
-
 .logo{display:flex;align-items:center;gap:8px;}
 .logo img{height:35px;}
-.logo h2{font-size:18px;}
-
-nav{display:flex;flex-wrap:wrap;justify-content:center;}
 nav a{margin:5px 8px;color:#fff;text-decoration:none;font-size:13px;}
 nav a:hover{color:var(--accent);}
 
-/* SLIDER (FIXED SIZE) */
-.slider{
-height:180px;
-position:relative;
-overflow:hidden;
-}
+/* SLIDER */
+.slider{height:180px;position:relative;overflow:hidden;}
 .slide{
 position:absolute;width:100%;height:100%;
 opacity:0;transition:1s;
-background-size:contain; /* FIXED */
+background-size:contain;
 background-repeat:no-repeat;
 background-position:center;
 }
 .slide.active{opacity:1;}
-
-@media(min-width:768px){
-.slider{height:260px;}
-}
+@media(min-width:768px){.slider{height:260px;}}
 
 /* SECTION */
 section{padding:30px 15px;max-width:1200px;margin:auto;}
-h2{text-align:center;color:var(--accent);margin-bottom:15px;font-size:20px;}
+h2{text-align:center;color:var(--accent);margin-bottom:15px;}
 
 /* GRID */
 .trust,.steps{
@@ -66,10 +54,12 @@ display:grid;
 grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
 gap:12px;
 }
-
 .box{
 background:var(--card);
-padding:15px;border-radius:10px;text-align:center;font-size:14px;
+padding:15px;
+border-radius:10px;
+text-align:center;
+font-size:14px;
 }
 
 /* PRODUCTS */
@@ -78,32 +68,20 @@ display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:12px;
 }
-
 .card{
 background:var(--card);
-padding:10px;border-radius:10px;position:relative;
+padding:10px;border-radius:10px;
 }
-
 .card img{
-width:100%;
-height:120px;
-object-fit:contain;
+width:100%;height:120px;object-fit:contain;
 }
-
-.badge{
-position:absolute;top:5px;left:5px;
-background:red;padding:3px;border-radius:5px;font-size:10px;
-}
-
 .btn{
 background:var(--primary);
 padding:8px;border:none;width:100%;
 margin-top:6px;border-radius:6px;color:#fff;cursor:pointer;
 }
-
 @media(min-width:768px){
 .products{grid-template-columns:repeat(4,1fr);}
-.card img{height:150px;}
 }
 
 /* CART */
@@ -136,8 +114,8 @@ z-index:3000;padding:15px;overflow:auto;
 .whatsapp{
 position:fixed;bottom:15px;right:15px;
 background:#25D366;color:#fff;
-padding:12px;border-radius:50%;
-text-decoration:none;
+padding:12px 14px;border-radius:6px;
+text-decoration:none;font-size:12px;
 }
 </style>
 </head>
@@ -147,7 +125,7 @@ text-decoration:none;
 <header>
 <div class="logo">
 <img src="images/logo.jpg">
-<h2>Flofentry</h2>
+<h2>Flofentry Foods</h2>
 </div>
 
 <nav>
@@ -158,34 +136,60 @@ text-decoration:none;
 <a href="#" onclick="openAdmin()">Admin</a>
 </nav>
 
-<div onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+<div onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</div>
 </header>
 
 <div id="slider" class="slider"></div>
 
+<!-- WHY -->
 <section>
-<h2>Why Choose Us</h2>
+<h2>Why Choose Flofentry</h2>
 <div class="trust">
-<div class="box">Premium quality nuts</div>
-<div class="box">Fast delivery across Kenya</div>
-<div class="box">Secure ordering</div>
-<div class="box">Fresh packaging</div>
+<div class="box">Premium quality nuts carefully selected for freshness</div>
+<div class="box">Fast and reliable delivery across Kenya</div>
+<div class="box">Simple and secure ordering process</div>
+<div class="box">Hygienic packaging and handling</div>
+<div class="box">Affordable pricing for high quality products</div>
+<div class="box">Trusted by a growing number of customers</div>
 </div>
 <p style="text-align:center;margin-top:10px;">
-🚚 We deliver across Kenya at a small fee depending on location
+We deliver across Kenya at a small fee depending on location
 </p>
 </section>
 
+<!-- PRODUCTS -->
 <section id="products">
 <h2>Products</h2>
 <input placeholder="Search products..." oninput="search(this.value)">
 <div id="products-list" class="products"></div>
 </section>
 
+<!-- HOW IT WORKS -->
+<section>
+<h2>How It Works</h2>
+<div class="steps">
+<div class="box">Choose your preferred products</div>
+<div class="box">Add items to your cart</div>
+<div class="box">Enter your details and location</div>
+<div class="box">Send order via WhatsApp</div>
+<div class="box">Order is processed and confirmed</div>
+<div class="box">Delivery to your location</div>
+</div>
+</section>
+
+<!-- ABOUT -->
 <section id="about">
-<h2>About</h2>
-<p style="text-align:center;">
-We supply premium nuts across Kenya.
+<h2>About Flofentry Foods</h2>
+<p style="text-align:center;max-width:800px;margin:auto;line-height:1.6;">
+Flofentry Foods is a trusted supplier of premium quality nuts in Kenya. We focus on delivering fresh, healthy, and carefully selected products to our customers across the country.
+</p>
+<br>
+<p style="text-align:center;max-width:800px;margin:auto;line-height:1.6;">
+Our range includes almonds, cashew nuts, bitter kola and other nutritious snacks. All products are hygienically packaged to ensure quality and freshness.
+</p>
+<br>
+<p style="text-align:center;max-width:800px;margin:auto;line-height:1.6;">
+We aim to make healthy snacking simple through an easy ordering process and reliable delivery service.
 </p>
 </section>
 
@@ -197,7 +201,7 @@ We supply premium nuts across Kenya.
 
 <input id="name" placeholder="Name">
 <input id="phone" placeholder="Phone">
-<input id="location" placeholder="Auto location">
+<input id="location" placeholder="Location">
 
 <button class="btn" onclick="getLocation()">Detect Location</button>
 <button class="btn" onclick="checkout()">Order via WhatsApp</button>
@@ -219,29 +223,28 @@ We supply premium nuts across Kenya.
 <div id="orders"></div>
 </div>
 
-<a class="whatsapp" href="https://wa.me/254726718968">💬</a>
+<a class="whatsapp" href="https://wa.me/254726718968">WhatsApp</a>
 
 <footer style="text-align:center;padding:15px;background:#000;">
 <p>© Flofentry Foods</p>
-<p>📞 0726718968 | 📧 flofentryfoods@gmail.com</p>
+<p>Phone: 0726718968 | Email: flofentryfoods@gmail.com</p>
 </footer>
 
 <script>
 
 /* FIREBASE */
 const firebaseConfig = {
-  apiKey: "AIzaSyBlbiAN0xLWPnEmHqUbxPefNQt1wHNUHCU",
-  authDomain: "flofentryfoods.firebaseapp.com",
-  projectId: "flofentryfoods",
-  storageBucket: "flofentryfoods.firebasestorage.app",
-  messagingSenderId: "994930198837",
-  appId: "1:994930198837:web:111371e2ec0822b923e47c",
-  measurementId: "G-FLX677Z857"
+apiKey:"AIzaSyBlbiAN0xLWPnEmHqUbxPefNQt1wHNUHCU",
+authDomain:"flofentryfoods.firebaseapp.com",
+projectId:"flofentryfoods"
 };
+firebase.initializeApp(firebaseConfig);
 const db=firebase.firestore();
 
 /* PRODUCTS */
-let products=[ {name:"Bitter Kola 60g – Natural Herbal Wellness",price:1000,img:"images/bitterkola-60g.jpg"}, {name:"Bitter Kola 125g – Premium Herbal Kola Nuts",price:2000,img:"images/bitterkola-125g.jpg"}, {name:"Raw Almonds 1kg – Premium Healthy Nuts",price:2200,img:"images/almond-1kg.jpg"}, {name:"Roasted Almonds 1kg – Crunchy Snack Pack",price:2400,img:"images/almond-1kg.jpg"}, {name:"Raw Almonds 500g – Fresh Natural Nuts",price:1200,img:"images/almond-500g.jpg"}, {name:"Roasted Almonds 500g – Crunchy & Tasty",price:1400,img:"images/almond-500g.jpg"}, {name:"Raw Almonds 250g – Healthy Snack Pack",price:700,img:"images/almond-250g.jpg"}, {name:"Roasted Almonds 250g – Ready-to-Eat Crunchy Nuts",price:900,img:"images/almond-250g.jpg"}, {name:"Raw Cashew Nuts 1kg – Premium Fresh Quality",price:1800,img:"images/cashew-1kg.jpg"}, {name:"Roasted Cashew Nuts 1kg – Crunchy Snack Pack",price:2000,img:"images/cashew-1kg.jpg"}, {name:"Raw Cashew Nuts 500g – Fresh Natural Snack",price:1000,img:"images/cashew-500g.jpg"}, {name:"Roasted Cashew Nuts 500g – Crunchy & Tasty",price:1200,img:"images/cashew-500g.jpg"}, {name:"Raw Cashew Nuts 250g – Healthy Snack Pack",price:600,img:"images/cashew-250g.jpg"}, {name:"Roasted Cashew Nuts 250g – Ready-to-Eat Snack",price:800,img:"images/cashew-250g.jpg"}, {name:"Brazil Nuts 500g",price:5500,img:"images/brazil-500g.jpg"}, {name:"Brazil Nuts 250g",price:3500,img:"images/brazil-250g.jpg"}, {name:"Brazil Nuts 125g",price:1800,img:"images/brazil-125g.jpg"} ];
+let products=[
+{name:"Bitter Kola 60g – Natural Herbal Wellness",price:1000,img:"images/bitterkola-60g.jpg"}, {name:"Bitter Kola 125g – Premium Herbal Kola Nuts",price:2000,img:"images/bitterkola-125g.jpg"}, {name:"Raw Almonds 1kg – Premium Healthy Nuts",price:2200,img:"images/almond-1kg.jpg"}, {name:"Roasted Almonds 1kg – Crunchy Snack Pack",price:2400,img:"images/almond-1kg.jpg"}, {name:"Raw Almonds 500g – Fresh Natural Nuts",price:1200,img:"images/almond-500g.jpg"}, {name:"Roasted Almonds 500g – Crunchy & Tasty",price:1400,img:"images/almond-500g.jpg"}, {name:"Raw Almonds 250g – Healthy Snack Pack",price:700,img:"images/almond-250g.jpg"}, {name:"Roasted Almonds 250g – Ready-to-Eat Crunchy Nuts",price:900,img:"images/almond-250g.jpg"}, {name:"Raw Cashew Nuts 1kg – Premium Fresh Quality",price:1800,img:"images/cashew-1kg.jpg"}, {name:"Roasted Cashew Nuts 1kg – Crunchy Snack Pack",price:2000,img:"images/cashew-1kg.jpg"}, {name:"Raw Cashew Nuts 500g – Fresh Natural Snack",price:1000,img:"images/cashew-500g.jpg"}, {name:"Roasted Cashew Nuts 500g – Crunchy & Tasty",price:1200,img:"images/cashew-500g.jpg"}, {name:"Raw Cashew Nuts 250g – Healthy Snack Pack",price:600,img:"images/cashew-250g.jpg"}, {name:"Roasted Cashew Nuts 250g – Ready-to-Eat Snack",price:800,img:"images/cashew-250g.jpg"}, {name:"Brazil Nuts 500g",price:5500,img:"images/brazil-500g.jpg"}, {name:"Brazil Nuts 250g",price:3500,img:"images/brazil-250g.jpg"}, {name:"Brazil Nuts 125g",price:1800,img:"images/brazil-125g.jpg"}
+];
 
 /* CART */
 let cart=JSON.parse(localStorage.getItem("cart"))||[];
@@ -267,11 +270,11 @@ cart.forEach((i,index)=>{
 total+=i.price*i.qty;
 box.innerHTML+=`
 <div class="cart-item">
-${i.name} x${i.qty} - KSh ${i.price*i.qty}
+${i.name} x${i.qty}
 <br>
 <button onclick="decrease(${index})">-</button>
 <button onclick="increase(${index})">+</button>
-<button onclick="removeItem(${index})">X</button>
+<button onclick="removeItem(${index})">Remove</button>
 </div>`;
 });
 
@@ -298,30 +301,33 @@ document.getElementById("location").value=data.display_name;
 
 /* CHECKOUT */
 function checkout(){
-let name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
-let loc=document.getElementById("location").value;
+let name=document.getElementById("name").value.trim();
+let phone=document.getElementById("phone").value.trim();
+let loc=document.getElementById("location").value.trim();
 
-if(!name||!phone){alert("Fill details");return;}
+if(!name||!phone){alert("Please fill your details");return;}
 
 let orderId="FLF"+Date.now();
 let total=0;
-let msg=`Order ID:${orderId}%0A`;
+
+let msg=`NEW ORDER - FLOFENTRY FOODS\n\n`;
+msg+=`Order ID: ${orderId}\n`;
+msg+=`Name: ${name}\nPhone: ${phone}\nLocation: ${loc}\n\n`;
 
 cart.forEach(i=>{
 let t=i.price*i.qty;
 total+=t;
-msg+=`${i.name} x${i.qty} - KSh ${t}%0A`;
+msg+=`${i.name} x${i.qty} = KSh ${t}\n`;
 });
 
-msg+=`Total: KSh ${total}`;
+msg+=`\nTotal: KSh ${total}\nDelivery fee depends on location`;
 
 db.collection("orders").doc(orderId).set({
 orderId,name,phone,loc,total,cart,status:"Pending"
 });
 
-window.open("https://wa.me/254726718968?text="+msg);
-alert("Order ID: "+orderId);
+window.open("https://wa.me/254726718968?text="+encodeURIComponent(msg));
+alert("Order placed. Your Order ID: "+orderId);
 
 cart=[];
 saveCart();
@@ -336,7 +342,7 @@ async function trackOrder(){
 let id=document.getElementById("trackId").value;
 let doc=await db.collection("orders").doc(id).get();
 document.getElementById("trackResult").innerText=
-doc.exists?"Status: "+doc.data().status:"Not found";
+doc.exists?"Status: "+doc.data().status:"Order not found";
 }
 
 /* ADMIN */
@@ -398,11 +404,10 @@ box.innerHTML="";
 list.forEach(p=>{
 box.innerHTML+=`
 <div class="card">
-<div class="badge">Top</div>
 <img src="${p.img}">
 <h4>${p.name}</h4>
 <p>KSh ${p.price}</p>
-<button class="btn" onclick="add('${p.name}')">Add</button>
+<button class="btn" onclick="add('${p.name}')">Add to Cart</button>
 </div>`;
 });
 }
