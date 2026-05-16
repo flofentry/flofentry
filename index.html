@@ -23,12 +23,49 @@
 <!-- TikTok Pixel Code Start -->
 <script>
 !function (w, d, t) {
-  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+  w.TiktokAnalyticsObject=t;
+  var ttq=w[t]=w[t]||[];
+  ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
+
+  ttq.setAndDefer=function(t,e){
+    t[e]=function(){
+      t.push([e].concat(Array.prototype.slice.call(arguments,0)))
+    }
+  };
+
+  for(var i=0;i<ttq.methods.length;i++)
+    ttq.setAndDefer(ttq,ttq.methods[i]);
+
+  ttq.instance=function(t){
+    for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)
+      ttq.setAndDefer(e,ttq.methods[n]);
+    return e
+  };
+
+  ttq.load=function(e,n){
+    var r="https://analytics.tiktok.com/i18n/pixel/events.js",
+    o=n&&n.partner;
+
+    ttq._i=ttq._i||{};
+    ttq._i[e]=[];
+    ttq._i[e]._u=r;
+    ttq._t=ttq._t||{};
+    ttq._t[e]=+new Date;
+    ttq._o=ttq._o||{};
+    ttq._o[e]=n||{};
+
+    n=document.createElement("script");
+    n.type="text/javascript";
+    n.async=!0;
+    n.src=r+"?sdkid="+e+"&lib="+t;
+
+    e=document.getElementsByTagName("script")[0];
+    e.parentNode.insertBefore(n,e)
+  };
 
   ttq.load('D81F6RBC77U02PKA3V0G');
   ttq.page();
+
 }(window, document, 'ttq');
 </script>
 <!-- TikTok Pixel Code End -->
@@ -266,7 +303,6 @@ Cart (<span id="cart-count">0</span>)
 
 <div id="slider" class="slider"></div>
 
-<!-- WHY -->
 <section>
 <h2>Why Choose Flofentry</h2>
 
@@ -278,13 +314,8 @@ Cart (<span id="cart-count">0</span>)
 <div class="box">Affordable pricing for high quality products</div>
 <div class="box">Trusted by a growing number of customers</div>
 </div>
-
-<p style="text-align:center;margin-top:10px;">
-We deliver across Kenya at a small fee depending on location
-</p>
 </section>
 
-<!-- PRODUCTS -->
 <section id="products">
 <h2>Products</h2>
 
@@ -293,42 +324,6 @@ We deliver across Kenya at a small fee depending on location
 <div id="products-list" class="products"></div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section>
-<h2>How It Works</h2>
-
-<div class="steps">
-<div class="box">Choose your preferred products</div>
-<div class="box">Add items to your cart</div>
-<div class="box">Enter your details and location</div>
-<div class="box">Send order via WhatsApp</div>
-<div class="box">Order is processed and confirmed</div>
-<div class="box">Delivery to your location</div>
-</div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-<h2>About Flofentry Foods</h2>
-
-<p style="text-align:center;max-width:800px;margin:auto;line-height:1.6;">
-Flofentry Foods is a trusted supplier of premium quality nuts in Kenya. We focus on delivering fresh, healthy, and carefully selected products to our customers across the country.
-</p>
-
-<br>
-
-<p style="text-align:center;max-width:800px;margin:auto;line-height:1.6;">
-Our range includes almonds, cashew nuts, bitter kola and other nutritious snacks. All products are hygienically packaged to ensure quality and freshness.
-</p>
-
-<br>
-
-<p style="text-align:center;max-width:800px;margin:auto;line-height:1.6;">
-We aim to make healthy snacking simple through an easy ordering process and reliable delivery service.
-</p>
-</section>
-
-<!-- CART -->
 <div id="cartDrawer">
 <h3>Your Cart</h3>
 
@@ -345,7 +340,6 @@ We aim to make healthy snacking simple through an easy ordering process and reli
 <button class="btn" onclick="closeCart()">Close</button>
 </div>
 
-<!-- TRACK -->
 <div id="trackingBox">
 <input id="trackId" placeholder="Enter Order ID">
 <button onclick="trackOrder()">Track</button>
@@ -355,7 +349,6 @@ We aim to make healthy snacking simple through an easy ordering process and reli
 <button onclick="closeTracking()">Close</button>
 </div>
 
-<!-- ADMIN -->
 <div id="admin">
 <button onclick="closeAdmin()">Close</button>
 
@@ -406,7 +399,6 @@ let products=[
 {name:"Brazil Nuts 250g",price:3500,img:"images/brazil-250g.jpg"},
 {name:"Brazil Nuts 125g",price:1800,img:"images/brazil-125g.jpg"}
 ];
-
 /* CART */
 let cart=JSON.parse(localStorage.getItem("cart"))||[];
 
@@ -415,6 +407,9 @@ localStorage.setItem("cart",JSON.stringify(cart));
 }
 
 function add(name){
+
+ttq.track('AddToCart');
+
 let item=cart.find(p=>p.name===name);
 
 if(item){
@@ -428,6 +423,7 @@ updateCart();
 }
 
 function updateCart(){
+
 let box=document.getElementById("cart-items");
 
 box.innerHTML="";
@@ -435,6 +431,7 @@ box.innerHTML="";
 let total=0;
 
 cart.forEach((i,index)=>{
+
 total+=i.price*i.qty;
 
 box.innerHTML+=`
@@ -480,6 +477,7 @@ document.getElementById("cartDrawer").classList.remove("active");
 
 /* LOCATION */
 function getLocation(){
+
 navigator.geolocation.getCurrentPosition(async pos=>{
 
 let res=await fetch(
@@ -489,11 +487,14 @@ let res=await fetch(
 let data=await res.json();
 
 document.getElementById("location").value=data.display_name;
+
 });
 }
 
 /* CHECKOUT */
 function checkout(){
+
+ttq.track('InitiateCheckout');
 
 let name=document.getElementById("name").value.trim();
 let phone=document.getElementById("phone").value.trim();
@@ -520,7 +521,7 @@ total+=t;
 msg+=`${i.name} x${i.qty} = KSh ${t}\n`;
 });
 
-msg+=`\nTotal: KSh ${total}\nDelivery fee depends on location`;
+msg+=`\nTotal: KSh ${total}`;
 
 db.collection("orders").doc(orderId).set({
 orderId,
@@ -530,6 +531,11 @@ loc,
 total,
 cart,
 status:"Pending"
+});
+
+ttq.track('Purchase', {
+value: total,
+currency: 'KES'
 });
 
 window.open(
@@ -582,16 +588,6 @@ rev+=d.total;
 html+=`
 <div>
 ${d.orderId} - ${d.status}
-
-<select onchange="updateStatus('${d.orderId}',this.value)">
-<option>Pending</option>
-<option>Processing</option>
-<option>Delivered</option>
-</select>
-
-<button onclick="deleteOrder('${d.orderId}')">
-Delete
-</button>
 </div>`;
 });
 
@@ -608,14 +604,6 @@ datasets:[{data:[rev]}]
 });
 }
 
-function updateStatus(id,s){
-db.collection("orders").doc(id).update({status:s});
-}
-
-function deleteOrder(id){
-db.collection("orders").doc(id).delete();
-}
-
 function closeAdmin(){
 document.getElementById("admin").style.display="none";
 }
@@ -628,6 +616,7 @@ function buildSlider(){
 let s=document.getElementById("slider");
 
 products.forEach((p,i)=>{
+
 s.innerHTML+=`
 <div class="slide ${i==0?"active":""}"
 style="background-image:url('${p.img}')">
@@ -670,6 +659,7 @@ Add to Cart
 }
 
 function search(q){
+
 render(
 products.filter(p=>
 p.name.toLowerCase().includes(q.toLowerCase())
@@ -682,6 +672,12 @@ render();
 updateCart();
 buildSlider();
 
+</script>
+
+<!-- Vercel Analytics -->
+<script type="module">
+import { inject } from 'https://cdn.vercel-insights.com/v1/script.debug.js';
+inject();
 </script>
 
 </body>
